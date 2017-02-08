@@ -1,0 +1,62 @@
+! ██╗  ██╗██████╗ ███████╗███████╗ ██████╗ ██╗   ██╗██████╗  ██████╗███████╗███████╗
+! ╚██╗██╔╝██╔══██╗██╔════╝██╔════╝██╔═══██╗██║   ██║██╔══██╗██╔════╝██╔════╝██╔════╝
+!  ╚███╔╝ ██████╔╝█████╗  ███████╗██║   ██║██║   ██║██████╔╝██║     █████╗  ███████╗
+!  ██╔██╗ ██╔══██╗██╔══╝  ╚════██║██║   ██║██║   ██║██╔══██╗██║     ██╔══╝  ╚════██║
+! ██╔╝ ██╗██║  ██║███████╗███████║╚██████╔╝╚██████╔╝██║  ██║╚██████╗███████╗███████║
+! ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝
+
+
+
+Xft.antialias: 1
+Xft.autohint: 0
+Xft.dpi: 96
+Xft.hinting: 1
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+Xft.rgba: rgb
+! urxvt*depth: 32
+! urxvt*background: rgba:0000/0000/0200/c800
+
+! Set the font
+! URxvt*font: xft:MesloLGM\ Nerd\ Font:size=10
+URxvt*font: xft:Envypn:size=11
+! URxvt*font: xft:Monaco:size=10:antialiasing=true
+
+
+
+! Increase line spacing
+URxvt*lineSpace: 3
+
+! Increase letter spacing
+! URxvt*letterSpace: -2
+
+! Disable scrollbar
+URxvt.scrollBar: false
+
+! Set urxvt as login shell
+URxvt*loginShell: true
+
+! Set terminal padding
+URxvt.internalBorder: 15
+
+! Enables copy/paste with Ctrl-Shift-C/V
+URxvt.perl-lib: /usr/lib/urxvt/perl
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.iso14755: False
+URxvt.perl-ext-common: default,clipboard,matcher
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1
+
+rofi.font: Envypn 11
+rofi.separator-style:                solid
+rofi.bw: 3
+
+! #include "colors/diamond"
+! #include "colors/pearl"
+! #include "colors/firered"
+! #include "colors/leafgreen"
+#include "colors/arc"
+! #include "colors/moka"
+! #include "colors/nxll"
+
+

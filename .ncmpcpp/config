@@ -1,0 +1,63 @@
+# ███╗   ██╗ ██████╗███╗   ███╗██████╗  ██████╗██████╗ ██████╗ 
+# ████╗  ██║██╔════╝████╗ ████║██╔══██╗██╔════╝██╔══██╗██╔══██╗
+# ██╔██╗ ██║██║     ██╔████╔██║██████╔╝██║     ██████╔╝██████╔╝
+# ██║╚██╗██║██║     ██║╚██╔╝██║██╔═══╝ ██║     ██╔═══╝ ██╔═══╝ 
+# ██║ ╚████║╚██████╗██║ ╚═╝ ██║██║     ╚██████╗██║     ██║     
+# ╚═╝  ╚═══╝ ╚═════╝╚═╝     ╚═╝╚═╝      ╚═════╝╚═╝     ╚═╝     
+
+
+
+mpd_music_dir = "/mnt/library/music/"
+
+# PLAYLIST
+song_list_format               = "$3%n$9 $1█ $4%a $3*$4 $0%t $R%b $1█ $3%l$9"
+now_playing_prefix             = "$b$3"
+now_playing_suffix             = "$/b"
+playlist_display_mode          = "classic" (classic/columns)
+playlist_separate_albums       = "no"
+
+# BARS
+song_status_format             = "$4%a $3*$4 $0%t [%b] $3"
+progressbar_look               = "▂▂▂"
+titles_visibility              = "no"
+header_visibility              = "yes"
+display_bitrate                = "no"
+header_text_scrolling = "yes"
+statusbar_visibility = "yes"
+
+# BROWSER
+browser_playlist_prefix        = "$2plist >$9 "
+browser_display_mode           = "classic" (classic/columns)
+
+# VISUALIZER
+visualizer_fifo_path           = "/tmp/mpd.fifo"
+visualizer_output_name         = "fifo"
+visualizer_type                = "spectrum" (spectrum/wave)
+visualizer_in_stereo           = "no"
+visualizer_look                = ".▕"
+
+# COLORS
+header_window_color            = white
+volume_color                   = magenta
+state_line_color               = green
+state_flags_color              = magenta
+color1                         = white
+color2                         = magenta
+main_window_color              = white
+main_window_highlight_color    = white
+alternative_ui_separator_color = black
+active_window_border           = black
+progressbar_color              = magenta
+progressbar_elapsed_color      = green 
+statusbar_color                = white
+active_column_color            = green
+visualizer_color               = green
+
+# OTHER SETTINGS
+mpd_crossfade_time             = "2"
+mouse_support                  = "yes"
+search_engine_display_mode     = "columns" (classic/columns)
+clock_display_seconds          = "no"
+autocenter_mode                = "yes"
+cyclic_scrolling               = "yes"
+ask_before_clearing_playlists = "no"

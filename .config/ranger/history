@@ -1,0 +1,23 @@
+rm
+rename todolistr.md
+rename comfy-book.jpg
+rename comfy_reading.jpg
+rename schema.sql
+d
+search m
+rename criarReserva.php
+rename criarEdificio.php
+rename criarEspaco.php
+rename criarPosto
+rename criarPosto.php
+rename index.html
+rename pagarReserva.php
+rename totals.php
+rename removerUser.php
+rename removerPosto.php
+rename removerOferta.php
+rename removerEspaco.php
+rename removerEdificio.php
+
+delete
+open_with  
