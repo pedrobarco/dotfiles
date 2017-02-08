@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'Envy';
+    src: url('Envy.ttf');
+}
+
+html {
+	background: #131313;
+	background-size: 100%;
+	font-family: 'Envy';
+}
+
+#main {
+	position: absolute;
+	width: 600; height: 358;
+	top: 0; right: 0; left: 0; bottom: 0;
+	margin: auto;
+	background: none;
+}
+
+.sidebar {
+	position: absolute;
+	left: 460;
+	background: url('http://i.imgur.com/Hm9zciW.jpg');
+    background-size: 400% ;
+	background-position: center ;
+	width: 142px; height: 324px;
+	border: 2px solid #6c6c66;
+}
+
+#google {
+    background-color: #000000;
+    color: #b5b3aa;
+	position: absolute;
+	left: 0; right: 0; top: 310;
+	width: 224; height: 18;
+	font-family: 'Envy', monospace;
+	font-size: 11;
+	border: 2px solid #6c6c66;
+}
+
+#youtube {
+    background-color: #000000;
+    color: #b5b3aa;
+	position: absolute;
+	left: 230; right: 0; top: 310;
+	width: 224; height: 18;
+	font-family: 'Envy', monospace;
+	font-size: 11;
+	border: 2px solid #6c6c66;
+}
+
+.mainbox {
+	position: absolute;
+	width: 450; height: 300;
+	background: #000000;
+	border: 2px solid #6c6c66;
+
+}
+
+.welcome {
+    color: #c6c5fe;
+	position: absolute;
+	margin: auto;
+	left: 0; right: 0;
+	top: 60;
+	font-size:14;
+	text-align: center;
+}
+
+ul {
+	width:75px;
+	list-style-type:none;
+	float:left;
+	padding-left:0px;
+	padding-right:0px;
+	margin-left:18px;
+	margin-right:18px;
+}
+
+li {
+	text-align:left;
+	padding-left:3px;
+	padding-right:3px;
+	height:16px;
+	line-height:16px;
+}
+
+.links {
+	width:auto;
+	top: 140px;
+	position:relative;
+    display: inline-block;
+}
+
+a {
+	text-decoration:none;
+	color:#b5b3aa;
+}
+
+a:hover {
+	text-decoration:underline;
+    color: #c6c5fe;
+    transition:all ease 0.4s;
+}
+
+
+#google:focus, #youtube:focus {
+    outline:none;
+}

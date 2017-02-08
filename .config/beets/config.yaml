@@ -1,0 +1,24 @@
+directory: ~/Music
+library: ~/.config/beets/library.db
+
+import:
+    move: yes
+    write: yes
+
+asciify_paths: yes
+
+plugins: discogs mbsync lastgenre fetchart embedart zero scrub missing edit
+
+lastgenre:
+    auto: yes
+    count: 1
+
+zero:
+    fields: artist_sort albumartist_sort comments rg_album_gain
+    
+scrub:
+    auto: yes
+
+fetchart:
+    auto: yes
+    sources: filesystem *
