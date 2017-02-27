@@ -18,6 +18,4 @@ source $ZSH/oh-my-zsh.sh
 alias dotfiles='cd ; cd Dropbox\/Dotfiles'
 alias -g sigma='ist181905@sigma.ist.utl.pt'
 
-alias ls="ls -a --color=auto"
-
-echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+source /Users/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
