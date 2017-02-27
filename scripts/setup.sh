@@ -60,7 +60,7 @@ function setupConfig {
         rm -rf ~/Downloads/bitmap/
 }
 
-# setupConfig
+setupConfig
 installZsh
 makeLn
 # changeWp

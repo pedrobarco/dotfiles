@@ -9,7 +9,7 @@
 
 export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="robbyrussel"
+ZSH_THEME="robbyrussell"
 
 plugins=(git)
 
@@ -23,3 +23,7 @@ alias ls="ls -a --color=auto"
 echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 
 
+source /home/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
