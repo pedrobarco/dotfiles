@@ -18,4 +18,4 @@ source $ZSH/oh-my-zsh.sh
 alias dotfiles='cd ; cd Dropbox\/Dotfiles'
 alias -g sigma='ist181905@sigma.ist.utl.pt'
 
-source /Users/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/barco/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
