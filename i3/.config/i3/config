@@ -1,0 +1,237 @@
+#  _ ____
+# (_)__ /_ __ ___ __
+# | ||_ \ V  V / '  \
+# |_|___/\_/\_/|_|_|_|
+
+# Set mod key to Super/Windows/Command key
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Hack 10
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+for_window [instance="__special__"] floating enable
+for_window [class="XCalc"] floating enable
+
+# Start a terminal
+bindsym $mod+Return exec --no-startup-id urxvtc
+bindsym $mod+Shift+Return exec --no-startup-id urxvtc -name __special__ -geometry 80x20+20+70
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start dmenu/rofi (a program launcher)
+bindsym $mod+d exec rofi -show run
+
+# Screensaver
+bindsym XF86ScreenSaver exec i3lock -n -e -c "#000000"
+bindsym $mod+Shift+l exec i3lock -n -e -c "#000000"
+
+# Focus windows
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split in horizontal orientation
+bindsym $mod+h split h
+
+# Split in vertical orientation
+bindsym $mod+v split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle between stacking/tabbed/split:
+bindsym $mod+x layout toggle
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+workspace_auto_back_and_forth yes
+
+# Customize workspace names
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+
+# Customize class to specific workspaces
+assign [class="spotify"] $ws6
+assign [class="^Evince$"] $ws5
+
+# Switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+m workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+m move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Resize windows
+bindsym $mod+r mode $resize
+mode $resize {
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+# Power options
+set $sysmenu "system:  [r]eload  [e]xit  [p]oweroff  re[b]oot"
+bindsym $mod+Shift+e      mode $sysmenu
+
+mode $sysmenu {
+	bindsym e         exec i3-msg exit
+	bindsym r         restart
+	bindsym p         exec poweroff
+	bindsym b         exec reboot
+	bindsym Return    mode "default"
+	bindsym Escape    mode "default"
+}
+
+# Restart i3 config
+bindsym $mod+Shift+r restart
+
+# Volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
+bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master toggle
+
+set $audiomenu "volume:  [+]10%  [-]10%  [m]ute"
+bindsym $mod+Shift+v mode $audiomenu
+
+mode $audiomenu {
+	bindsym plus          exec --no-startup-id exec amixer set Master 10%+
+	bindsym KP_Add        exec --no-startup-id exec amixer set Master 10%+
+	bindsym minus         exec --no-startup-id exec amixer set Master 10%-
+	bindsym KP_Subtract   exec --no-startup-id exec amixer set Master 10%-
+	bindsym m             exec --no-startup-id amixer -D pulse set Master toggle
+	bindsym Return        mode "default"
+	bindsym Escape        mode "default"
+}
+
+# MPC
+bindsym mod1+s exec --no-startup-id mpc toggle
+bindsym mod1+d exec --no-startup-id mpc next
+bindsym mod1+a exec --no-startup-id mpc prev
+
+bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id mpc volume +5
+bindsym Shift+XF86AudioLowerVolume exec --no-startup-id mpc volume -5
+
+# Media player
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Brightness 
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
+
+set $brightnessmenu "brightness:  [+]10%  [-]10% "
+bindsym $mod+Shift+b mode $brightnessmenu
+
+mode $brightnessmenu {
+	bindsym plus          exec --no-startup-id exec xbacklight -inc 20
+	bindsym KP_Add        exec --no-startup-id exec xbacklight -inc 20
+	bindsym minus         exec --no-startup-id exec xbacklight -dec 20
+	bindsym KP_Subtract   exec --no-startup-id exec xbacklight -dec 20
+	bindsym Return        mode "default"
+	bindsym Escape        mode "default"
+}
+
+# Screenshot bindings
+bindsym Print exec maim ~/Pictures/$(date +%F-%T).png
+bindsym Control+Print exec maim -s ~/Pictures/$(date +%F-%T).png
+bindsym Shift+Print exec maim -i $(xdotool getactivewindow) ~/Pictures/$(date +%F-%T).png
+
+# Take screenshot
+set $screenshotmenu "screenshot: [f]ullscreen [s]election [w]indow"
+bindsym $mod+Shift+s mode $screenshotmenu
+
+mode $screenshotmenu  {
+	bindsym f exec uguush -d 1 -f -o 0x0
+	bindsym s exec uguush -s -o 0x0
+	bindsym w exec uguush -w -o 0x0
+	bindsym Return        mode "default"
+	bindsym Escape        mode "default"
+}
+
+# Record webm
+set $webmmenu "webm: [5]s [1]0s [3]0s [6]0s"
+bindsym $mod+Shift+w mode $webmmenu
+
+mode $webmmenu  {
+	bindsym 5 exec yaxg -d 5 -e 'uguush -o 0x0 -u $f' -F /tmp/test.webm
+	bindsym 1 exec yaxg -d 10 -e 'uguush -o 0x0 -u $f' -F /tmp/test.webm
+	bindsym 3 exec yaxg -d 30 -e 'uguush -o 0x0 -u $f' -F /tmp/test.webm
+	bindsym 6 exec yaxg -d 60 -e 'uguush -o 0x0 -u $f' -F /tmp/test.webm
+	bindsym Return        mode "default"
+	bindsym Escape        mode "default"
+}
+
+# Bar
+bar {
+	position top
+	status_command i3blocks
+}
+
+# Startup apps
+exec --no-startup-id setxkbmap -layout pt
+exec --no-startup-id xrdb ~/.Xresources
+exec --no-startup-id xsetroot -cursor_name left_ptr
+exec --no-startup-id xset -b
+exec --no-startup-id dunst
+exec --no-startup-id compton --config ~/.compton.conf
+exec --no-startup-id urxvtd -q -o -f
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id synclient TapButton1=1 TapButton2=2 TapButton3=3
+exec --no-startup-id nm-applet
+
+exec xautolock -time 15 -locker i3lock -n -e -c "#000000" &
