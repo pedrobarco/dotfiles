@@ -22,7 +22,7 @@ export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 ZSH_THEME="robbyrussell"
 
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vim tmux extract zsh-syntax-highlighting)
+plugins=(git vi-mode vim tmux extract zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
