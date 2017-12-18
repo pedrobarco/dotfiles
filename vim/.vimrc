@@ -13,7 +13,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'altercation/vim-colors-solarized'
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'easymotion/vim-easymotion'
@@ -39,8 +39,7 @@ set showmatch					"Highlight matching [{()}]
 set visualbell                  "No sounds
 
 syntax enable					"Turn on syntax highlighting
-set background=dark
-colorscheme solarized
+colorscheme wombat256mod
 
 let mapleader=" "				"Change leader to a space because the backslash is too far away
 
@@ -55,8 +54,7 @@ map <Leader>n :NERDTreeToggle<CR>
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-let g:airline_solarized_bg='dark'
-let g:airline_theme='solarized'
+let g:airline_theme='wombat'
 
 " }}}
 " Spaces & Tabs {{{
