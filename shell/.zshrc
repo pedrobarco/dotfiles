@@ -15,10 +15,6 @@ export EDITOR=$VISUAL
 # Kills lag
 export KEYTIMEOUT=1
 
-
-# Java path
-export JAVA_HOME="/usr/lib/jvm/java-8-oracle"
-
 ZSH_THEME="robbyrussell"
 
 # Example format: plugins=(rails git textmate ruby lighthouse)
