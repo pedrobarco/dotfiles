@@ -18,9 +18,12 @@ export KEYTIMEOUT=1
 ZSH_THEME="robbyrussell"
 
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode vim tmux extract zsh-syntax-highlighting)
+plugins=(git vi-mode tmux extract zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
 alias -g sigma='ist181905@sigma.ist.utl.pt'
+
+export NVM_DIR=~/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 

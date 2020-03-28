@@ -14,8 +14,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'rafi/awesome-vim-colorschemes'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -36,10 +35,11 @@ set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 set showmatch					"Highlight matching [{()}]
-set visualbell                  "No sounds
+set laststatus=2				"Set status for Lightline
+set noshowmode					"Get rid of status indicator (Lightline has it)
 
 syntax enable					"Turn on syntax highlighting
-colorscheme wombat256mod
+colorscheme default
 
 let mapleader=" "				"Change leader to a space because the backslash is too far away
 
@@ -47,14 +47,6 @@ let mapleader=" "				"Change leader to a space because the backslash is too far 
 " Keybinds {{{
 
 map <Leader>n :NERDTreeToggle<CR>
-
-" }}}
-" Airline {{{
-
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-let g:airline_theme='wombat'
 
 " }}}
 " Spaces & Tabs {{{
