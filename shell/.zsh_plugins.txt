@@ -1,16 +1,21 @@
 mafredri/zsh-async
+
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
 
+# OMZ Plugins
 robbyrussell/oh-my-zsh path:lib/completion.zsh
 robbyrussell/oh-my-zsh path:plugins/vi-mode
 robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/tmux
 robbyrussell/oh-my-zsh path:plugins/extract
 
+# Custom plugins
 bobthecow/git-flow-completion
-denysdovhan/spaceship-prompt
 lukechilds/zsh-nvm
+
+# Prompt
+denysdovhan/spaceship-prompt
 
 zdharma/fast-syntax-highlighting
 zdharma/history-search-multi-word
