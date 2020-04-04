@@ -13,16 +13,24 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'rafi/awesome-vim-colorschemes'
+Plug 'altercation/vim-colors-solarized'
 Plug 'itchyny/lightline.vim'
-Plug 'easymotion/vim-easymotion'
+Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'kien/ctrlp.vim'
+Plug 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
+" }}}
+" Lightline {{{
+
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ }
 " }}}
 " UI Layout {{{
 
@@ -33,20 +41,25 @@ set relativenumber              "Easier to navigate
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
-set showmode                    "Show current mode down the bottom
 set showmatch					"Highlight matching [{()}]
+set noshowmode					"Get rid of VIM status indicator
 set laststatus=2				"Set status for Lightline
-set noshowmode					"Get rid of status indicator (Lightline has it)
 
 syntax enable					"Turn on syntax highlighting
-colorscheme default
+set background=dark				"Set dark colorscheme
+colorscheme solarized
 
-let mapleader=" "				"Change leader to a space because the backslash is too far away
 
 " }}}
 " Keybinds {{{
 
+let mapleader=" "				"Change leader to a space because the backslash is too far away
+
+" Nerdtree
 map <Leader>n :NERDTreeToggle<CR>
+
+" Fzf
+map <C-p> :Files<CR>
 
 " }}}
 " Spaces & Tabs {{{
