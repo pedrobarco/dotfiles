@@ -1,21 +1,31 @@
 mafredri/zsh-async
 
+###################
+# Antigen plugins #
+###################
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
 
-# OMZ Plugins
+###############
+# OMZ plugins #
+###############
 robbyrussell/oh-my-zsh path:lib/completion.zsh
 robbyrussell/oh-my-zsh path:plugins/vi-mode
-robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/tmux
+robbyrussell/oh-my-zsh path:plugins/git
+robbyrussell/oh-my-zsh path:plugins/git-flow
+robbyrussell/oh-my-zsh path:plugins/jump
 robbyrussell/oh-my-zsh path:plugins/extract
 
-# Custom plugins
-bobthecow/git-flow-completion
-lukechilds/zsh-nvm
+##################
+# Custom plugins #
+##################
+lukechilds/zsh-nvm # Nvm
+djui/alias-tips # Alias tips
+denysdovhan/spaceship-prompt # Prompt
 
-# Prompt
-denysdovhan/spaceship-prompt
-
+#################
+# Zinit plugins #
+#################
 zdharma/fast-syntax-highlighting
 zdharma/history-search-multi-word
