@@ -13,7 +13,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'edkolev/tmuxline.vim'
@@ -27,14 +26,10 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " }}}
-" Gruvbox {{{
-
-let g:gruvbox_contrast_dark = 'hard'
-" }}}
 " Lightline {{{
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'gruvbox'
+let g:lightline.colorscheme = 'default'
 " }}}
 " UI Layout {{{
 
@@ -51,7 +46,7 @@ set laststatus=2				"Set status for Lightline
 
 syntax enable					"Turn on syntax highlighting
 set background=dark				"Set dark colorscheme
-colorscheme gruvbox
+colorscheme default
 
 " }}}
 " Keybinds {{{

@@ -69,6 +69,7 @@ export KEYTIMEOUT=1
 if [[ "$TERM" != "screen"* && "$TERM" != "tmux"* ]]; then
     export TERM=rxvt-unicode-256color
 fi
+
 # }}}
 # Completion {{{
 # ==========
