@@ -13,9 +13,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'kaicataldo/material.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'shinchu/lightline-gruvbox.vim'
-Plug 'edkolev/tmuxline.vim'
+Plug 'koz4k/tmuxline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
@@ -29,24 +29,35 @@ call plug#end()
 " Lightline {{{
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'default'
+let g:lightline.colorscheme = 'material_vim'
+
+" }}}
+" Tmuxline {{{
+
+let g:tmuxline_powerline_separators = 1
+
 " }}}
 " UI Layout {{{
 
-set nocompatible				"Use Vim settings, rather then Vi settings (much better!).
-set hidden						"Buffers can exist in the background
-set number                      "Line numbers are good
-set relativenumber              "Easier to navigate
-set backspace=indent,eol,start  "Allow backspace in insert mode
-set history=1000                "Store lots of :cmdline history
-set showcmd                     "Show incomplete cmds down the bottom
-set showmatch					"Highlight matching [{()}]
-set noshowmode					"Get rid of VIM status indicator
-set laststatus=2				"Set status for Lightline
+set nocompatible						"Use Vim settings, rather then Vi settings (much better!).
+set hidden								"Buffers can exist in the background
+set number								"Line numbers are good
+set relativenumber						"Easier to navigate
+set backspace=indent,eol,start			"Allow backspace in insert mode
+set history=1000						"Store lots of :cmdline history
+set showcmd								"Show incomplete cmds down the bottom
+set showmatch							"Highlight matching [{()}]
+set noshowmode							"Get rid of VIM status indicator
+set laststatus=2						"Set status for Lightline
 
-syntax enable					"Turn on syntax highlighting
-set background=dark				"Set dark colorscheme
-colorscheme default
+if (has("termguicolors"))
+  set termguicolors						"Enable true color
+endif
+
+syntax enable							"Turn on syntax highlighting
+set background=dark						"Set dark colorscheme
+let g:material_theme_style='ocean'		"Set material theme
+colorscheme	material					"Set colorscheme
 
 " }}}
 " Keybinds {{{
