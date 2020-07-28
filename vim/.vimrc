@@ -13,9 +13,10 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'kaicataldo/material.vim'
+Plug 'yarisgutierrez/ayu-lightline'
+Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'koz4k/tmuxline.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
@@ -29,12 +30,12 @@ call plug#end()
 " Lightline {{{
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'material_vim'
+let g:lightline.colorscheme = 'ayu'
 
 " }}}
 " Tmuxline {{{
 
-let g:tmuxline_powerline_separators = 1
+let g:tmuxline_powerline_separators = 0
 
 " }}}
 " UI Layout {{{
@@ -56,8 +57,8 @@ endif
 
 syntax enable							"Turn on syntax highlighting
 set background=dark						"Set dark colorscheme
-let g:material_theme_style='ocean'		"Set material theme
-colorscheme	material					"Set colorscheme
+let ayucolor="dark"						"Set mirage version of ayu
+colorscheme	ayu							"Set colorscheme
 
 " }}}
 " Keybinds {{{
