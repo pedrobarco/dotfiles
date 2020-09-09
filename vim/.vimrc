@@ -13,8 +13,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'yarisgutierrez/ayu-lightline'
-Plug 'ayu-theme/ayu-vim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-fugitive'
@@ -30,7 +29,7 @@ call plug#end()
 " Lightline {{{
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'ayu'
+let g:lightline.colorscheme = 'palenight'
 
 " }}}
 " Tmuxline {{{
@@ -57,8 +56,7 @@ endif
 
 syntax enable							"Turn on syntax highlighting
 set background=dark						"Set dark colorscheme
-let ayucolor="dark"						"Set mirage version of ayu
-colorscheme	ayu							"Set colorscheme
+colorscheme	palenight					"Set colorscheme
 
 " }}}
 " Keybinds {{{

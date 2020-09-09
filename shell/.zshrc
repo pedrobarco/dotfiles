@@ -12,9 +12,6 @@
 # Support 256 colors
 # export TERM=xterm-256color
 
-# Support dir colors
-export CLICOLOR=YES
-
 # Set a cache dir.
 export ZSH_CACHE_DIR=$HOME/.zsh/cache
 
