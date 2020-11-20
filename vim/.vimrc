@@ -13,7 +13,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'lifepillar/vim-solarized8'
+Plug 'ghifarit53/tokyonight-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-fugitive'
@@ -29,7 +29,7 @@ call plug#end()
 " Lightline {{{
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'solarized'
+let g:lightline.colorscheme = 'tokyonight'
 
 " }}}
 " Tmuxline {{{
@@ -55,8 +55,7 @@ if (has("termguicolors"))
 endif
 
 syntax enable							"Turn on syntax highlighting
-set background=light					"Set light colorscheme
-colorscheme	solarized8					"Set colorscheme
+colorscheme	tokyonight					"Set colorscheme
 
 " }}}
 " Keybinds {{{
