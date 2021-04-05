@@ -113,3 +113,4 @@ vi_mode
 # }}}
 
 # vim:foldmethod=marker:foldlevel=0:sts=4:ts=4:sw=4:et
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
