@@ -4,7 +4,7 @@
 apt install -y \
 	zsh vim tmux \
 	git git-flow tig stow \
-    zsh tree htop jq \
+    tree htop jq \
 	vlc tor \
 	v4l2loopback-dkms \
 	apt-transport-https \
@@ -12,7 +12,6 @@ apt install -y \
 	curl \
 	gnupg \
 	lsb-release
-
 
 # Install snap packages
 snap install spotify discord
@@ -39,13 +38,14 @@ echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
+# Install custom packages
 sudo apt-get update
 sudo apt-get install -y \
 	codium \
 	docker-ce \
-       	docker-ce-cli \
+    docker-ce-cli \
 	containerd.io \
-	docker-compose 
+	docker-compose
 
 # Change default shell to zsh
 chsh -s $(which zsh)
