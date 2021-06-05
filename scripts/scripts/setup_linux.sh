@@ -6,7 +6,7 @@ apt install -y \
 	zsh vim tmux \
 	git git-flow tig stow \
     tree htop jq \
-	vlc tor \
+	vlc thunderbird tor \
 	ffmpeg v4l-utils v4l2loopback-dkms
 
 # Install nvm - node version manager
