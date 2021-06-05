@@ -7,7 +7,11 @@ apt install -y \
 	git git-flow tig stow \
     tree htop jq \
 	vlc thunderbird tor \
+    xclip python3 python3-pip \
 	ffmpeg v4l-utils v4l2loopback-dkms
+
+# TODO: nvm setup (install --lts)
+# TODO: nvim setup (install nvim pip3 + npm modules)
 
 # Install nvm - node version manager
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash

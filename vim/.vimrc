@@ -15,7 +15,6 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'itchyny/lightline.vim'
-Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
@@ -30,11 +29,6 @@ call plug#end()
 
 let g:lightline = {}
 let g:lightline.colorscheme = 'dracula'
-
-" }}}
-" Tmuxline {{{
-
-let g:tmuxline_powerline_separators = 0
 
 " }}}
 " UI Layout {{{
