@@ -8,8 +8,10 @@ apt install -y \
     tree htop jq \
 	vlc thunderbird tor \
     xclip python3 python3-pip \
+    openvpn openconnect \
 	ffmpeg v4l-utils v4l2loopback-dkms
 
+# TODO: sudo dpkg-reconfigure resolvconf
 # TODO: nvm setup (install --lts)
 # TODO: nvim setup (install nvim pip3 + npm modules)
 
