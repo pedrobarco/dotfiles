@@ -27,60 +27,202 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'puremourning/vimspector'
 
 Plug 'tpope/vim-fugitive'
+
+Plug 'ayu-theme/ayu-vim'
+Plug 'hoob3rt/lualine.nvim'
+Plug 'edkolev/tmuxline.vim'
 call plug#end()
 
 " }}}
+" Treesitter {{{
+lua << EOF
+require'nvim-treesitter.configs'.setup{
+    ensure_installed = { "typescript", "javascript", "go" },
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = true,
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "gnn",
+          node_incremental = "grn",
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        },
+    },
+}
+EOF
+" }}}
+" LSP {{{
+lua << EOF
+-- Go
+require'lspconfig'.gopls.setup{}
+
+-- Typescript
+require'lspconfig'.tsserver.setup{}
+EOF
+
+" }}}
+" nvim-compe {{{
+
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.resolve_timeout = 800
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
+let g:compe.source.ultisnips = v:true
+let g:compe.source.luasnip = v:true
+
+set completeopt=menuone,noselect
+
+" }}}
+" Telescope {{{
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
+    prompt_prefix = "> ",
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+    shorten_path = true,
+    winblend = 0,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+  }
+}
+EOF
+
+" }}}
+" Lualine + Tmuxline {{{
+lua << EOF
+require('lualine').setup{
+    options = {
+        theme = 'ayu_dark',
+        component_separators = {'', ''},
+        section_separators = {'', ''},
+    },
+    sections = {
+        lualine_x = {'encoding', 'filetype'},
+    }
+}
+EOF
+
+let g:tmuxline_preset = "full"
+let g:tmuxline_theme = "vim_statusline_1"
+
+" }}}
 " Runtimes {{{
-
 " Node.js
-let g:node_host_prog = "~/.nvm/versions/node/v14.17.0/bin/neovim-node-host"
-
+let g:node_host_prog = "~/.yarn/bin/neovim-node-host"
 " }}}
 " UI Layout {{{
 
-set hidden							"Buffers can exist in the background
-set number							"Line numbers are good
-set relativenumber						"Easier to navigate
-set showcmd							"Show incomplete cmds down the bottom
-set cmdheight=1							"Give more space for displaying messages
-set showmatch							"Highlight matching [{()}]
-set noshowmode							"Get rid of VIM status indicator
-set noerrorbells						"Get rid of error bells
-set laststatus=2						"Set status for Lightline
-set colorcolumn=80
+set hidden              " Buffers can exist in the background
+set number              " Line numbers are good
+set relativenumber      " Easier to navigate
+set showcmd             " Show incomplete cmds down the bottom
+set cmdheight=1         " Give more space for displaying messages
+set showmatch           " Highlight matching [{()}]
+set noshowmode          " Get rid of VIM status indicator
+set noerrorbells        " Get rid of error bells
+set laststatus=2        " Set status for Lightline
+set colorcolumn=80      " Set color in column 80
 set signcolumn=yes
+set isfname+=@-@
 
 if (has("termguicolors"))
-  set termguicolors						"Enable true color
+  set termguicolors     " Enable true color
 endif
 
-syntax enable							"Turn on syntax highlighting
-colorscheme default						"Set colorscheme
+syntax enable           " Turn on syntax highlighting
+set termguicolors
+let ayucolor="dark"
+colorscheme ayu         " Set colorscheme
 
 " }}}
 " Keybinds {{{
 
-let mapleader=" "				"Change leader to a space because the backslash is too far away
+let mapleader=" "       " Change leader to a space because the backslash is too far away
 
+" nvim-compe
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+" telescope
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " }}}
 " Spaces & Tabs {{{
 
-set autoindent
 set smartindent
-set softtabstop=4	"4 space tab
-set tabstop=4		"4 space tab
-set shiftwidth=4	"4 space tab
-set expandtab		"Use spaces for tabs
-
-set nowrap		"Don't wrap lines
-set linebreak		"Wrap lines at convenient points
+set softtabstop=4 tabstop=4     " 4 space tab
+set shiftwidth=4                " 4 space tab
+set expandtab                   " Use spaces for tabs
+set nowrap                      " Don't wrap lines
 
 " }}}
 " Completion {{{
 
 set wildmode=longest,list,full
-set wildmenu						"enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~			"stuff to ignore when tab completing
+set wildmenu                        " enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~         " stuff to ignore when tab completing
 set wildignore+=*vim/backups*
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
@@ -101,23 +243,23 @@ set wildignore+=**/.git/*
 " }}}
 " Search {{{
 
-set incsearch       " Find the next match as we type the search
-set nohlsearch      " Don't highlight searches
-set ignorecase      " Ignore case when searching...
-set smartcase       " ...unless we type a capital
+set incsearch       " find the next match as we type the search
+set nohlsearch      " don't highlight searches
+set ignorecase      " ignore case when searching
+set smartcase       " unless we type a capital
 
 " }}}
 " Scrolling {{{
 
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set scrolloff=8     " start scrolling when we're 8 lines away from margins
 
 " }}}
 " Folding {{{
 
-set foldenable        "dont fold by default
-set foldmethod=indent "fold based on indent
-set foldnestmax=3    "deepest fold is 3 levels
-set foldlevelstart=3   " start with fold level of 1
+set foldenable          " dont fold by default
+set foldmethod=indent   " fold based on indent
+set foldnestmax=3       " deepest fold is 3 levels
+set foldlevelstart=3    " start with fold level of 1
 
 " }}}
 " Backups {{{
@@ -127,6 +269,7 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set updatetime=50
+set shortmess+=c
 
 " }}}
 
