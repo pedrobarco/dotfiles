@@ -83,6 +83,7 @@ fi
 # This makes the `zsh-nvm` plugin load lazily, and thus reduces the impact of the plugin on shell
 # start-up time.
 export NVM_LAZY_LOAD="true"
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 
 if _has antibody; then
     # If plugins have not been downloaded, then download and static load in future.
@@ -113,4 +114,3 @@ vi_mode
 # }}}
 
 # vim:foldmethod=marker:foldlevel=0:sts=4:ts=4:sw=4:et
-export PATH="/usr/local/opt/openjdk/bin:$PATH"

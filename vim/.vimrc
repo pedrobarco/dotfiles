@@ -13,22 +13,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'ayu-theme/ayu-vim'
+Plug 'yarisgutierrez/ayu-lightline'
 Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'preservim/nerdtree'
-Plug 'preservim/nerdcommenter'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " }}}
 " Lightline {{{
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'dracula'
+let g:lightline.colorscheme = 'ayu'
 
 " }}}
 " UI Layout {{{
@@ -49,18 +44,15 @@ if (has("termguicolors"))
 endif
 
 syntax enable							"Turn on syntax highlighting
-colorscheme	dracula						"Set colorscheme
+
+set termguicolors
+let ayucolor="dark"
+colorscheme	ayu							"Set colorscheme
 
 " }}}
 " Keybinds {{{
 
 let mapleader=" "				"Change leader to a space because the backslash is too far away
-
-" Nerdtree
-map <Leader>n :NERDTreeToggle<CR>
-
-" Fzf
-map <C-p> :Files<CR>
 
 " }}}
 " Spaces & Tabs {{{
