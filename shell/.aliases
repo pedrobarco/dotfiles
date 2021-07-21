@@ -23,3 +23,6 @@ alias egrep='egrep --color=auto'
 
 # Jump aliases
 alias j='jump'
+
+# Lazygit
+alias lg='lazygit'

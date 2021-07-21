@@ -7,7 +7,8 @@
 brew install \
 	zsh antibody \
 	vim tmux \
-	git git-flow tig stow  \
+	go \
+	git git-flow tig lazygit stow  \
 	tree watch htop wget telnet jq \
 	yarn kubectl docker-compose \
 	firefox vlc
