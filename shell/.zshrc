@@ -16,7 +16,7 @@
 export ZSH_CACHE_DIR=$HOME/.zsh/cache
 
 # Ensure editor is Vim
-export EDITOR=vim
+export EDITOR=nvim
 export VISUAL=$EDITOR
 
 # 10ms for key sequences
