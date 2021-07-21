@@ -4,11 +4,12 @@
 apt install -y \
 	apt-transport-https ca-certificates curl gnupg lsb-release \
 	zsh vim tmux \
+	golang-go \
 	git git-flow tig stow \
-    tree htop jq \
+	tree htop jq \
 	vlc thunderbird tor \
-    xclip python3 python3-pip \
-    openvpn openconnect \
+	xclip python3 python3-pip \
+	openvpn openconnect \
 	ffmpeg v4l-utils v4l2loopback-dkms
 
 # TODO: sudo dpkg-reconfigure resolvconf
@@ -17,6 +18,9 @@ apt install -y \
 
 # Install nvm - node version manager
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+
+# Install lazygit
+go get github.com/jesseduffield/lazygit
 
 # Install antibody - zsh plugin manager
 curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
@@ -40,14 +44,15 @@ echo "deb https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium mai
 curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
 echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
 
+
 # Install custom packages
-sudo apt-get update
-sudo apt-get install -y \
+apt update
+apt install -y \
 	docker-ce docker-ce-cli containerd.io docker-compose \
 	kubectl \
 	codium \
 	spotify-client
-	
+
 # Change default shell to zsh
 chsh -s $(which zsh)
 
