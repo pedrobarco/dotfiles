@@ -1,16 +1,4 @@
-"       _
-"  __ _(_)_ __  _ _ __
-"  \ V / | '  \| '_/ _|
-" (_)_/|_|_|_|_|_| \__|
-
 " Vim Plug {{{
-
-" auto-install vim-plug
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
-endif
 
 " Use Vim-plug plugin to manage all other plugins
 call plug#begin()
@@ -132,7 +120,7 @@ require('telescope').setup{
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},
     generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    shorten_path = true,
+    path_display = true,
     winblend = 0,
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
