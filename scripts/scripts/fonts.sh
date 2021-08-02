@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# Powerline fonts
-echo "Installing powerline patched fonts..."
-git clone https://github.com/powerline/fonts.git --depth=1
-cd fonts
-./install.sh
+# Nerd fonts
+echo "Installing nerd fonts..."
+git clone https://github.com/ryanoasis/nerd-fonts --depth=1
+cd nerd-fonts
+./install.sh Hack
+./install.sh Meslo
 cd ..
 rm -rf fonts
 
