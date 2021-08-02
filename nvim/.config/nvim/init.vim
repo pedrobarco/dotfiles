@@ -14,8 +14,11 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'puremourning/vimspector'
 
-Plug 'kdheepak/lazygit.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'preservim/nerdcommenter'
+Plug 'voldikss/vim-floaterm'
 
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ayu-theme/ayu-vim'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'edkolev/tmuxline.vim'
@@ -23,6 +26,7 @@ call plug#end()
 
 " }}}
 " Treesitter {{{
+
 lua << EOF
 require'nvim-treesitter.configs'.setup{
     ensure_installed = { "typescript", "javascript", "go" },
@@ -43,8 +47,9 @@ require'nvim-treesitter.configs'.setup{
     },
 }
 EOF
+
 " }}}
-" LSP {{{
+" Lsp {{{
 
 lua << EOF
 -- Go
@@ -55,7 +60,14 @@ require'lspconfig'.tsserver.setup{}
 EOF
 
 " }}}
-" nvim-compe {{{
+" Lspsaga {{{
+
+lua << EOF
+require'lspsaga'.init_lsp_saga()
+EOF
+
+" }}}
+" Nvim-compe {{{
 
 lua << EOF
 require'compe'.setup {
@@ -90,6 +102,7 @@ set completeopt=menuone,noselect
 
 " }}}
 " Telescope {{{
+
 lua << EOF
 require('telescope').setup{
   defaults = {
@@ -120,25 +133,23 @@ require('telescope').setup{
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},
     generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    path_display = true,
     winblend = 0,
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
     color_devicons = true,
     use_less = true,
+    path_display = {},
     set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-
-    -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
   }
 }
 EOF
 
 " }}}
 " Lualine + Tmuxline {{{
+
 lua << EOF
 require('lualine').setup{
     options = {
@@ -157,8 +168,10 @@ let g:tmuxline_theme = "vim_statusline_1"
 
 " }}}
 " Runtimes {{{
+
 " Node.js
 let g:node_host_prog = "~/.yarn/bin/neovim-node-host"
+
 " }}}
 " UI Layout {{{
 
@@ -189,6 +202,11 @@ colorscheme ayu         " Set colorscheme
 
 let mapleader=" "       " Change leader to a space because the backslash is too far away
 
+" lspsaga
+nnoremap <silent> gh :Lspsaga lsp_finder<CR>
+nnoremap <silent><leader>ca :Lspsaga code_action<CR>
+vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
+
 " nvim-compe
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <Tab>     compe#confirm('<CR>')
@@ -197,13 +215,15 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " telescope
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>ff <CMD>Telescope find_files<CR>
+nnoremap <leader>fg <CMD>Telescope live_grep<CR>
+nnoremap <leader>fb <CMD>Telescope buffers<CR>
+nnoremap <leader>fh <CMD>Telescope help_tags<CR>
 
-" lazygit
-nnoremap <silent> <leader>lg :LazyGit<CR>
+" float-terminal
+nnoremap <silent> <leader>lg <CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>
+nnoremap <silent> <leader>nn <CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 nnn -Hde<CR>
+nnoremap <silent> <leader>tt <CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 zsh<CR>
 
 " }}}
 " Spaces & Tabs {{{
