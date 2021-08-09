@@ -18,6 +18,8 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'preservim/nerdcommenter'
 Plug 'voldikss/vim-floaterm'
 
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ayu-theme/ayu-vim'
 Plug 'hoob3rt/lualine.nvim'
@@ -29,7 +31,15 @@ call plug#end()
 
 lua << EOF
 require'nvim-treesitter.configs'.setup{
-    ensure_installed = { "typescript", "javascript", "go" },
+    ensure_installed = {
+        "dockerfile",
+        "go",
+        "graphql",
+        "javascript",
+        "json",
+        "typescript",
+        "yaml",
+    },
     highlight = {
         enable = true,
     },
@@ -148,6 +158,12 @@ require('telescope').setup{
 EOF
 
 " }}}
+" NerdCommenter {{{
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 0
+
+" }}}
 " Lualine + Tmuxline {{{
 
 lua << EOF
@@ -219,6 +235,10 @@ nnoremap <leader>ff <CMD>Telescope find_files<CR>
 nnoremap <leader>fg <CMD>Telescope live_grep<CR>
 nnoremap <leader>fb <CMD>Telescope buffers<CR>
 nnoremap <leader>fh <CMD>Telescope help_tags<CR>
+
+" nerdcommenter
+map <leader>cc <plug>NERDCommenterSexy
+map <leader>cu <plug>NERDCommenterToggle
 
 " float-terminal
 nnoremap <silent> <leader>lg <CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>
