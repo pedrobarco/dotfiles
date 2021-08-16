@@ -3,3 +3,9 @@
 _has() {
     which $1>/dev/null 2>&1
 }
+
+search_ddg() {
+    # TODO: add url encoded string to support more arguments
+    args=`echo $@ | sed "s/ /%20/g"`
+    open "https://duckduckgo.com/lite?q=$args"
+}

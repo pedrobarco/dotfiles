@@ -11,6 +11,11 @@ else
 	zstyle ':completion:*:default' list-colors ''
 fi
 
+# Map xdg-open to open
+if [[ "$(uname)" == "Linux" ]]; then
+    alias open="xdg-open"
+fi
+
 # More ls aliases.
 alias ll='ls -alF'
 alias la='ls -A'
@@ -32,3 +37,6 @@ alias j='jump'
 
 # Lazygit
 alias lg='lazygit'
+
+# search
+alias "?"='search_ddg'
