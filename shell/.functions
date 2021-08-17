@@ -5,7 +5,7 @@ _has() {
 }
 
 search_ddg() {
-    # TODO: add url encoded string to support more arguments
-    args=`echo $@ | sed "s/ /%20/g"`
-    open "https://duckduckgo.com/lite?q=$args"
+    # url encoded string?
+    query=`echo "$@" | sed "s/ /%20/g"`
+    open "https://duckduckgo.com/?q=${query}"
 }
