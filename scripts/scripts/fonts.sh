@@ -1,19 +1,19 @@
 #!/bin/bash
 
+custom_font_dir="../../fonts"
+font_path=$([[ "$(uname)" == "Darwin" ]] \
+    && echo ~/Library/Fonts \
+    || echo ~/.fonts)
+
 # Nerd fonts
 echo "Installing nerd fonts..."
 git clone https://github.com/ryanoasis/nerd-fonts --depth=1
 cd nerd-fonts
 ./install.sh Hack
 ./install.sh Meslo
-cd ..
-rm -rf fonts
 
-# Bitmap fonts
-echo "Installing bitmap fonts..."
-git clone https://github.com/Tecate/bitmap-fonts.git
-sudo cp -avr bitmap-fonts/bitmap/ /usr/share/fonts
-rm -rf bitmap-fonts
+# Custom fonts
+echo "Installing custom fonts..."
+mkdir -p $font_path
+cp $custom_font_dir/* $font_path
 
-xset fp+ /user/share/fonts/bitmap
-fc-cache -fv
