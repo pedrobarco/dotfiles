@@ -232,9 +232,11 @@ inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " telescope
 nnoremap <leader>ff <CMD>Telescope find_files<CR>
+nnoremap <C-p> <CMD>Telescope git_files<CR>
 nnoremap <leader>fg <CMD>Telescope live_grep<CR>
 nnoremap <leader>fb <CMD>Telescope buffers<CR>
 nnoremap <leader>fh <CMD>Telescope help_tags<CR>
+nnoremap <leader>nt <CMD>Telescope file_browser<CR>
 
 " nerdcommenter
 map <leader>cc <plug>NERDCommenterSexy
