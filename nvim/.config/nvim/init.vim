@@ -235,12 +235,10 @@ nnoremap <leader>ff <CMD>Telescope find_files<CR>
 nnoremap <C-p> <CMD>Telescope git_files<CR>
 nnoremap <leader>fg <CMD>Telescope live_grep<CR>
 nnoremap <leader>fb <CMD>Telescope buffers<CR>
-nnoremap <leader>fh <CMD>Telescope help_tags<CR>
 nnoremap <leader>nt <CMD>Telescope file_browser<CR>
 
 " nerdcommenter
-map <leader>cc <plug>NERDCommenterSexy
-map <leader>cu <plug>NERDCommenterToggle
+map <leader>cc <plug>NERDCommenterToggle
 
 " float-terminal
 nnoremap <silent> <leader>lg <CMD>FloatermNew --autoclose=2 --height=0.9 --width=0.9 lazygit<CR>
