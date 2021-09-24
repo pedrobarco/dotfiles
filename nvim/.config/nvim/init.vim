@@ -21,7 +21,7 @@ Plug 'voldikss/vim-floaterm'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'ayu-theme/ayu-vim'
+Plug 'gruvbox-community/gruvbox'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'edkolev/tmuxline.vim'
 call plug#end()
@@ -169,7 +169,7 @@ let g:NERDCreateDefaultMappings = 0
 lua << EOF
 require('lualine').setup{
     options = {
-        theme = 'ayu_dark',
+        theme = 'gruvbox',
         component_separators = {'', ''},
         section_separators = {'', ''},
     },
@@ -210,8 +210,8 @@ endif
 
 syntax enable           " Turn on syntax highlighting
 set termguicolors
-let ayucolor="dark"
-colorscheme ayu         " Set colorscheme
+set background=dark
+colorscheme gruvbox     " Set colorscheme
 
 " }}}
 " Keybinds {{{
