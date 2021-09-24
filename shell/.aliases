@@ -40,3 +40,6 @@ alias lg="lazygit"
 
 # search
 alias "?"="search_ddg"
+
+# open pr
+alias "gpr"="open_pr"
