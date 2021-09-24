@@ -9,3 +9,10 @@ search_ddg() {
     query=`echo "$@" | sed "s/ /%20/g"`
     open "https://duckduckgo.com/?q=${query}"
 }
+
+open_pr() {
+    git_repo=`git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g"`
+    git_branch=`git branch --show-current`
+    query=`echo "$@" | sed "s/ /%20/g"`
+    open "https://${git_repo}/compare/${git_branch}?expand=1"
+}
