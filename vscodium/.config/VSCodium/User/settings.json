@@ -1,0 +1,45 @@
+{
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "editor.fontFamily": "UbuntuMono Nerd Font",
+  "editor.fontSize": 22,
+  "editor.lineHeight": 24,
+  "editor.minimap.enabled": false,
+  "editor.scrollBeyondLastLine": false,
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    80,
+  ],
+  "terminal.integrated.fontFamily": "UbuntuMono Nerd Font",
+  "terminal.integrated.fontSize": 22,
+  "terminal.integrated.lineHeight": 1.125,
+  "breadcrumbs.enabled": false,
+  // "workbench.activityBar.visible": false,
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.settings.editor": "json",
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.perEditorGroup": true,
+  "workbench.editor.limit.value": 5,
+  "explorer.autoReveal": false,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "files.trimTrailingWhitespace": true,
+  "git.enabled": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.iconTheme": null,
+  "workbench.colorTheme": "Gruvbox Dark Medium",
+}
