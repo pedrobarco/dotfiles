@@ -43,3 +43,6 @@ alias "?"="search_ddg"
 
 # open pr
 alias "gpr"="open_pr"
+
+# open pr
+alias glf="force_pull"

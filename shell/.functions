@@ -16,3 +16,29 @@ open_pr() {
     query=`echo "$@" | sed "s/ /%20/g"`
     open "https://${git_repo}/compare/${git_branch}?expand=1"
 }
+
+force_pull() {
+    git_branch=`git branch --show-current`
+    git fetch --all
+    git reset --hard "origin/${git_branch}"
+}
+
+netshoot() {
+overrides='
+{
+  "metadata": {
+    "annotations": {
+      "sidecar.istio.io/inject": "false"
+    }
+  }
+}
+'
+
+kubectl run netshoot --rm -it \
+  --image nicolaka/netshoot:latest \
+  --namespace "${1:-$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)}" \
+  --overrides "$overrides" \
+  -- /bin/bash
+}
+
+
