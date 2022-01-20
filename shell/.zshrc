@@ -1,10 +1,3 @@
-# Aliases {{{
-# =======
-# Load our aliases.
-if [ -f $HOME/.aliases ]; then
-    . $HOME/.aliases
-fi
-# }}}
 # Functions {{{
 # =========
 . $HOME/.functions
@@ -72,6 +65,13 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 # Don't execute immediately upon history expansion.
 setopt HIST_VERIFY
+# }}}
+# Aliases {{{
+# =======
+# Load our aliases.
+if [ -f $HOME/.aliases ]; then
+    . $HOME/.aliases
+fi
 # }}}
 # Antibody {{{
 # =======
