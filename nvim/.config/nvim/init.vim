@@ -12,8 +12,6 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'puremourning/vimspector'
-
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'preservim/nerdcommenter'
 Plug 'voldikss/vim-floaterm'
@@ -303,7 +301,7 @@ set foldlevelstart=3    " start with fold level of 1
 
 set noswapfile
 set nobackup
-set undodir=~/.vim/undodir
+set undodir=~/.config/nvim/undodir
 set undofile
 set updatetime=50
 set shortmess+=c
