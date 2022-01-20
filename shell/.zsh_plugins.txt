@@ -22,9 +22,9 @@ robbyrussell/oh-my-zsh path:plugins/kubectl
 ##################
 # Custom plugins #
 ##################
-lukechilds/zsh-nvm # Nvm
-djui/alias-tips # Alias tips
-denysdovhan/spaceship-prompt # Prompt
+lukechilds/zsh-nvm
+djui/alias-tips
+denysdovhan/spaceship-prompt
 
 #################
 # Zinit plugins #
