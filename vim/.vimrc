@@ -1,80 +1,56 @@
 " Vim Plug {{{
 
 " Use Vim-plug plugin to manage all other plugins
-if empty(glob('~/.vim/autoload/plug.vim'))
-	  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-	  	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-Plug 'ayu-theme/ayu-vim'
-Plug 'yarisgutierrez/ayu-lightline'
-Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-surround'
+call plug#begin()
+Plug 'gruvbox-community/gruvbox'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
-
-" }}}
-" Lightline {{{
-
-let g:lightline = {}
-let g:lightline.colorscheme = 'ayu'
 
 " }}}
 " UI Layout {{{
 
-set nocompatible						"Use Vim settings, rather then Vi settings (much better!).
-set hidden								"Buffers can exist in the background
-set number								"Line numbers are good
-set relativenumber						"Easier to navigate
-set backspace=indent,eol,start			"Allow backspace in insert mode
-set history=1000						"Store lots of :cmdline history
-set showcmd								"Show incomplete cmds down the bottom
-set showmatch							"Highlight matching [{()}]
-set noshowmode							"Get rid of VIM status indicator
-set laststatus=2						"Set status for Lightline
+set hidden              " Buffers can exist in the background
+set number              " Line numbers are good
+set relativenumber      " Easier to navigate
+set showcmd             " Show incomplete cmds down the bottom
+set cmdheight=1         " Give more space for displaying messages
+set showmatch           " Highlight matching [{()}]
+set noshowmode          " Get rid of VIM status indicator
+set noerrorbells        " Get rid of error bells
+set laststatus=2        " Set status for Lightline
+set colorcolumn=80      " Set color in column 80
+set signcolumn=yes
+set isfname+=@-@
 
 if (has("termguicolors"))
-  set termguicolors						"Enable true color
+  set termguicolors     " Enable true color
 endif
 
-syntax enable							"Turn on syntax highlighting
-
+syntax enable           " Turn on syntax highlighting
 set termguicolors
-let ayucolor="dark"
-colorscheme	ayu							"Set colorscheme
+set background=dark
+colorscheme gruvbox     " Set colorscheme
 
 " }}}
 " Keybinds {{{
 
-let mapleader=" "				"Change leader to a space because the backslash is too far away
+let mapleader=" "       " Change leader to a space because the backslash is too far away
 
 " }}}
 " Spaces & Tabs {{{
 
-set autoindent
 set smartindent
-set smarttab
-set shiftwidth=4	"4 space tab
-set softtabstop=4	"4 space tab
-set tabstop=4		"4 space tab
-set noexpandtab		"Use tabs for spaces
-set modelines=1		"One line setup vim setup on-file
-filetype indent on
-filetype plugin on
-set autoindent
-
-set list listchars=tab:\ \ ,trail:· " Display tabs and trailing spaces visually
-
-set nowrap			"Don't wrap lines
-set linebreak		"Wrap lines at convenient points
+set softtabstop=4 tabstop=4     " 4 space tab
+set shiftwidth=4                " 4 space tab
+set expandtab                   " Use spaces for tabs
+set nowrap                      " Don't wrap lines
 
 " }}}
 " Completion {{{
 
-set wildmode=longest:full,list:full
-set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildmode=longest,list,full
+set wildmenu                        " enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~         " stuff to ignore when tab completing
 set wildignore+=*vim/backups*
 set wildignore+=*sass-cache*
 set wildignore+=*DS_Store*
@@ -84,39 +60,44 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
 
 " }}}
 " Search {{{
 
-set incsearch       " Find the next match as we type the search
-set hlsearch        " Highlight searches by default
-set ignorecase      " Ignore case when searching...
-set smartcase       " ...unless we type a capital
+set incsearch       " find the next match as we type the search
+set nohlsearch      " don't highlight searches
+set ignorecase      " ignore case when searching
+set smartcase       " unless we type a capital
 
 " }}}
 " Scrolling {{{
 
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
-set sidescrolloff=15
-set sidescroll=1
+set scrolloff=8     " start scrolling when we're 8 lines away from margins
 
 " }}}
 " Folding {{{
 
-set foldenable        "dont fold by default
-set foldmethod=indent "fold based on indent
-set foldnestmax=3    "deepest fold is 3 levels
-set foldlevelstart=3   " start with fold level of 1
+set foldenable          " dont fold by default
+set foldmethod=indent   " fold based on indent
+set foldnestmax=3       " deepest fold is 3 levels
+set foldlevelstart=3    " start with fold level of 1
 
 " }}}
 " Backups {{{
 
 set noswapfile
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set writebackup
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set updatetime=50
+set shortmess+=c
 
 " }}}
 
