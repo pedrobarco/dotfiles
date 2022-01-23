@@ -3,6 +3,7 @@
 call plug#begin()
 Plug 'gruvbox-community/gruvbox'
 Plug 'sheerun/vim-polyglot'
+Plug 'earthly/earthly.vim'
 call plug#end()
 
 " UI Layout
