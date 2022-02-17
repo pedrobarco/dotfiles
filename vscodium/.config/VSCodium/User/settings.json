@@ -6,14 +6,11 @@
   "editor.minimap.enabled": false,
   "editor.scrollBeyondLastLine": false,
   "editor.formatOnSave": true,
-  "editor.rulers": [
-    80,
-  ],
+  "editor.rulers": [80],
   "terminal.integrated.fontFamily": "UbuntuMono Nerd Font",
   "terminal.integrated.fontSize": 22,
   "terminal.integrated.lineHeight": 1.125,
   "breadcrumbs.enabled": false,
-  // "workbench.activityBar.visible": false,
   "workbench.startupEditor": "newUntitledFile",
   "workbench.settings.editor": "json",
   "workbench.editor.enablePreviewFromQuickOpen": false,
@@ -30,10 +27,10 @@
     "typescript"
   ],
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
@@ -41,5 +38,5 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "diffEditor.ignoreTrimWhitespace": false,
   "workbench.iconTheme": null,
-  "workbench.colorTheme": "Gruvbox Dark Medium",
+  "workbench.colorTheme": "Gruvbox Dark Medium"
 }

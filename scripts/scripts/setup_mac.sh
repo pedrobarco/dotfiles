@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install homebrew 
+# Install homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # Install brew normal packages
@@ -16,6 +16,5 @@ brew install \
 # Install brew casks packages
 brew install --cask docker vscodium thunderbird tor-browser
 
-# Clone tmux tpm 
+# Clone tmux tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-

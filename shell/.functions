@@ -58,6 +58,3 @@ netshoot() {
     --overrides "${overrides}" \
     -- "/bin/bash"
 }
-
-
-

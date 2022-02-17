@@ -139,7 +139,7 @@ set nowrap                      " Don't wrap lines
 
 " Completion
 " enable ctrl-n and ctrl-p to scroll through matches
-set wildmenu  
+set wildmenu
 
 " Search
 set incsearch       " find the next match as we type the search
@@ -149,7 +149,7 @@ set smartcase       " unless we type a capital
 
 " Scrolling
 " start scrolling when we're 8 lines away from margins
-set scrolloff=8 
+set scrolloff=8
 
 " Folding
 set nofoldenable        " don't fold by default
@@ -157,11 +157,10 @@ set foldmethod=indent   " fold based on indent
 set foldnestmax=3       " deepest fold is 3 levels
 set foldlevelstart=3    " start with fold level of 1
 
-" Backups 
+" Backups
 set noswapfile
 set nobackup
 set undodir=~/.config/nvim/undodir
 set undofile
 set updatetime=50
 set shortmess+=c
-
