@@ -16,4 +16,3 @@ cd nerd-fonts
 echo "Installing custom fonts..."
 mkdir -p $font_path
 cp $custom_font_dir/* $font_path
-

@@ -208,7 +208,7 @@ upload() {
           result="$(curl -sf -F shorten="${result}" "${shorturl}")"
       elif [ "${useshortener}" = 'ptpb' ]; then
         result="$(curl -sf -F c="${result}" "${shorturl}")"
-      fi  
+      fi
     fi
 
     if [ "${?}" = 0 ]; then
@@ -293,4 +293,3 @@ upload
 
 # If the program doesn't exit at the for-loop, the upload failed.
 echo 'File was not uploaded, did you specify a valid filename?'
-

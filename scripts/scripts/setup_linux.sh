@@ -27,7 +27,7 @@ go get github.com/jesseduffield/lazygit
 # Install antibody - zsh plugin manager
 curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 
-# Clone tmux tpm 
+# Clone tmux tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Install docker
@@ -58,6 +58,5 @@ apt install -y \
 # Change default shell to zsh
 chsh -s $(which zsh)
 
-# Mkdir zsh cache 
+# Mkdir zsh cache
 mkdir -p $HOME/.zsh/cache/
-

@@ -8,6 +8,5 @@
 # DONE: use stow to symlink
 stow shell
 stow vim
-stow --no-folding nvim 
+stow --no-folding nvim
 stow tmux
-
