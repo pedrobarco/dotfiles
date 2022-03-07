@@ -26,6 +26,13 @@ search_zet() {
   done
 }
 
+clone() {
+  local url="$1"
+  local repo=$(echo "$url" | grep -q "^https://" && echo ${url#*.com/} || echo ${url##*:})
+  repo=$(echo "$repo" | sed "s/.git//g")
+  git clone $url $REPOS/$repo
+}
+
 open_pr() {
   local repo=$(git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g")
   local branch=$(git branch --show-current)
@@ -35,7 +42,6 @@ open_pr() {
 
 force_pull() {
   local branch=$(git branch --show-current)
-
   git fetch --all
   git reset --hard "origin/${branch}"
 }

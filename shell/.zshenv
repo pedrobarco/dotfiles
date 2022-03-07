@@ -1,3 +1,5 @@
+export REPOS="$HOME/repos"
+
 export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))"
 export PATH="$JAVA_HOME:$PATH"
 
