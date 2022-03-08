@@ -14,7 +14,7 @@ brew install \
 	firefox vlc
 
 # Install brew casks packages
-brew install --cask docker vscodium thunderbird tor-browser
+brew install --cask docker visual-studio-code thunderbird tor-browser
 
 # Clone tmux tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
