@@ -8,4 +8,5 @@
 stow shell
 stow vim
 stow --no-folding nvim
+stow --no-folding code
 stow tmux
