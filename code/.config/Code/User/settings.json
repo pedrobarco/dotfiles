@@ -1,12 +1,14 @@
 {
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
   "editor.fontFamily": "UbuntuMono Nerd Font",
-  "editor.fontSize": 22,
+  "editor.fontSize": 18,
   "editor.lineHeight": 24,
   "editor.minimap.enabled": false,
   "editor.scrollBeyondLastLine": false,
   "editor.formatOnSave": true,
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "terminal.integrated.fontFamily": "UbuntuMono Nerd Font",
   "terminal.integrated.fontSize": 22,
   "terminal.integrated.lineHeight": 1.125,
