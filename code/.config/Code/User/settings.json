@@ -10,7 +10,7 @@
     80
   ],
   "terminal.integrated.fontFamily": "UbuntuMono Nerd Font",
-  "terminal.integrated.fontSize": 22,
+  "terminal.integrated.fontSize": 18,
   "terminal.integrated.lineHeight": 1.125,
   "breadcrumbs.enabled": false,
   "workbench.startupEditor": "newUntitledFile",
@@ -40,5 +40,6 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "diffEditor.ignoreTrimWhitespace": false,
   "workbench.iconTheme": null,
-  "workbench.colorTheme": "Gruvbox Dark Medium"
+  "workbench.colorTheme": "Gruvbox Dark Medium",
+  "window.zoomLevel": 0.6
 }
