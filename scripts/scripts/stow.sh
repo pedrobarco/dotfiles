@@ -5,8 +5,8 @@
 # TODO: clone vim-plug automatically
 
 # DONE: use stow to symlink
-stow shell
-stow vim
-stow --no-folding nvim
-stow --no-folding code
-stow tmux
+stow shell -t $HOME
+stow vim -t $HOME
+stow --no-folding nvim -t $HOME
+stow --no-folding code -t $HOME
+stow tmux -t $HOME
