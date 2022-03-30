@@ -2,12 +2,10 @@
 " Use Vim-plug plugin to manage all other plugins
 call plug#begin()
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'gruvbox-community/gruvbox'
 call plug#end()

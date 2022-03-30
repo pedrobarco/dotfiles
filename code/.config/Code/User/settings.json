@@ -39,7 +39,7 @@
   },
   "typescript.updateImportsOnFileMove.enabled": "always",
   "diffEditor.ignoreTrimWhitespace": false,
-  "workbench.iconTheme": null,
   "workbench.colorTheme": "Gruvbox Dark Medium",
-  "window.zoomLevel": 0.6
+  "window.zoomLevel": 0.6,
+  "go.toolsManagement.autoUpdate": true
 }
