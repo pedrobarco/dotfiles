@@ -2,13 +2,7 @@
 
 # Install apt packages
 apt install -y \
-	apt-transport-https ca-certificates curl gnupg lsb-release \
-	zsh vim tmux \
-	golang-go \
-	git git-flow tig stow \
-	tree htop jq \
-	vlc thunderbird tor \
-	xclip python3 python3-pip \
+	vlc thunderbird \
 	openvpn openconnect \
 	ffmpeg v4l-utils v4l2loopback-dkms
 
@@ -17,37 +11,6 @@ apt install -y \
 # TODO: nvim setup (install nvim pip3 + npm modules)
 # TODO: nvim setup lsp
 # yarn global add typescript-language-server typescript
-
-# Install nvm - node version manager
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-
-# Install lazygit
-go get github.com/jesseduffield/lazygit
-
-# Install antibody - zsh plugin manager
-curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
-
-# Clone tmux tpm
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-# Install docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Install kubectl
-sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-
-# Install spotify
-curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-
-# Install custom packages
-apt update
-apt install -y \
-	docker-ce docker-ce-cli containerd.io docker-compose \
-	kubectl \
-	spotify-client
 
 # Change default shell to zsh
 chsh -s $(which zsh)
