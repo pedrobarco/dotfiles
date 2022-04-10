@@ -28,9 +28,10 @@ search_zet() {
 
 clone() {
   local url="$1"
+  shift 1
   local repo=$(echo "$url" | grep -q "^https://" && echo ${url#*.com/} || echo ${url##*:})
   repo=$(echo "$repo" | sed "s/.git//g")
-  git clone $url $REPOS/$repo
+  git clone $url "$@" $REPOS/$repo
 }
 
 open_pr() {
