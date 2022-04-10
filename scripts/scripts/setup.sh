@@ -26,17 +26,19 @@ packages=(
     # runtimes
     "go"
     "python3"
-    "bazelisk"
     "kubectl"
+    "minikube"
 
     # development
     "tmux"
     "vim"
-
-    # plugins
-    "antibody"
     "pre-commit"
+    "bazelisk"
+
+    # plugin managers
+    "antibody"
     "tpm"
+    "krew"
 )
 
 sdir=$(dirname $BASH_SOURCE[0])
