@@ -1,7 +1,6 @@
 #!/bin/bash
 # Install xclip
 
-if [ "$(uname)" == "Darwin" ]; then
-else
+if [ "$(uname)" == "Linux" ]; then
     apt install -y xclip
 fi

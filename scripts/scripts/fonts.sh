@@ -1,18 +1,17 @@
 #!/bin/bash
 
-custom_font_dir="../../fonts"
-font_path=$([[ "$(uname)" == "Darwin" ]] \
-    && echo ~/Library/Fonts \
-    || echo ~/.fonts)
+fonts=(
+    "UbuntuMono"
+)
 
-# Nerd fonts
-echo "Installing nerd fonts..."
-git clone https://github.com/ryanoasis/nerd-fonts --depth=1
-cd nerd-fonts
-./install.sh Hack
-./install.sh Meslo
+fdir="$HOME/.fonts"
+for font in "${fonts[@]}"
+do
+    curl -LO "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/$font.zip"
+    unzip "$font.zip" -d "$fdir/$font"
+    rm -rf "$font.zip"
+done
 
-# Custom fonts
-echo "Installing custom fonts..."
-mkdir -p $font_path
-cp $custom_font_dir/* $font_path
+if [ "$(uname)" == "Darwin" ]; then
+    ln -s $fdir "~/Library/Fonts/Custom"
+fi

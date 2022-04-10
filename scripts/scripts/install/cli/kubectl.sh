@@ -4,7 +4,7 @@
 if [ "$(uname)" == "Darwin" ]; then
 	brew install kubectl
 else
-    sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg \
+    curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg \
         https://packages.cloud.google.com/apt/doc/apt-key.gpg
     echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] \
         https://apt.kubernetes.io/ kubernetes-xenial main" \

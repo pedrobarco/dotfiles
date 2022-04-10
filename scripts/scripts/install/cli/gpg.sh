@@ -2,7 +2,7 @@
 # Install gpg
 
 if [ "$(uname)" == "Darwin" ]; then
-	brew install \
+    brew install \
         ca-certificates  \
         gnupg
 else

@@ -6,4 +6,3 @@ if [ "$(uname)" == "Darwin" ]; then
 else
 	curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
 fi
-
