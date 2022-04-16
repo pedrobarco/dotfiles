@@ -3,7 +3,8 @@
 extensions=(
     "ms-vscode-remote.remote-wsl"
     "jdinhlife.gruvbox"
-    "asvetliakov.vscode-neovim"
+    "vscodevim.vim"
+    # "asvetliakov.vscode-neovim"
     "golang.Go"
     "BazelBuild.vscode-bazel"
     "earthly.earthfile-syntax-highlighting"
