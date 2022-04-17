@@ -32,6 +32,9 @@ alias egrep="egrep --color=auto"
 # alias view="nvim -R"
 # alias vimdiff="nvim -d"
 
+# Python aliases
+alias python=python3
+
 # Jump aliases
 alias j="jump"
 
