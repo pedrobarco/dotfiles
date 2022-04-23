@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 _has() {
   which $1>/dev/null 2>&1
@@ -30,7 +30,7 @@ clone() {
   local url="$1"
   shift 1
   local repo=$(echo "$url" | grep -q "^https://" && echo ${url#*.com/} || echo ${url##*:})
-  repo=$(echo "$repo" | sed "s/.git//g")
+  local repo="${${repo:l}%%.git*}"
   git clone $url "$@" $REPOS/$repo
 }
 
