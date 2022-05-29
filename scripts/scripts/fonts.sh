@@ -2,6 +2,7 @@
 
 fonts=(
     "UbuntuMono"
+    "Meslo"
 )
 
 fdir="$HOME/.fonts"

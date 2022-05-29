@@ -1,25 +1,3 @@
-" Plugins
-" Install vim-plug if not found
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
-
-" Use Vim-plug plugin to manage all other plugins
-call plug#begin()
-Plug 'gruvbox-community/gruvbox'
-Plug 'sheerun/vim-polyglot'
-Plug 'earthly/earthly.vim'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-pandoc/vim-pandoc'
-call plug#end()
-
 " UI Layout
 set hidden              " Buffers can exist in the background
 set number              " Line numbers are good
@@ -32,17 +10,11 @@ set colorcolumn=80      " Set color in column 80
 
 set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
 
+set laststatus=0        " Disable neovim statusline
+
 if (has("termguicolors"))
   set termguicolors     " Enable true color
 endif
-
-syntax enable           " Turn on syntax highlighting
-set termguicolors
-set background=dark
-colorscheme gruvbox     " Set colorscheme
-
-" Keybinds
-let mapleader=" "       " Change leader to space
 
 " Spaces & Tabs
 set smartindent
@@ -50,10 +22,6 @@ set softtabstop=2 tabstop=2     " 2 space tab
 set shiftwidth=2                " 2 space tab
 set expandtab                   " Use spaces for tabs
 set nowrap                      " Don't wrap lines
-
-" Completion
-" enable ctrl-n and ctrl-p to scroll through matches
-set wildmenu
 
 " Search
 set incsearch       " find the next match as we type the search

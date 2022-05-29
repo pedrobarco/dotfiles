@@ -4,8 +4,8 @@
 # TODO: detect platform and run setup script
 # TODO: clone vim-plug automatically
 
-stow shell -t $HOME
-stow vim -t $HOME
-stow tmux -t $HOME
-stow --no-folding nvim -t $HOME
-stow --no-folding code -t $HOME
+stow --restow -t $HOME shell
+stow --restow -t $HOME vim
+stow --restow -t $HOME nvim
+stow --restow -t $HOME tmux
+stow --restow -t $HOME --no-folding code
