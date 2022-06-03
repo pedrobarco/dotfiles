@@ -7,6 +7,7 @@ set cmdheight=1         " Give more space for displaying messages
 set showmatch           " Highlight matching [{()}]
 set noerrorbells        " Get rid of error bells
 set colorcolumn=80      " Set color in column 80
+set guicursor=          " Set cursor shape to block
 
 set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
 
@@ -18,8 +19,8 @@ endif
 
 " Spaces & Tabs
 set smartindent
-set softtabstop=2 tabstop=2     " 2 space tab
-set shiftwidth=2                " 2 space tab
+set softtabstop=4 tabstop=4     " 4 space tab
+set shiftwidth=4                " 4 space tab
 set expandtab                   " Use spaces for tabs
 set nowrap                      " Don't wrap lines
 
