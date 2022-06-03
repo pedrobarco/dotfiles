@@ -19,6 +19,9 @@ packages=(
     "jq"
     "tree"
     "watch"
+    "ripgrep"
+    "fd"
+    "fzy"
 
     # vpn
     "openconnect"
