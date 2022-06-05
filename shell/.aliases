@@ -47,7 +47,7 @@ alias "?"="search_ddg"
 # open pr
 alias gpr="open_pr"
 
-# open pr
+# reset branch to remote
 alias glf="force_pull"
 
 # zet
