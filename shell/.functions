@@ -34,6 +34,12 @@ clone() {
   git clone $url "$@" $REPOS/$repo
 }
 
+repos() {
+  local repo="$(find $REPOS -type d -exec test -e '{}/.git' \; \
+      -print -prune | fzy)"
+  cd "$repo"
+}
+
 open_pr() {
   local repo=$(git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g")
   local branch=$(git branch --show-current)
