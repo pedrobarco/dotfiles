@@ -1,73 +1,88 @@
 #!/bin/zsh
 
 _has() {
-  which $1>/dev/null 2>&1
+    which $1>/dev/null 2>&1
 }
 
 search_ddg() {
-  # url encoded string?
-  local query=$(echo "$@" | python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))")
-  open "https://duckduckgo.com/?q=${query}"
+    # url encoded string?
+    local query=$(echo "$@" | python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))")
+    open "https://duckduckgo.com/?q=${query}"
 }
 
 search_zet() {
-  local query="$@"
+    local query="$@"
 
-  local notes="${HOME}/Documents/notes"
-  local zets_regex=".*/[0-9]{14}\.md"
+    local notes="${HOME}/Documents/notes"
+    local zets_regex=".*/[0-9]{14}\.md"
 
-  local results=$(grep -rl "${query}" "${notes}" | grep -E "${zets_regex}" | uniq)
+    local results=$(grep -rl "${query}" "${notes}" | grep -E "${zets_regex}" | uniq)
 
-  for r in $(echo "${results}")
-  do
-    local id=$(basename "${r}" .md)
-    local title=$(head -n1 "${r}" | pandoc -t plain)
-    echo "$id\t$title"
-  done
+    for r in $(echo "${results}")
+    do
+        local id=$(basename "${r}" .md)
+        local title=$(head -n1 "${r}" | pandoc -t plain)
+        echo "$id\t$title"
+    done
 }
 
 clone() {
-  local url="$1"
-  shift 1
-  local repo=$(echo "$url" | grep -q "^https://" && echo ${url#*.com/} || echo ${url##*:})
-  local repo="${${repo:l}%%.git*}"
-  git clone $url "$@" $REPOS/$repo
+    local url="$1"
+    shift 1
+    local repo=$(echo "$url" | grep -q "^https://" && echo ${url#*.com/} || echo ${url##*:})
+    local repo="${${repo:l}%%.git*}"
+    git clone $url "$@" $REPOS/$repo
 }
 
 repos() {
-  local repo="$(find $REPOS -type d -exec test -e '{}/.git' \; \
-      -print -prune | fzy)"
-  cd "$repo"
+    local repo=$1
+    if [[ -z $repo ]]; then
+        local repo=$(find $REPOS -type d \
+            -exec test -e '{}/.git' \; -print -prune \
+            | awk -F"/" '{ print $(NF-1)"/"$NF }' \
+            | fzy)
+    fi
+
+    local selected_repo="$REPOS/$repo"
+    if [[ ! -d $selected_repo ]]; then
+        return
+    fi
+
+    local session_name=$(echo "$repo" | sed "s/[\.|\/]/_/g")
+    local tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+        tmux new-session -s $session_name -c $selected_repo
+        return
+    fi
+
+    if ! tmux has-session -t=$session_name 2> /dev/null; then
+        tmux new-session -ds $session_name -c $selected_repo
+    fi
+
+    tmux switch-client -t $session_name
 }
 
 open_pr() {
-  local repo=$(git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g")
-  local branch=$(git branch --show-current)
+    local repo=$(git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g")
+    local branch=$(git branch --show-current)
 
-  open "https://${repo}/compare/${branch}?expand=1"
+    open "https://${repo}/compare/${branch}?expand=1"
 }
 
 force_pull() {
-  local branch=$(git branch --show-current)
-  git fetch --all
-  git reset --hard "origin/${branch}"
+    local branch=$(git branch --show-current)
+    git fetch --all
+    git reset --hard "origin/${branch}"
 }
 
 netshoot() {
-  local overrides='
-  {
-    "metadata": {
-      "annotations": {
-        "sidecar.istio.io/inject": "false"
-      }
-    }
-  }
-'
-  local ns="${1:-$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)}"
+    local overrides='{"metadata":{"annotations":{"sidecar.istio.io/inject":"false"}}}'
+    local ns="${1:-$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)}"
 
-  kubectl run netshoot --rm -it \
-    --image nicolaka/netshoot:latest \
-    --namespace "${ns}" \
-    --overrides "${overrides}" \
-    -- "/bin/bash"
-}
+    kubectl run netshoot --rm -it \
+        --image nicolaka/netshoot:latest \
+        --namespace "${ns}" \
+        --overrides "${overrides}" \
+        -- "/bin/bash"
+    }
