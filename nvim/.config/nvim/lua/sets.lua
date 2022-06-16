@@ -1,7 +1,3 @@
-local has = function(x)
-    return vim.fn.has(x) == 1
-end
-
 -- UI Layout
 vim.opt.number = true              -- line numbers are good
 vim.opt.relativenumber = true      -- easier to navigate
@@ -44,7 +40,7 @@ vim.opt.undofile = true
 vim.opt.updatetime=50              -- longer updatetime leads to delays and poor UX
 vim.opt.shortmess:append("c")      -- don't pass messages to ins-completion-menu
 
-vim.g.mapleader = "<space>"        -- Map leader key to space
+vim.g.mapleader = " "        -- Map leader key to space
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
