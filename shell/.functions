@@ -36,10 +36,12 @@ clone() {
 
 repos() {
     local repo=$1
+    local nth=$(($(echo "$REPOS" | grep -o "/"  | wc -l) * 2 - 1))
+
     if [[ -z $repo ]]; then
         local repo=$(find $REPOS -type d \
             -exec test -e '{}/.git' \; -print -prune \
-            | awk -F"/" '{ print $(NF-1)"/"$NF }' \
+            | cut -d "/" -f$nth- \
             | fzy)
     fi
 
