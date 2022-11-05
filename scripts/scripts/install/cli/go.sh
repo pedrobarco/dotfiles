@@ -1,7 +1,7 @@
 #!/bin/bash
 # Install go
 
-GO_VERSION=1.18.3
+GO_VERSION=1.19.3
 
 if [ "$(uname)" == "Darwin" ]; then
 	brew install go
