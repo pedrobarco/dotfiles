@@ -9,7 +9,7 @@ fonts=(
 fdir="$HOME/.fonts"
 for font in "${fonts[@]}"
 do
-    curl -LO "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/$font.zip"
+    curl -LO "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.2.2/$font.zip"
     unzip "$font.zip" -d "$fdir/$font"
     rm -rf "$font.zip"
 done
