@@ -44,3 +44,11 @@ vim.g.mapleader = " "        -- Map leader key to space
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+
+-- Trim whitespace
+vim.api.nvim_exec([[
+augroup usrbinboat
+autocmd!
+autocmd BufWritePre * %s/\s\+$//e
+augroup END
+]], false)
