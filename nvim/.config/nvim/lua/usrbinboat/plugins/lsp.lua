@@ -1,16 +1,43 @@
+local status, nvim_lsp_installer = pcall(require, "nvim-lsp-installer")
+if not status then
+	return
+end
+
+local status, cmp = pcall(require, "cmp")
+if not status then
+	return
+end
+
+local status, lspkind = pcall(require, "lspkind")
+if not status then
+	return
+end
+
+local status, luasnip = pcall(require, "luasnip")
+if not status then
+	return
+end
+
+local status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status then
+	return
+end
+
+local status, lspconfig = pcall(require, "lspconfig")
+if not status then
+	return
+end
+
 -- setup lsp-installer
-require("nvim-lsp-installer").setup{
+nvim_lsp_installer.setup({
     automatic_installation = true,
-}
+})
 
 -- setup nvim-cmp
-local cmp = require("cmp")
-local lspkind = require("lspkind")
-
 cmp.setup({
     snippet = {
         expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     window = {
@@ -38,15 +65,13 @@ cmp.setup({
     })
 })
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-local lspconfig = require("lspconfig")
-
 -- Mappings.
 local opts = { noremap=true, silent=true }
 vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
+local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
