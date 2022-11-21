@@ -35,15 +35,10 @@ return packer.startup(function(use)
     -- Treesitter
     use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
 
-    -- Lsp
+    -- Managing & Installing LSP
+    use("williamboman/mason.nvim")
+    use("williamboman/mason-lspconfig.nvim")
     use("neovim/nvim-lspconfig")
-    use("williamboman/nvim-lsp-installer")
-    use("hrsh7th/cmp-nvim-lsp")
-    use("hrsh7th/cmp-buffer")
-    use("hrsh7th/cmp-path")
-    use("hrsh7th/cmp-cmdline")
-    use("hrsh7th/nvim-cmp")
-    use("onsails/lspkind-nvim")
 
     -- Telescope
     use("nvim-lua/popup.nvim")
@@ -51,14 +46,39 @@ return packer.startup(function(use)
     use("nvim-telescope/telescope.nvim")
     use("nvim-telescope/telescope-fzy-native.nvim")
 
+    -- Autocompletion
+    use("hrsh7th/cmp-nvim-lsp")
+    use("hrsh7th/cmp-buffer")
+    use("hrsh7th/cmp-path")
+    use("hrsh7th/cmp-cmdline")
+    use("hrsh7th/nvim-cmp")
+    use("onsails/lspkind-nvim")
+
+    -- Formatters & Linters
+    use("jose-elias-alvarez/null-ls.nvim")
+    use("jayp0521/mason-null-ls.nvim")
+
     -- Snippets
     use("L3MON4D3/LuaSnip")
     use("saadparwaiz1/cmp_luasnip")
 
-    use({"iamcco/markdown-preview.nvim", run = "cd app && yarn install"})
+    -- Comments
+    use("numToStr/Comment.nvim")
 
-    use("kyazdani42/nvim-web-devicons")
+    -- File Explorer
+    use({"nvim-tree/nvim-tree.lua", requires = {"nvim-tree/nvim-web-devicons"}})
+
+    -- Statusline
+    use({"nvim-lualine/lualine.nvim", requires = {"nvim-tree/nvim-web-devicons"}})
+
+    -- Icons
+    use("nvim-tree/nvim-web-devicons")
+
+    -- Colorscheme
     use("gruvbox-community/gruvbox")
+
+    -- Markdown
+    use({"iamcco/markdown-preview.nvim", run = "cd app && yarn install"})
 
     if PACKER_BOOTSTRAP then
         require("packer").sync()
