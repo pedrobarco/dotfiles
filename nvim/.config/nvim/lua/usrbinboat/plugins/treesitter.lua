@@ -3,14 +3,17 @@ if not status then
 	return
 end
 
+local servers = require("usrbinboat.plugins.lsp.servers")
+
 treesitter.setup({
-    highlight = {
-        enable = true,
-    },
-    indent = {
-        enable = true,
-    },
-    incremental_selection = {
-        enable = true,
-    },
+	ensure_installed = servers.languages,
+	highlight = {
+		enable = true,
+	},
+	indent = {
+		enable = true,
+	},
+	incremental_selection = {
+		enable = true,
+	},
 })

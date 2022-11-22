@@ -4,5 +4,9 @@ if not status then
 end
 
 lualine.setup({
-	options = { theme = "gruvbox" }
+	options = {
+		theme = "gruvbox",
+		section_separators = "",
+		component_separators = "",
+	},
 })
