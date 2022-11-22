@@ -16,7 +16,6 @@ null_ls.setup({
 	-- setup formatters & linters
 	sources = {
 		formatting.stylua,
-		formatting.prettier,
 		formatting.buildifier,
 		diagnostics.golangci_lint,
 		diagnostics.eslint_d.with({
