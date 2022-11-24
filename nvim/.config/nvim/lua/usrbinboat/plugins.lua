@@ -62,9 +62,6 @@ return packer.startup(function(use)
 	use("L3MON4D3/LuaSnip")
 	use("saadparwaiz1/cmp_luasnip")
 
-	-- Comments
-	use("numToStr/Comment.nvim")
-
 	-- File Explorer
 	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })
 
@@ -76,6 +73,10 @@ return packer.startup(function(use)
 
 	-- Colorscheme
 	use("gruvbox-community/gruvbox")
+
+	-- Misc
+	use("numToStr/Comment.nvim")
+	use("tpope/vim-surround")
 
 	-- Git
 	use("lewis6991/gitsigns.nvim")
