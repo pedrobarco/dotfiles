@@ -81,6 +81,7 @@ return packer.startup(function(use)
 	-- Git
 	use("lewis6991/gitsigns.nvim")
 	use({ "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } })
+	use("tpope/vim-fugitive")
 
 	-- Markdown
 	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
