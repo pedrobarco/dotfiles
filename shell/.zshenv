@@ -1,3 +1,6 @@
+export TERM=xterm-256color
+export COLORTERM=truecolor
+
 export REPOS="$HOME/repos"
 
 KREW_ROOT="$HOME/.krew"
