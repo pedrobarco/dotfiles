@@ -26,27 +26,21 @@ vim.opt.smartcase = true -- unless we type a capital
 -- start scrolling when we're 8 lines away from margins
 vim.opt.scrolloff = 8
 
--- Folding
-vim.opt.foldenable = false -- don't fold by default
-vim.opt.foldmethod = "indent" -- fold based on indent
-vim.opt.foldnestmax = 3 -- deepest fold is 3 levels
-vim.opt.foldlevelstart = 1 -- start with fold level of 1
-
 -- Backups
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = vim.env.HOME .. "/.vim/undodir"
 vim.opt.undofile = true
-vim.opt.updatetime = 50 -- longer updatetime leads to delays and poor UX
-vim.opt.shortmess:append("c") -- don't pass messages to ins-completion-menu
+vim.opt.updatetime = 50
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+local usrbinboat_group = augroup("usrbinboat", {})
 
 -- Trim whitespace
-vim.api.nvim_exec(
-	[[
-augroup usrbinboat
-autocmd!
-autocmd BufWritePre * %s/\s\+$//e
-augroup END
-]],
-	false
-)
+autocmd({ "BufWritePre" }, {
+	group = usrbinboat_group,
+	pattern = "*",
+	command = [[%s/\s\+$//e]],
+})
