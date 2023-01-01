@@ -7,6 +7,7 @@ vim.opt.colorcolumn = "80" -- set color in column 80
 vim.opt.signcolumn = "yes" -- useful for lsp and git
 vim.opt.guicursor = "" -- set cursor shape to block
 vim.opt.termguicolors = true -- enable true color
+vim.opt.pumheight = 20 -- items to show in the popup menu
 
 -- Spaces & Tabs
 vim.opt.smartindent = true

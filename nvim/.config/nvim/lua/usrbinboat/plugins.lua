@@ -89,7 +89,7 @@ return packer.startup(function(use)
 	use("nvim-tree/nvim-web-devicons")
 
 	-- Colorscheme
-	use("gruvbox-community/gruvbox")
+	use("nyoom-engineering/oxocarbon.nvim")
 
 	-- Misc
 	use("numToStr/Comment.nvim")
