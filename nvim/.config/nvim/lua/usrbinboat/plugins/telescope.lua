@@ -6,7 +6,20 @@ end
 local builtin = require("telescope.builtin")
 
 telescope.setup({
-	defaults = require("telescope.themes").get_ivy({}),
+	defaults = require("telescope.themes").get_ivy({
+		vimgrep_arguments = {
+			"rg",
+			"--color=never",
+			"--no-heading",
+			"--with-filename",
+			"--line-number",
+			"--column",
+			"--smart-case",
+			"--hidden",
+			"--glob",
+			"!.git/*",
+		},
+	}),
 	pickers = {
 		find_files = {
 			-- file and text search in hidden files and directories
