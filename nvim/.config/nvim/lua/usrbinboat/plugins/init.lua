@@ -1,6 +1,5 @@
 require("usrbinboat.plugins.treesitter")
 require("usrbinboat.plugins.telescope")
-require("usrbinboat.plugins.nvim-cmp")
 require("usrbinboat.plugins.comment")
 require("usrbinboat.plugins.nvim-tree")
 require("usrbinboat.plugins.lualine")
