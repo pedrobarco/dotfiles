@@ -78,10 +78,6 @@ return packer.startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jayp0521/mason-null-ls.nvim")
 
-	-- Snippets
-	use("L3MON4D3/LuaSnip")
-	use("saadparwaiz1/cmp_luasnip")
-
 	-- File Explorer
 	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })
 
@@ -101,8 +97,8 @@ return packer.startup(function(use)
 
 	-- Git
 	use("lewis6991/gitsigns.nvim")
-	use({ "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } })
 	use("tpope/vim-fugitive")
+	use({ "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } })
 
 	-- Markdown
 	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })

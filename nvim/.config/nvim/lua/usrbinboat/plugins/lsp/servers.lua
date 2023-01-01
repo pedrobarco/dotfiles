@@ -12,9 +12,9 @@ M.languages = {
 }
 
 M.lsp_servers = {
-	"sumneko_lua",
 	"gopls",
 	"tsserver",
+	"sumneko_lua",
 }
 
 M.formatters = {
