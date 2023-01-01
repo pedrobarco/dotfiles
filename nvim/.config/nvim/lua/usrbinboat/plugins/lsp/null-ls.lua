@@ -17,6 +17,7 @@ null_ls.setup({
 	sources = {
 		formatting.stylua,
 		formatting.buildifier,
+		formatting.goimports,
 		diagnostics.golangci_lint,
 		diagnostics.eslint_d.with({
 			condition = function(utils)

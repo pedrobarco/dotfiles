@@ -1,19 +1,25 @@
--- import lspconfig plugin safely
-local lspconfig_status, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status then
+-- import cmp-nvim-lsp plugin safely
+local lsp_status, lsp = pcall(require, "lsp-zero")
+if not lsp_status then
 	return
 end
 
--- import cmp-nvim-lsp plugin safely
-local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not cmp_nvim_lsp_status then
+-- import neodev plugin safely
+local neodev_status, neodev = pcall(require, "neodev")
+if not neodev_status then
+	return
+end
+
+-- import lspkind plugin safely
+local lspkind_status, lspkind = pcall(require, "lspkind")
+if not lspkind_status then
 	return
 end
 
 local keymap = vim.keymap -- for conciseness
 
 -- enable keybinds only for when lsp server available
-local on_attach = function(_, bufnr)
+lsp.on_attach(function(_, bufnr)
 	-- keybind options
 	local opts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -32,29 +38,20 @@ local on_attach = function(_, bufnr)
 	keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
 	keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 	keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-end
+end)
 
--- used to enable autocompletion (assign to every lsp server config)
-local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
--- Use a loop to conveniently call "setup" on multiple servers and
--- map buffer local keybindings when the language server attaches
 local servers = require("usrbinboat.plugins.lsp.servers").lsp_servers
-for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-	})
-end
 
-lspconfig.sumneko_lua.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { "vim" },
-			},
-		},
+neodev.setup()
+
+lsp.preset("recommended")
+lsp.ensure_installed(servers)
+lsp.nvim_workspace()
+lsp.setup_nvim_cmp({
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = "symbol_text",
+		}),
 	},
 })
+lsp.setup()

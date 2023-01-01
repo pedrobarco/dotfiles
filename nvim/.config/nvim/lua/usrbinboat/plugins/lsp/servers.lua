@@ -3,9 +3,12 @@ local M = {}
 M.languages = {
 	"go",
 	"dockerfile",
-	"lua",
-	"typescript",
 	"javascript",
+	"lua",
+	"python",
+	"rust",
+	"typescript",
+	"help",
 }
 
 M.lsp_servers = {
@@ -18,6 +21,7 @@ M.formatters = {
 	"stylua",
 	"prettier",
 	"buildifier",
+	"goimports",
 }
 
 M.linters = {
