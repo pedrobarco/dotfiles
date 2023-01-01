@@ -19,7 +19,7 @@ M.lsp_servers = {
 
 M.formatters = {
 	"stylua",
-	"prettier",
+	"prettierd",
 	"buildifier",
 	"goimports",
 }

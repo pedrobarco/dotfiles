@@ -5,8 +5,9 @@ if not setup then
 end
 
 -- for conciseness
-local formatting = null_ls.builtins.formatting -- to setup formatters
+local code_actions = null_ls.builtins.code_actions -- to setup code actions
 local diagnostics = null_ls.builtins.diagnostics -- to setup linters
+local formatting = null_ls.builtins.formatting -- to setup formatters
 
 -- to setup format on save
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -15,15 +16,17 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 null_ls.setup({
 	-- setup formatters & linters
 	sources = {
-		formatting.stylua,
-		formatting.buildifier,
-		formatting.goimports,
+		code_actions.eslint_d,
 		diagnostics.golangci_lint,
 		diagnostics.eslint_d.with({
 			condition = function(utils)
 				return utils.root_has_file_matches(".eslintrc.*")
 			end,
 		}),
+		formatting.stylua,
+		formatting.buildifier,
+		formatting.goimports,
+		formatting.prettierd,
 	},
 
 	-- configure format on save
