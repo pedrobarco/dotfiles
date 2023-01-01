@@ -4,10 +4,12 @@ M.languages = {
 	"go",
 	"dockerfile",
 	"javascript",
+	"json",
 	"lua",
 	"python",
 	"rust",
 	"typescript",
+	"yaml",
 	"help",
 }
 
