@@ -1,0 +1,41 @@
+window:
+  padding:
+    x: 8
+    y: 8
+    decorations: "none"
+mouse:
+  hide_when_typing: true
+font:
+  size: 14
+  normal:
+    family: "JetBrainsMono NF"
+shell:
+  program: ubuntu
+#  args:
+#    - --login
+schemes:
+  oxocarbon: &oxocarbon
+    cursor:
+      cursor: "#dde1e6"
+    primary:
+      background: "#161616"
+      foreground: "#ffffff"
+    normal:
+      black: "#161616"
+      red: "#33b1ff"
+      green: "#ff7eb6"
+      yellow: "#42be65"
+      blue: "#08bdba"
+      magenta: "#82cfff"
+      cyan: "#78a9ff"
+      white: "#dde1e6"
+    bright:
+      black: "#525252"
+      red: "#33b1ff"
+      green: "#ff7eb6"
+      yellow: "#42be65"
+      blue: "#08bdba"
+      magenta: "#82cfff"
+      cyan: "#78a9ff"
+      white: "#ffffff"
+colors: *oxocarbon
