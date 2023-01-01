@@ -7,7 +7,9 @@ end
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
-nvim_tree.setup()
+nvim_tree.setup({
+	view = {
+		adaptive_size = true,
+	},
+	filters = { custom = { "^.git$" } },
+})
