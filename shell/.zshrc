@@ -5,13 +5,14 @@
 # Environment {{{
 # ===========
 # Support 256 colors
-# export TERM=xterm-256color
+export TERM=xterm-256color
+export COLORTERM=truecolor
 
 # Set a cache dir.
 export ZSH_CACHE_DIR=$HOME/.zsh/cache
 
-# Ensure editor is Vim
-export EDITOR=vim
+# Ensure editor is nvim
+export EDITOR=nvim
 export VISUAL=$EDITOR
 
 # 10ms for key sequences
