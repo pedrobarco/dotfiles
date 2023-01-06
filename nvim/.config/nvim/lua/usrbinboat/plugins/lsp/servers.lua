@@ -31,4 +31,8 @@ M.linters = {
 	"golangci_lint",
 }
 
+M.debuggers = {
+	"delve",
+}
+
 return M
