@@ -104,9 +104,7 @@ SPACESHIP_PROMPT_ORDER=(
   line_sep      # Line break
   char          # Prompt character
 )
-SPACESHIP_RPROMPT_ORDER=(
-vi_mode
-)
+SPACESHIP_RPROMPT_ORDER=()
 # }}}
 
 # vim:foldmethod=marker:foldlevel=0:sts=4:ts=4:sw=4:et
