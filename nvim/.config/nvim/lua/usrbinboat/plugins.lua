@@ -99,6 +99,10 @@ return packer.startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 	use({ "TimUntersberger/neogit", requires = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" } })
 
+	-- Database
+	use("tpope/vim-dadbod")
+	use("kristijanhusak/vim-dadbod-ui")
+
 	-- Markdown
 	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
 
