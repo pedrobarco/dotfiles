@@ -46,7 +46,6 @@ neodev.setup()
 
 lsp.preset("recommended")
 lsp.ensure_installed(servers)
-lsp.nvim_workspace()
 lsp.setup_nvim_cmp({
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
@@ -62,4 +61,13 @@ lsp.setup_nvim_cmp({
 		end,
 	},
 })
+
+lsp.configure("gopls", {
+	settings = {
+		gopls = {
+			buildFlags = { "-tags=wireinject" },
+		},
+	},
+})
+lsp.nvim_workspace()
 lsp.setup()
