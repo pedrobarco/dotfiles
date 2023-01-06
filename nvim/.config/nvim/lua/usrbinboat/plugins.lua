@@ -78,6 +78,12 @@ return packer.startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jayp0521/mason-null-ls.nvim")
 
+	-- Debuggers
+	use("mfussenegger/nvim-dap")
+	use({ "jayp0521/mason-nvim-dap.nvim", requires = { "mfussenegger/nvim-dap" } })
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	use({ "leoluz/nvim-dap-go", requires = { "mfussenegger/nvim-dap" } })
+
 	-- File Explorer
 	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })
 

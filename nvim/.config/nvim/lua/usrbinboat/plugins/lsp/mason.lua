@@ -16,6 +16,12 @@ if not mason_null_ls_status then
 	return
 end
 
+-- import mason-nvim-dap plugin safely
+local mason_nvim_dap_status, mason_nvim_dap = pcall(require, "mason-nvim-dap")
+if not mason_nvim_dap_status then
+	return
+end
+
 -- enable mason
 mason.setup()
 
@@ -32,5 +38,12 @@ mason_null_ls.setup({
 	-- list of formatters & linters for mason to install
 	ensure_installed = { unpack(servers.formatters), unpack(servers.linters) },
 	-- auto-install configured formatters & linters (with null-ls)
+	automatic_installation = true,
+})
+
+mason_nvim_dap.setup({
+	-- list of debuggers for mason to install
+	ensure_installed = servers.debuggers,
+	-- auto-install configured debuggers (with nvim-dap)
 	automatic_installation = true,
 })
