@@ -8,4 +8,4 @@ stow --restow -t $HOME shell
 stow --restow -t $HOME vim
 stow --restow -t $HOME nvim
 stow --restow -t $HOME tmux
-stow --restow -t $HOME --no-folding code
+stow --restow -t $HOME bin

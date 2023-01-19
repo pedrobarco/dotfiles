@@ -37,9 +37,7 @@ alias python=python3
 
 # Jump aliases
 alias j="jump"
-
-# Lazygit
-alias lg="lazygit"
+alias repos="$HOME/bin/tmux_sessionizer.sh"
 
 # search
 alias "?"="search_ddg"

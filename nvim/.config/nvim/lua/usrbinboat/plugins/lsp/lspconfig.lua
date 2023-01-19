@@ -65,7 +65,7 @@ lsp.setup_nvim_cmp({
 lsp.configure("gopls", {
 	settings = {
 		gopls = {
-			buildFlags = { "-tags=wireinject" },
+			buildFlags = { "-tags=wireinject,integration" },
 		},
 	},
 })
