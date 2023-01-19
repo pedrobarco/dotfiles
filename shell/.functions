@@ -34,37 +34,6 @@ clone() {
     git clone $url "$@" $REPOS/$repo
 }
 
-repos() {
-    local repo=$1
-    local nth=$(($(echo "$REPOS" | grep -o "/"  | wc -l) * 2 - 1))
-
-    if [[ -z $repo ]]; then
-        local repo=$(find $REPOS -type d \
-            -exec test -e '{}/.git' \; -print -prune \
-            | cut -d "/" -f$nth- \
-            | fzy)
-    fi
-
-    local selected_repo="$REPOS/$repo"
-    if [[ ! -d $selected_repo ]]; then
-        return
-    fi
-
-    local session_name=$(echo "$repo" | sed "s/[\.|\/]/_/g")
-    local tmux_running=$(pgrep tmux)
-
-    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-        tmux new-session -s $session_name -c $selected_repo
-        return
-    fi
-
-    if ! tmux has-session -t=$session_name 2> /dev/null; then
-        tmux new-session -ds $session_name -c $selected_repo
-    fi
-
-    tmux switch-client -t $session_name
-}
-
 open_pr() {
     local repo=$(git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g")
     local branch=$(git branch --show-current)
@@ -87,4 +56,4 @@ netshoot() {
         --namespace "${ns}" \
         --overrides "${overrides}" \
         -- "/bin/bash"
-    }
+}
