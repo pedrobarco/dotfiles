@@ -19,3 +19,27 @@ keymap.set("n", "<leader>gc", require("telescope.builtin").git_commits) -- list 
 keymap.set("n", "<leader>gfc", require("telescope.builtin").git_bcommits) -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
 keymap.set("n", "<leader>gb", require("telescope.builtin").git_branches) -- list git branches (use <cr> to checkout) ["gb" for git branch]
 keymap.set("n", "<leader>gs", require("telescope.builtin").git_status) -- list current changes per file with diff preview ["gs" for git status]
+
+-- dap
+vim.keymap.set("n", "<F5>", require("dap").continue)
+vim.keymap.set("n", "<F10>", require("dap").step_over)
+vim.keymap.set("n", "<F11>", require("dap").step_into)
+vim.keymap.set("n", "<F12>", require("dap").step_out)
+vim.keymap.set("n", "<leader>b", require("dap").toggle_breakpoint)
+vim.keymap.set("n", "<leader>B", require("dap").set_breakpoint)
+vim.keymap.set("n", "<Leader>lp", function()
+	require("dap").set_breakpoint(nil, nil, vim.fn.input({ "Log point message: " }))
+end)
+vim.keymap.set("n", "<leader>dr", require("dap").repl.open)
+vim.keymap.set("n", "<leader>dl", require("dap").run_last)
+vim.keymap.set({ "n", "v" }, "<leader>dh", require("dap.ui.widgets").hover)
+vim.keymap.set({ "n", "v" }, "<leader>dp", require("dap.ui.widgets").preview)
+vim.keymap.set("n", "<leader>df", function()
+	local widgets = require("dap.ui.widgets").centered_float()
+	widgets.centered_float(widgets.frames)
+end)
+vim.keymap.set("n", "<leader>ds", function()
+	local widgets = require("dap.ui.widgets")
+	widgets.centered_float(widgets.scopes)
+end)
+--]]

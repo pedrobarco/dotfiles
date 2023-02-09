@@ -109,6 +109,9 @@ return packer.startup(function(use)
 	use("tpope/vim-dadbod")
 	use("kristijanhusak/vim-dadbod-ui")
 
+	-- Terraform
+	use("hashivim/vim-terraform")
+
 	-- Markdown
 	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
 
