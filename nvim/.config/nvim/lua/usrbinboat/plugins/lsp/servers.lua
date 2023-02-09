@@ -1,8 +1,9 @@
 local M = {}
 
 M.languages = {
-	"go",
 	"dockerfile",
+	"go",
+	"hcl",
 	"javascript",
 	"json",
 	"lua",
@@ -15,6 +16,7 @@ M.languages = {
 
 M.lsp_servers = {
 	"gopls",
+	"terraformls",
 	"tsserver",
 	"sumneko_lua",
 }
