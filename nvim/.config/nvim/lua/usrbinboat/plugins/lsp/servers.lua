@@ -18,7 +18,7 @@ M.lsp_servers = {
 	"gopls",
 	"terraformls",
 	"tsserver",
-	"sumneko_lua",
+	"lua_ls",
 }
 
 M.formatters = {
