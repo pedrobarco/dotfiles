@@ -95,7 +95,7 @@ return packer.startup(function(use)
 	use("nvim-tree/nvim-web-devicons")
 
 	-- Colorscheme
-	use("EdenEast/nightfox.nvim")
+	use("sainnhe/gruvbox-material")
 
 	-- Misc
 	use("numToStr/Comment.nvim")

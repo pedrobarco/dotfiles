@@ -61,4 +61,5 @@ schemes:
     indexed_colors:
       - { index: 16, color: "0x3ddbd9" }
       - { index: 17, color: "0xff7eb6" }
-colors: *carbonfox
+import:
+  - ./themes/gruvbox_material.yaml
