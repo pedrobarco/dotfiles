@@ -5,7 +5,7 @@ end
 
 lualine.setup({
 	options = {
-		theme = "carbonfox",
+		theme = "gruvbox",
 		section_separators = "",
 		component_separators = "",
 	},
