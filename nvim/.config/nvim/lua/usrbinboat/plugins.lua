@@ -109,6 +109,9 @@ return packer.startup(function(use)
 	use("tpope/vim-dadbod")
 	use("kristijanhusak/vim-dadbod-ui")
 
+	-- Go
+	use("fatih/vim-go")
+
 	-- Terraform
 	use("hashivim/vim-terraform")
 
