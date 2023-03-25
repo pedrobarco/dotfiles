@@ -19,6 +19,7 @@ keymap.set("n", "<leader>fs", telescope.live_grep) -- find string in current wor
 keymap.set("n", "<leader>fc", telescope.grep_string) -- find string under cursor in current working directory
 keymap.set("n", "<leader>fb", telescope.buffers) -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", telescope.help_tags) -- list available help tags
+keymap.set("n", "<leader>fls", telescope.lsp_document_symbols) -- list LSP document symbols in the current buffer
 
 -- git commands
 keymap.set("n", "<leader>gc", telescope.git_commits) -- list all git commits (use <cr> to checkout) ["gc" for git commits]
