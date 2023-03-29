@@ -11,55 +11,5 @@ font:
     family: "JetBrainsMono NF"
 shell:
   program: ubuntu
-schemes:
-  oxocarbon: &oxocarbon
-    cursor:
-      cursor: "#dde1e6"
-    primary:
-      background: "#161616"
-      foreground: "#ffffff"
-    normal:
-      black: "#161616"
-      red: "#33b1ff"
-      green: "#ff7eb6"
-      yellow: "#42be65"
-      blue: "#08bdba"
-      magenta: "#82cfff"
-      cyan: "#78a9ff"
-      white: "#dde1e6"
-    bright:
-      black: "#525252"
-      red: "#33b1ff"
-      green: "#ff7eb6"
-      yellow: "#42be65"
-      blue: "#08bdba"
-      magenta: "#82cfff"
-      cyan: "#78a9ff"
-      white: "#ffffff"
-  carbonfox: &carbonfox
-    primary:
-      background: "0x161616"
-      foreground: "0xf2f4f8"
-    normal:
-      black:   "0x282828"
-      red:     "0xee5396"
-      green:   "0x25be6a"
-      yellow:  "0x08bdba"
-      blue:    "0x78a9ff"
-      magenta: "0xbe95ff"
-      cyan:    "0x33b1ff"
-      white:   "0xdfdfe0"
-    bright:
-      black:   "0x484848"
-      red:     "0xf16da6"
-      green:   "0x46c880"
-      yellow:  "0x2dc7c4"
-      blue:    "0x8cb6ff"
-      magenta: "0xc8a5ff"
-      cyan:    "0x52bdff"
-      white:   "0xe4e4e5"
-    indexed_colors:
-      - { index: 16, color: "0x3ddbd9" }
-      - { index: 17, color: "0xff7eb6" }
 import:
-  - ./themes/gruvbox_material.yaml
+  - ./themes/oxocarbon.yaml
