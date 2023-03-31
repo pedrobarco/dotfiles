@@ -96,6 +96,7 @@ return packer.startup(function(use)
 
 	-- Colorscheme
 	use("sainnhe/gruvbox-material")
+	use("nyoom-engineering/oxocarbon.nvim")
 
 	-- Misc
 	use("numToStr/Comment.nvim")
