@@ -12,4 +12,4 @@ font:
 shell:
   program: ubuntu
 import:
-  - ./themes/oxocarbon.yaml
+  - ./themes/gruvbox_material.yaml
