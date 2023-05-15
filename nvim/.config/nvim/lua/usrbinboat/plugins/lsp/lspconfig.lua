@@ -1,20 +1,36 @@
--- import cmp-nvim-lsp plugin safely
+-- import lsp-zero plugin safely
 local lsp_status, lsp = pcall(require, "lsp-zero")
 if not lsp_status then
 	return
 end
 
--- import neodev plugin safely
-local neodev_status, neodev = pcall(require, "neodev")
-if not neodev_status then
+-- import lspconfig plugin safely
+local lspconfig_status, lspconfig = pcall(require, "lspconfig")
+if not lspconfig_status then
 	return
 end
 
+-- import cmp plugin safely
+local cmp_status, cmp = pcall(require, "cmp")
+if not cmp_status then
+	return
+end
+
+--[[
+-- import neodev plugin safely
+local neodev_status, neodev = pcall(require, "neodev")
+if not neodev_status then
+    return
+end
+--]]
+
+--[[
 -- import lspkind plugin safely
 local lspkind_status, lspkind = pcall(require, "lspkind")
 if not lspkind_status then
 	return
 end
+--]]
 
 local keymap = vim.keymap -- for conciseness
 
@@ -40,34 +56,31 @@ lsp.on_attach(function(_, bufnr)
 	keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 end)
 
-local servers = require("usrbinboat.plugins.lsp.servers").lsp_servers
+-- local servers = require("usrbinboat.plugins.lsp.servers").lsp_servers
 
-neodev.setup()
+-- neodev.setup()
 
-lsp.preset("recommended")
-lsp.ensure_installed(servers)
-lsp.setup_nvim_cmp({
-	formatting = {
-		fields = { "kind", "abbr", "menu" },
-		format = function(entry, vim_item)
-			local kind = lspkind.cmp_format({
-				mode = "symbol_text",
-				maxwidth = 50,
-			})(entry, vim_item)
-			local strings = vim.split(kind.kind, "%s", { trimempty = true })
-			kind.kind = " " .. strings[1] .. " "
-			kind.menu = "    " .. strings[2] .. ""
-			return kind
-		end,
-	},
+lsp.preset({
+	name = "minimal",
 })
 
-lsp.configure("gopls", {
+lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.gopls.setup({
 	settings = {
 		gopls = {
 			buildFlags = { "-tags=wireinject,integration" },
 		},
 	},
 })
-lsp.nvim_workspace()
+
 lsp.setup()
+
+cmp.setup({
+	sources = {
+		{ name = "path" },
+		{ name = "nvim_lsp" },
+		{ name = "nvim_lua" },
+		{ name = "luasnip", keyword_length = 2 },
+		{ name = "buffer", keyword_length = 3 },
+	},
+})
