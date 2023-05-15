@@ -11,7 +11,7 @@ M.languages = {
 	"rust",
 	"typescript",
 	"yaml",
-	"help",
+	"vimdoc",
 }
 
 M.lsp_servers = {
