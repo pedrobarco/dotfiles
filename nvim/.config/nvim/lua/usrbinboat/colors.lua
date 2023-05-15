@@ -1,2 +1,4 @@
 vim.g.gruvbox_material_background = "hard"
-vim.cmd("colorscheme gruvbox-material")
+pcall(function()
+	vim.cmd("colorscheme gruvbox-material")
+end)
