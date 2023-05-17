@@ -16,13 +16,11 @@ if not cmp_status then
 	return
 end
 
---[[
 -- import neodev plugin safely
 local neodev_status, neodev = pcall(require, "neodev")
 if not neodev_status then
-    return
+	return
 end
---]]
 
 --[[
 -- import lspkind plugin safely
@@ -58,7 +56,7 @@ end)
 
 -- local servers = require("usrbinboat.plugins.lsp.servers").lsp_servers
 
--- neodev.setup()
+neodev.setup()
 
 lsp.preset({
 	name = "minimal",
