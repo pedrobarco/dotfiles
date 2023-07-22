@@ -44,7 +44,7 @@ return packer.startup(function(use)
 	-- Managing & Installing LSP
 	use({
 		"VonHeikemen/lsp-zero.nvim",
-        branch = "v2.x",
+		branch = "v2.x",
 		requires = {
 			-- LSP Support
 			{ "neovim/nvim-lspconfig" },
@@ -118,6 +118,9 @@ return packer.startup(function(use)
 
 	-- Markdown
 	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
+
+	-- YAML
+	use("towolf/vim-helm")
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
