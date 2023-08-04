@@ -46,4 +46,6 @@ mason_nvim_dap.setup({
 	ensure_installed = servers.debuggers,
 	-- auto-install configured debuggers (with nvim-dap)
 	automatic_installation = true,
+	-- sets up dap in the predefined manner
+	handlers = {},
 })
