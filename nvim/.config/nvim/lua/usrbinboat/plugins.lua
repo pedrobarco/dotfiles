@@ -83,7 +83,9 @@ return packer.startup(function(use)
 	use("mfussenegger/nvim-dap")
 	use({ "jayp0521/mason-nvim-dap.nvim", requires = { "mfussenegger/nvim-dap" } })
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
-	use({ "leoluz/nvim-dap-go", requires = { "mfussenegger/nvim-dap" } })
+
+	-- Build & Test
+	use({ "vim-test/vim-test", requires = { "tpope/vim-dispatch" } })
 
 	-- File Explorer
 	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })
@@ -110,17 +112,14 @@ return packer.startup(function(use)
 	use("tpope/vim-dadbod")
 	use("kristijanhusak/vim-dadbod-ui")
 
-	-- Go
-	use("fatih/vim-go")
-
 	-- Terraform
 	use("hashivim/vim-terraform")
 
+	-- Helm
+	use("towolf/vim-helm")
+
 	-- Markdown
 	use({ "iamcco/markdown-preview.nvim", run = "cd app && yarn install" })
-
-	-- YAML
-	use("towolf/vim-helm")
 
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
