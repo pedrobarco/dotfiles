@@ -27,6 +27,7 @@ null_ls.setup({
 		formatting.buildifier,
 		formatting.goimports,
 		formatting.prettierd,
+		formatting.rustfmt,
 	},
 
 	-- configure format on save

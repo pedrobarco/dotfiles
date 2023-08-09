@@ -7,28 +7,30 @@ M.languages = {
 	"javascript",
 	"json",
 	"lua",
+	"markdown",
+	"markdown_inline",
 	"python",
 	"rust",
 	"typescript",
-	"yaml",
 	"vim",
 	"vimdoc",
-	"markdown",
-	"markdown_inline",
+	"yaml",
 }
 
 M.lsp_servers = {
 	"gopls",
+	"lua_ls",
+	"rust_analyzer",
 	"terraformls",
 	"tsserver",
-	"lua_ls",
 }
 
 M.formatters = {
-	"stylua",
-	"prettierd",
 	"buildifier",
 	"goimports",
+	"prettierd",
+	"rustfmt",
+	"stylua",
 }
 
 M.linters = {
@@ -37,6 +39,7 @@ M.linters = {
 }
 
 M.debuggers = {
+	"codelldb",
 	"delve",
 }
 
