@@ -11,6 +11,7 @@ M.languages = {
 	"markdown_inline",
 	"python",
 	"rust",
+	"terraform",
 	"typescript",
 	"vim",
 	"vimdoc",

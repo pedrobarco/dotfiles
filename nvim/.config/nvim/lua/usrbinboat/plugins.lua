@@ -85,13 +85,11 @@ return packer.startup(function(use)
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 
 	-- Build & Test
+	use("tpope/vim-dispatch")
 	use({ "vim-test/vim-test", requires = { "tpope/vim-dispatch" } })
 
 	-- File Explorer
 	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })
-
-	-- Statusline
-	use({ "nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
 
 	-- Icons
 	use("onsails/lspkind-nvim")
@@ -111,9 +109,6 @@ return packer.startup(function(use)
 	-- Database
 	use("tpope/vim-dadbod")
 	use("kristijanhusak/vim-dadbod-ui")
-
-	-- Terraform
-	use("hashivim/vim-terraform")
 
 	-- Helm
 	use("towolf/vim-helm")

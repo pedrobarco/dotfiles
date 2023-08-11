@@ -39,19 +39,18 @@ lsp.on_attach(function(_, bufnr)
 
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	local bufopts = { noremap = true, silent = true, buffer = bufnr }
-	keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-	keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-	keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-	keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-	keymap.set("n", "<C-h>", vim.lsp.buf.signature_help, bufopts)
-	keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
-	keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-	keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-	keymap.set("n", "<leader>rr", vim.lsp.buf.references, bufopts)
+	keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+	keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+	keymap.set("n", "K", vim.lsp.buf.hover, opts)
+	keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+	keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+	keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+	keymap.set("n", "<leader>rr", vim.lsp.buf.references, opts)
 	keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
 	keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 	keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+	keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
 end)
 
 -- local servers = require("usrbinboat.plugins.lsp.servers").lsp_servers
