@@ -23,6 +23,7 @@ null_ls.setup({
 				return utils.root_has_file_matches(".eslintrc.*")
 			end,
 		}),
+		diagnostics.buildifier,
 		formatting.stylua,
 		formatting.buildifier,
 		formatting.goimports,
