@@ -44,35 +44,4 @@ dap.configurations.rust = {
 	},
 }
 
-dapui.setup({
-	layouts = {
-		{
-			elements = {
-				{
-					id = "breakpoints",
-					size = 0.25,
-				},
-				{
-					id = "scopes",
-					size = 0.5,
-				},
-				{
-					id = "watches",
-					size = 0.25,
-				},
-			},
-			position = "left",
-			size = 40,
-		},
-		{
-			elements = {
-				{
-					id = "repl",
-					size = 1,
-				},
-			},
-			position = "bottom",
-			size = 10,
-		},
-	},
-})
+dapui.setup()
