@@ -35,6 +35,7 @@ M.formatters = {
 }
 
 M.linters = {
+	"buildifier",
 	"eslint_d",
 	"golangci_lint",
 }
