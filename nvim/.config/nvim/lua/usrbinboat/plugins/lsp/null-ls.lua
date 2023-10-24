@@ -29,6 +29,7 @@ null_ls.setup({
 		formatting.goimports,
 		formatting.prettierd,
 		formatting.rustfmt,
+		formatting.terraform_fmt,
 	},
 
 	-- configure format on save
