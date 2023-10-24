@@ -39,6 +39,10 @@ alias python=python3
 alias j="jump"
 alias repos="$HOME/bin/tmux_sessionizer.sh"
 
+# k8s aliases
+alias kctx='kubectl ctx "$(kubectl ctx | fzy)"'
+alias kns='kubectl ns "$(kubectl ns | fzy)"'
+
 # search
 alias "?"="search_ddg"
 
@@ -50,3 +54,4 @@ alias glf="force_pull"
 
 # zet
 alias zs="search_zet"
+
