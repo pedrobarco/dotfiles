@@ -23,6 +23,7 @@ M.lsp_servers = {
 	"lua_ls",
 	"rust_analyzer",
 	"terraformls",
+	"tflint",
 	"tsserver",
 }
 
@@ -32,6 +33,7 @@ M.formatters = {
 	"prettierd",
 	"rustfmt",
 	"stylua",
+	"terraform_fmt",
 }
 
 M.linters = {
