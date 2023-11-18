@@ -7,30 +7,7 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv") -- move selection down
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- page up and center cursor in screen
 vim.keymap.set("n", "<C-d>", "<C-d>zz") -- page down and center cursor in screen
 
--- nvim-tree
-vim.keymap.set("n", "<leader>e", "<CMD>NvimTreeToggle<CR>") -- toggle file explorer
-
--- telescope
-local telescope_status, telescope = pcall(require, "telescope.builtin")
-if not telescope_status then
-	return
-end
-
--- file commands
-vim.keymap.set("n", "<C-p>", require("usrbinboat.plugins.telescope").project_files) -- find with git_files, otherwise fallback to find_files
-vim.keymap.set("n", "<leader>ff", telescope.find_files) -- find files within current working directory, respects .gitignore
-vim.keymap.set("n", "<leader>fs", telescope.live_grep) -- find string in current working directory as you type
-vim.keymap.set("n", "<leader>fc", telescope.grep_string) -- find string under cursor in current working directory
-vim.keymap.set("n", "<leader>fb", telescope.buffers) -- list open buffers in current neovim instance
-vim.keymap.set("n", "<leader>fh", telescope.help_tags) -- list available help tags
-vim.keymap.set("n", "<leader>fls", telescope.lsp_document_symbols) -- list LSP document symbols in the current buffer
-
--- git commands
-vim.keymap.set("n", "<leader>gc", telescope.git_commits) -- list all git commits (use <cr> to checkout) ["gc" for git commits]
-vim.keymap.set("n", "<leader>gfc", telescope.git_bcommits) -- list git commits for current file/buffer (use <cr> to checkout) ["gfc" for git file commits]
-vim.keymap.set("n", "<leader>gb", telescope.git_branches) -- list git branches (use <cr> to checkout) ["gb" for git branch]
-vim.keymap.set("n", "<leader>gs", telescope.git_status) -- list current changes per file with diff preview ["gs" for git status]
-
+--[[
 -- dap
 local dap_status, dap = pcall(require, "dap")
 if not dap_status then
@@ -66,3 +43,4 @@ vim.keymap.set("n", "<leader>tf", ":TestFile<CR>") -- run all tests in the curre
 vim.keymap.set("n", "<leader>ts", ":TestSuite<CR>") -- run the whole test suite
 vim.keymap.set("n", "<leader>tl", ":TestLast<CR>") -- run the last test
 vim.keymap.set("n", "<leader>tv", ":TestVisit<CR>") -- visit the test file
+--]]

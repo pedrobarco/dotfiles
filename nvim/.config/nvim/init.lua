@@ -1,2 +1,2 @@
--- Add personal config
-require("usrbinboat")
+require("usrbinboat.core")
+require("usrbinboat.lazy")
