@@ -1,0 +1,58 @@
+return {
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			{ "williamboman/mason-lspconfig.nvim", dependencies = { "williamboman/mason.nvim" } },
+			{ "folke/neodev.nvim", opts = {} },
+			{ "hrsh7th/cmp-nvim-lsp" },
+		},
+		config = function()
+			local lspconfig = require("lspconfig")
+			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+			local on_attach = function(_, bufnr)
+				-- keybind options
+				local opts = { noremap = true, silent = true, buffer = bufnr }
+
+				-- Mappings.
+				-- See `:help vim.lsp.*` for documentation on any of the below functions
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+				vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+				vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+				vim.keymap.set("n", "<leader>rr", vim.lsp.buf.references, opts)
+				vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+				vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
+			end
+
+			local default_setup = function(server)
+				lspconfig[server].setup({
+					capabilities = lsp_capabilities,
+					on_attach = on_attach,
+				})
+			end
+
+			local mason_lspconfig = require("mason-lspconfig")
+
+			mason_lspconfig.setup({
+				-- list of servers for mason to install
+				ensure_installed = {
+					"gopls",
+					"lua_ls",
+					"rust_analyzer",
+					"terraformls",
+					"tflint",
+					"tsserver",
+				},
+				-- auto-install configured servers (with lspconfig)
+				automatic_installation = true,
+				handlers = { default_setup },
+			})
+		end,
+	},
+}

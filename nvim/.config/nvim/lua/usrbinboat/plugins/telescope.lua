@@ -74,7 +74,6 @@ return {
 				require("telescope.builtin").lsp_document_symbols,
 				desc = "list LSP document symbols in the current buffer",
 			},
-
 			-- git commands
 			{
 				"<leader>gc",
