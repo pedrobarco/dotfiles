@@ -13,5 +13,5 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ import = "usrbinboat.plugins" },
-	-- { import = "usrbinboat.plugins.lsp" },
+	{ import = "usrbinboat.plugins.lsp" },
 }, {})
