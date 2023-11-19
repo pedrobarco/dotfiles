@@ -8,7 +8,7 @@ return {
 				config = function(_, opts)
 					local dap = require("dap")
 					local dapui = require("dapui")
-					dapui.setup()
+					dapui.setup(opts)
 					dap.listeners.after.event_initialized["dapui_config"] = function()
 						dapui.open({})
 					end
@@ -36,6 +36,34 @@ return {
 				},
 			},
 		},
+		config = function()
+			local dap = require("dap")
+			dap.configurations.rust = {
+				{
+					name = "LLDB: Launch",
+					type = "codelldb",
+					request = "launch",
+					program = function()
+						local output = vim.fn.systemlist("cargo build -q --message-format=json 2>1")
+						for _, l in ipairs(output) do
+							local json = vim.json.decode(l)
+							if json == nil then
+								error("error parsing json")
+							end
+							if json.success == false then
+								return error("error building package")
+							end
+							if json.executable ~= nil then
+								return json.executable
+							end
+						end
+					end,
+					cwd = "${workspaceFolder}",
+					stopOnEntry = false,
+					args = {},
+				},
+			}
+		end,
 		keys = {
 			{
 				"<leader>dc",
