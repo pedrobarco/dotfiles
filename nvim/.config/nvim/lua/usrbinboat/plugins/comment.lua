@@ -1,6 +1,7 @@
-local status, comment = pcall(require, "Comment")
-if not status then
-	return
-end
-
-comment.setup()
+return {
+	{
+		"numToStr/Comment.nvim",
+		lazy = false,
+		config = true,
+	},
+}

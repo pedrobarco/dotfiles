@@ -1,83 +1,58 @@
--- import lsp-zero plugin safely
-local lsp_status, lsp = pcall(require, "lsp-zero")
-if not lsp_status then
-	return
-end
-
--- import lspconfig plugin safely
-local lspconfig_status, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status then
-	return
-end
-
--- import cmp plugin safely
-local cmp_status, cmp = pcall(require, "cmp")
-if not cmp_status then
-	return
-end
-
--- import neodev plugin safely
-local neodev_status, neodev = pcall(require, "neodev")
-if not neodev_status then
-	return
-end
-
---[[
--- import lspkind plugin safely
-local lspkind_status, lspkind = pcall(require, "lspkind")
-if not lspkind_status then
-	return
-end
---]]
-
-local keymap = vim.keymap -- for conciseness
-
--- enable keybinds only for when lsp server available
-lsp.on_attach(function(_, bufnr)
-	-- keybind options
-	local opts = { noremap = true, silent = true, buffer = bufnr }
-
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-	keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	keymap.set("n", "K", vim.lsp.buf.hover, opts)
-	keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-	keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
-	keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-	keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-	keymap.set("n", "<leader>rr", vim.lsp.buf.references, opts)
-	keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-	keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-	keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-	keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
-end)
-
--- local servers = require("usrbinboat.plugins.lsp.servers").lsp_servers
-
-neodev.setup()
-
-lsp.preset({
-	name = "minimal",
-})
-
-lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-lspconfig.gopls.setup({
-	settings = {
-		gopls = {
-			buildFlags = { "-tags=wireinject,integration" },
+return {
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			{ "williamboman/mason-lspconfig.nvim", dependencies = { "williamboman/mason.nvim" } },
+			{ "folke/neodev.nvim", opts = {} },
+			{ "hrsh7th/cmp-nvim-lsp" },
 		},
-	},
-})
+		config = function()
+			local lspconfig = require("lspconfig")
+			local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-lsp.setup()
+			local on_attach = function(_, bufnr)
+				-- keybind options
+				local opts = { noremap = true, silent = true, buffer = bufnr }
 
-cmp.setup({
-	sources = {
-		{ name = "path" },
-		{ name = "nvim_lsp" },
-		{ name = "nvim_lua" },
-		{ name = "luasnip", keyword_length = 2 },
-		{ name = "buffer", keyword_length = 3 },
+				-- Mappings.
+				-- See `:help vim.lsp.*` for documentation on any of the below functions
+				vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+				vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+				vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+				vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+				vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+				vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+				vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+				vim.keymap.set("n", "<leader>rr", vim.lsp.buf.references, opts)
+				vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+				vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+				vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+				vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
+			end
+
+			local default_setup = function(server)
+				lspconfig[server].setup({
+					capabilities = lsp_capabilities,
+					on_attach = on_attach,
+				})
+			end
+
+			local mason_lspconfig = require("mason-lspconfig")
+
+			mason_lspconfig.setup({
+				-- list of servers for mason to install
+				ensure_installed = {
+					"gopls",
+					"lua_ls",
+					"rust_analyzer",
+					"terraformls",
+					"tflint",
+					"tsserver",
+				},
+				-- auto-install configured servers (with lspconfig)
+				automatic_installation = true,
+				handlers = { default_setup },
+			})
+		end,
 	},
-})
+}

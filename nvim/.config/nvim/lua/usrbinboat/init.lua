@@ -1,5 +1,0 @@
-require("usrbinboat.sets")
-require("usrbinboat.colors")
-require("usrbinboat.keymaps")
-require("usrbinboat.plugins")
-require("usrbinboat.plugins.init")
