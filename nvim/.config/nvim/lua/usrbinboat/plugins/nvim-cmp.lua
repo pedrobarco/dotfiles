@@ -12,6 +12,7 @@ return {
 		config = function()
 			local cmp = require("cmp")
 
+			---@diagnostic disable-next-line: missing-fields
 			cmp.setup({
 				snippet = {
 					expand = function(args)
