@@ -6,6 +6,7 @@ repos:
       - id: check-json
       - id: trailing-whitespace
       - id: end-of-file-fixer
+        exclude: ^nvim/.config/nvim/lazy-lock.json
 
   - repo: https://github.com/JohnnyMorganz/StyLua
     rev: v0.15.3
