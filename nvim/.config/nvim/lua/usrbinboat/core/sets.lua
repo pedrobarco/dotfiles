@@ -10,8 +10,8 @@ vim.opt.termguicolors = true -- enable true color
 vim.opt.pumheight = 20 -- items to show in the popup menu
 
 -- Spaces & Tabs
-vim.opt.smartindent = true
-vim.opt.softtabstop = 4
+vim.opt.smartindent = true -- autoindent new lines
+vim.opt.softtabstop = 4 -- 4 space tab
 vim.opt.tabstop = 4 -- 4 space tab
 vim.opt.shiftwidth = 4 -- 4 space tab
 vim.opt.expandtab = true -- Use spaces for tabs
@@ -24,8 +24,7 @@ vim.opt.ignorecase = true -- ignore case when searching
 vim.opt.smartcase = true -- unless we type a capital
 
 -- Scrolling
--- start scrolling when we're 8 lines away from margins
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 8 -- number of lines to keep above and below the cursor
 
 -- Backups
 vim.opt.swapfile = false
