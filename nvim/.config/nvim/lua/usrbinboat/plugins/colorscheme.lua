@@ -8,10 +8,11 @@ return {
 	-- 	end,
 	-- },
 	{
-		"projekt0n/github-nvim-theme",
+		"sam4llis/nvim-tundra",
 		priority = 1000,
 		config = function()
-			vim.cmd.colorscheme("github_dark_default")
+			require("nvim-tundra").setup()
+			vim.cmd.colorscheme("tundra")
 		end,
 	},
 }

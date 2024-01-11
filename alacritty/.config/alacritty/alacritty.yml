@@ -19,4 +19,4 @@ font:
 shell:
   program: ubuntu
 import:
-  - ./themes/github_dark_default.yaml
+  - ./themes/tundra.yaml
