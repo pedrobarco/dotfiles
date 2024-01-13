@@ -13,7 +13,6 @@ robbyrussell/oh-my-zsh path:lib/completion.zsh
 robbyrussell/oh-my-zsh path:plugins/vi-mode
 robbyrussell/oh-my-zsh path:plugins/tmux
 robbyrussell/oh-my-zsh path:plugins/git
-robbyrussell/oh-my-zsh path:plugins/git-flow
 robbyrussell/oh-my-zsh path:plugins/jump
 robbyrussell/oh-my-zsh path:plugins/extract
 robbyrussell/oh-my-zsh path:plugins/yarn

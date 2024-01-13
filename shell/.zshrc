@@ -74,23 +74,23 @@ if [ -f $HOME/.aliases ]; then
     . $HOME/.aliases
 fi
 # }}}
-# Antibody {{{
+# Antidote {{{
 # =======
 # This makes the `zsh-nvm` plugin load lazily, and thus reduces the impact of the plugin on shell
 # start-up time.
 export NVM_LAZY_LOAD="true"
 export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 
-if _has antibody; then
-    # If plugins have not been downloaded, then download and static load in future.
-    if [[ ! -e "$HOME/.zsh_plugins.sh" ]]; then
-        # Fetch plugins.
-        antibody bundle < "$HOME/.zsh_plugins.txt" > "$HOME/.zsh_plugins.sh"
-    fi
-
-    # Load plugins.
-    . "$HOME/.zsh_plugins.sh"
+antidote_dir="$HOME/.antidote"
+if [[ "$(uname)" == "Darwin" ]]; then
+  antidote_dir="$(brew --prefix)/opt/antidote/share/antidote"
 fi
+
+# source antidote
+source "$antidote_dir/antidote.zsh"
+
+# initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
+antidote load
 # }}}
 # Prompt {{{
 # ======
