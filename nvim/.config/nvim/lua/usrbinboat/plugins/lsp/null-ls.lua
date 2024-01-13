@@ -11,7 +11,6 @@ return {
 						"buildifier",
 						"goimports",
 						"prettierd",
-						"rustfmt",
 						"stylua",
 						"terraform_fmt",
 						"eslint_d",
