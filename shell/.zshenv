@@ -20,3 +20,12 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export JAVA_HOME="$BREW_PATH/opt/openjdk@11"
     export PATH="$JAVA_HOME/bin:$PATH"
 fi
+
+# added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    . $HOME/.nix-profile/etc/profile.d/nix.sh;
+fi
+
+if [ -e $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh ]; then
+    . $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh;
+fi

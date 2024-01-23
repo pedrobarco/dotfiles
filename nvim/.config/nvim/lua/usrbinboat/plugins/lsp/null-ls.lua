@@ -1,6 +1,6 @@
 return {
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		dependencies = {
 			{
 				"jayp0521/mason-null-ls.nvim",
@@ -15,6 +15,7 @@ return {
 						"terraform_fmt",
 						"eslint_d",
 						"golangci_lint",
+						"nixpkgs_fmt",
 					},
 					-- auto-install configured formatters & linters (with null-ls)
 					automatic_installation = true,
@@ -50,6 +51,7 @@ return {
 					formatting.prettierd,
 					formatting.rustfmt,
 					formatting.terraform_fmt,
+					formatting.nixpkgs_fmt,
 				},
 
 				-- configure format on save

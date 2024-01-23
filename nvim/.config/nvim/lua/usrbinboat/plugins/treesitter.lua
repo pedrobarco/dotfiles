@@ -8,6 +8,7 @@ return {
 			---@diagnostic disable-next-line: missing-fields
 			configs.setup({
 				ensure_installed = {
+					"bash",
 					"dockerfile",
 					"go",
 					"hcl",
@@ -16,6 +17,7 @@ return {
 					"lua",
 					"markdown",
 					"markdown_inline",
+					"nix",
 					"python",
 					"rust",
 					"terraform",
@@ -29,7 +31,6 @@ return {
 				},
 				indent = {
 					enable = true,
-					disable = { "python" },
 				},
 				incremental_selection = {
 					enable = true,
