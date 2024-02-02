@@ -4,28 +4,6 @@ _has() {
     which $1>/dev/null 2>&1
 }
 
-search_ddg() {
-    # url encoded string?
-    local query=$(echo "$@" | python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))")
-    open "https://duckduckgo.com/?q=${query}"
-}
-
-search_zet() {
-    local query="$@"
-
-    local notes="${HOME}/Documents/notes"
-    local zets_regex=".*/[0-9]{14}\.md"
-
-    local results=$(grep -rl "${query}" "${notes}" | grep -E "${zets_regex}" | uniq)
-
-    for r in $(echo "${results}")
-    do
-        local id=$(basename "${r}" .md)
-        local title=$(head -n1 "${r}" | pandoc -t plain)
-        echo "$id\t$title"
-    done
-}
-
 clone() {
     local url="$1"
     shift 1

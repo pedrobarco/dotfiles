@@ -1,21 +1,5 @@
 #!/bin/bash
 
-# Enable color support of ls and also add handy aliases.
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls="ls --color=auto"
-    alias dir="dir --color=auto"
-    alias vdir="vdir --color=auto"
-else
-	export CLICOLOR=1
-	zstyle ':completion:*:default' list-colors ''
-fi
-
-# Map xdg-open to open
-if [[ "$(uname)" == "Linux" ]]; then
-    alias open="xdg-open"
-fi
-
 # More ls aliases.
 alias ll="ls -alF"
 alias la="ls -A"
@@ -36,15 +20,11 @@ alias vimdiff="nvim -d"
 alias python=python3
 
 # Jump aliases
-alias j="jump"
 alias repos="$HOME/bin/tmux_sessionizer.sh"
 
 # k8s aliases
 alias kctx='kubectl ctx "$(kubectl ctx | fzy)"'
 alias kns='kubectl ns "$(kubectl ns | fzy)"'
-
-# search
-alias "?"="search_ddg"
 
 # open pr
 alias gpr="open_pr"
