@@ -1,5 +1,8 @@
 export REPOS="$HOME/repos"
 
+LOCAL_ROOT="$HOME/.local"
+export PATH="$LOCAL_ROOT/bin:$PATH"
+
 KREW_ROOT="$HOME/.krew"
 export PATH="$KREW_ROOT/bin:$PATH"
 

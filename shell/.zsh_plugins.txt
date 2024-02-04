@@ -1,11 +1,11 @@
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions path:src kind:fpath
 
-robbyrussell/oh-my-zsh path:plugins/vi-mode
-robbyrussell/oh-my-zsh path:plugins/bazel
-robbyrussell/oh-my-zsh path:plugins/git
-robbyrussell/oh-my-zsh path:plugins/extract
-robbyrussell/oh-my-zsh path:plugins/kubectl
+ohmyzsh/ohmyzsh path:plugins/bazel
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/kubectl
+ohmyzsh/ohmyzsh path:plugins/vi-mode
 
 mattmc3/zephyr path:plugins/color
 mattmc3/zephyr path:plugins/completion
