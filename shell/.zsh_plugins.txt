@@ -1,15 +1,8 @@
-rupa/z
-lukechilds/zsh-nvm
-djui/alias-tips
-
-zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions path:src kind:fpath
 
-bazelbuild/bazel path:scripts/zsh_completion kind:fpath
-
-robbyrussell/oh-my-zsh path:lib/completion.zsh
 robbyrussell/oh-my-zsh path:plugins/vi-mode
-robbyrussell/oh-my-zsh path:plugins/tmux
+robbyrussell/oh-my-zsh path:plugins/bazel
 robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/extract
 robbyrussell/oh-my-zsh path:plugins/kubectl
@@ -17,7 +10,9 @@ robbyrussell/oh-my-zsh path:plugins/kubectl
 mattmc3/zephyr path:plugins/color
 mattmc3/zephyr path:plugins/completion
 mattmc3/zephyr path:plugins/history
-mattmc3/zephyr path:plugins/utility
 
-zdharma-continuum/fast-syntax-highlighting kind:defer
-zdharma-continuum/history-search-multi-word
+lukechilds/zsh-nvm
+djui/alias-tips
+
+zdharma-continuum/fast-syntax-highlighting
+zdharma-continuum/history-search-multi-word kind:defer
