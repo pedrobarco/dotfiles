@@ -1,15 +1,16 @@
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions path:src kind:fpath
 
-ohmyzsh/ohmyzsh path:plugins/bazel
 ohmyzsh/ohmyzsh path:plugins/extract
-ohmyzsh/ohmyzsh path:plugins/git
-ohmyzsh/ohmyzsh path:plugins/kubectl
 ohmyzsh/ohmyzsh path:plugins/vi-mode
 
 mattmc3/zephyr path:plugins/color
 mattmc3/zephyr path:plugins/completion
 mattmc3/zephyr path:plugins/history
+
+ohmyzsh/ohmyzsh path:plugins/bazel
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/kubectl
 
 lukechilds/zsh-nvm
 djui/alias-tips
