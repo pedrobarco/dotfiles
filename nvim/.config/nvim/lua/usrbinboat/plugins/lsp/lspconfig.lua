@@ -49,6 +49,7 @@ return {
 					"tflint",
 					"tsserver",
 					"nil_ls",
+					"bzl",
 				},
 				-- auto-install configured servers (with lspconfig)
 				automatic_installation = true,
