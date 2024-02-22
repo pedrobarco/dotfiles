@@ -4,9 +4,11 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-fzy-native.nvim",
+			"nvim-telescope/telescope-live-grep-args.nvim",
 		},
 		config = function()
 			local telescope = require("telescope")
+			local lga_actions = require("telescope-live-grep-args.actions")
 
 			telescope.setup({
 				defaults = require("telescope.themes").get_ivy({
@@ -30,9 +32,19 @@ return {
 						find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
 					},
 				},
+				extensions = {
+					live_grep_args = {
+						mappings = { -- extend mappings
+							i = {
+								["<C-k>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+							},
+						},
+					},
+				},
 			})
 
 			telescope.load_extension("fzy_native")
+			telescope.load_extension("live_grep_args")
 		end,
 		keys = {
 			-- file commands
@@ -55,12 +67,16 @@ return {
 			},
 			{
 				"<leader>fs",
-				require("telescope.builtin").live_grep,
+				function()
+					require("telescope").extensions.live_grep_args.live_grep_args()
+				end,
 				desc = "find string in current working directory as you type",
 			},
 			{
 				"<leader>fc",
-				require("telescope.builtin").grep_string,
+				function()
+					require("telescope-live-grep-args.shortcuts").grep_word_under_cursor()
+				end,
 				desc = "find string under cursor in current working directory",
 			},
 			{
