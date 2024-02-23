@@ -8,6 +8,7 @@ vim.opt.signcolumn = "yes" -- useful for lsp and git
 vim.opt.guicursor = "" -- set cursor shape to block
 vim.opt.termguicolors = true -- enable true color
 vim.opt.pumheight = 20 -- items to show in the popup menu
+vim.opt.statusline = "%2{mode()} | %{expand('%:p:h:t')}/%t %m %r %= %y %8(%l,%c%) %4p%%"
 
 -- Spaces & Tabs
 vim.opt.smartindent = true -- autoindent new lines

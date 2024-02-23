@@ -29,7 +29,6 @@ return {
 				},
 			})
 			vim.cmd.colorscheme("tundra")
-			vim.opt.statusline = "%2{mode()} | %{expand('%:p:h:t')}/%t %m %r %= %y %8(%l,%c%) %4p%%"
 		end,
 	},
 }
