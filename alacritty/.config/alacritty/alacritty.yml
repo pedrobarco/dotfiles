@@ -19,4 +19,4 @@ font:
 shell:
   program: ubuntu
 import:
-  - ./themes/tundra.yaml
+  - ./themes/gruvbox_material.yaml

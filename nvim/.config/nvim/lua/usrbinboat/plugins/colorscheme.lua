@@ -1,12 +1,12 @@
 return {
-	-- {
-	-- 	"sainnhe/gruvbox-material",
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		vim.g.gruvbox_material_background = "hard"
-	-- 		vim.cmd.colorscheme("gruvbox-material")
-	-- 	end,
-	-- },
+	{
+		"sainnhe/gruvbox-material",
+		priority = 1000,
+		config = function()
+			vim.g.gruvbox_material_background = "hard"
+			vim.cmd.colorscheme("gruvbox-material")
+		end,
+	},
 	{
 		"sam4llis/nvim-tundra",
 		priority = 1000,
@@ -28,7 +28,8 @@ return {
 					neogit = true,
 				},
 			})
-			vim.cmd.colorscheme("tundra")
+			-- vim.g.tundra_biome = "artic"
+			-- vim.cmd.colorscheme("tundra")
 		end,
 	},
 }
