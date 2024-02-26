@@ -21,12 +21,12 @@ return {
 					automatic_installation = true,
 				},
 			},
+			{ "nvimtools/none-ls-extras.nvim" },
 		},
 		config = function()
 			local null_ls = require("null-ls")
 
 			-- for conciseness
-			local code_actions = null_ls.builtins.code_actions -- to setup code actions
 			local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 			local formatting = null_ls.builtins.formatting -- to setup formatters
 
@@ -37,9 +37,9 @@ return {
 			null_ls.setup({
 				-- setup formatters & linters
 				sources = {
-					code_actions.eslint_d,
+					require("none-ls.code_actions.eslint_d"),
 					diagnostics.golangci_lint,
-					diagnostics.eslint_d.with({
+					require("none-ls.code_actions.eslint_d").with({
 						condition = function(utils)
 							return utils.root_has_file_matches(".eslintrc.*")
 						end,
@@ -49,7 +49,7 @@ return {
 					formatting.buildifier,
 					formatting.goimports,
 					formatting.prettierd,
-					formatting.rustfmt,
+					require("none-ls.formatting.rustfmt"),
 					formatting.terraform_fmt,
 					formatting.nixpkgs_fmt,
 				},
