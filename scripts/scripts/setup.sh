@@ -4,6 +4,7 @@ packages=(
     # core
     "bash"
     "zsh"
+    "starship"
     "git"
     "coreutils"
     "gpg"
@@ -39,7 +40,7 @@ packages=(
     "bazelisk"
 
     # plugin managers
-    "antibody"
+    "antidote"
     "tpm"
     "krew"
 )
