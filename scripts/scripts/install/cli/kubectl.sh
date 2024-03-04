@@ -4,11 +4,8 @@
 if [ "$(uname)" == "Darwin" ]; then
 	brew install kubectl
 else
-    curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg \
-        https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] \
-        https://apt.kubernetes.io/ kubernetes-xenial main" \
-        | tee /etc/apt/sources.list.d/kubernetes.list
-    apt update
-    apt install -y kubectl
+    cd "$(mktemp -d)"
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    cd -
 fi
