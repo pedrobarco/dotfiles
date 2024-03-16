@@ -39,9 +39,18 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local usrbinboat_group = augroup("usrbinboat", {})
 
--- Trim whitespace
 autocmd({ "BufWritePre" }, {
 	group = usrbinboat_group,
 	pattern = "*",
 	command = [[%s/\s\+$//e]],
+	desc = "Remove trailing whitespace",
+})
+
+autocmd({ "BufEnter" }, {
+	group = usrbinboat_group,
+	pattern = "*",
+	callback = function()
+		vim.opt.formatoptions:remove({ "c", "r", "o" })
+	end,
+	desc = "Remove auto comment and auto wrap",
 })
