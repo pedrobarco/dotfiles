@@ -9,5 +9,14 @@ return {
 		opts = {
 			disable_commit_confirmation = true,
 		},
+		keys = {
+			{
+				"<leader>gs",
+				function()
+					require("neogit").open()
+				end,
+				desc = "open neogit",
+			},
+		},
 	},
 }

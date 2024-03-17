@@ -106,11 +106,6 @@ return {
 				require("telescope.builtin").git_branches,
 				desc = "list git branches (use <cr> to checkout)",
 			}, -- "gc" for git branch
-			{
-				"<leader>gs",
-				require("telescope.builtin").git_status,
-				desc = "list current changes per file with diff preview",
-			}, -- "gs" for git status
 		},
 	},
 }
