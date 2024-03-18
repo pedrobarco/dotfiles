@@ -15,7 +15,6 @@ return {
 						"terraform_fmt",
 						"eslint_d",
 						"golangci_lint",
-						"nixpkgs_fmt",
 					},
 					-- auto-install configured formatters & linters (with null-ls)
 					automatic_installation = true,

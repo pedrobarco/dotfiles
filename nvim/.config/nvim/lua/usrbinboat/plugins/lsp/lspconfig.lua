@@ -48,7 +48,6 @@ return {
 					"terraformls",
 					"tflint",
 					"tsserver",
-					"nil_ls",
 					"bzl",
 				},
 				-- auto-install configured servers (with lspconfig)
