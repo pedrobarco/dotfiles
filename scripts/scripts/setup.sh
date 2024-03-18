@@ -25,7 +25,7 @@ packages=(
     "fzy"
 
     # vpn
-    "openconnect"
+    # "openconnect"
 
     # runtimes
     "go"
