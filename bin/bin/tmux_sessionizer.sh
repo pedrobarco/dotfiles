@@ -4,7 +4,7 @@ repo=$1
 nth=$(($(echo "$REPOS" | grep -o "/" | wc -l) * 2 - 1))
 
 if [[ -z $repo ]]; then
-    repo=$(find $REPOS -type d \
+    repo=$(find $REPOS -maxdepth 3 -type d \
         -exec test -e '{}/.git' \; -print -prune \
         | cut -d "/" -f$nth- \
         | fzy)
