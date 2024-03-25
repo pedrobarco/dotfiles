@@ -16,8 +16,9 @@ alias vim="nvim"
 alias view="nvim -R"
 alias vimdiff="nvim -d"
 
-# Python aliases
-alias python=python3
+# enconding aliases
+alias encode='python3 -c "import sys; from urllib.parse import quote; print(quote(sys.stdin.read()));"'
+alias decode='python3 -c "import sys; from urllib.parse import unquote; print(unquote(sys.stdin.read()));"'
 
 # Jump aliases
 alias repos="$HOME/bin/tmux_sessionizer.sh"
