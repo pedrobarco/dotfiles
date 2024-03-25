@@ -33,13 +33,8 @@ fi
 export NVM_LAZY_LOAD="true"
 export NVM_LAZY_LOAD_EXTRA_COMMANDS=('nvim')
 
-antidote_dir="$HOME/.antidote"
-if [[ "$(uname)" == "Darwin" ]]; then
-  antidote_dir="$(brew --prefix)/opt/antidote/share/antidote"
-fi
-
 # source antidote
-source "$antidote_dir/antidote.zsh"
+source $HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh
 
 # initialize plugins statically with ${ZDOTDIR:-~}/.zsh_plugins.txt
 antidote load
