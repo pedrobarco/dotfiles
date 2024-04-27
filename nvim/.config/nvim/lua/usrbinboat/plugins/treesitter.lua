@@ -9,6 +9,7 @@ return {
 			configs.setup({
 				ensure_installed = {
 					"bash",
+					"css",
 					"dockerfile",
 					"go",
 					"hcl",
@@ -24,6 +25,7 @@ return {
 					"typescript",
 					"vim",
 					"vimdoc",
+					"vue",
 					"yaml",
 				},
 				highlight = {

@@ -39,20 +39,53 @@ return {
 
 			local mason_lspconfig = require("mason-lspconfig")
 
+			local mason_registry = require("mason-registry")
+			local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+				.. "/node_modules/@vue/language-server"
+
 			mason_lspconfig.setup({
 				-- list of servers for mason to install
 				ensure_installed = {
+					"bzl",
 					"gopls",
 					"lua_ls",
 					"rust_analyzer",
 					"terraformls",
 					"tflint",
 					"tsserver",
-					"bzl",
+					"volar",
 				},
 				-- auto-install configured servers (with lspconfig)
 				automatic_installation = true,
-				handlers = { default_setup },
+				handlers = {
+					default_setup,
+					["volar"] = function()
+						lspconfig.volar.setup({
+							capabilities = lsp_capabilities,
+							on_attach = on_attach,
+							init_options = {
+								vue = {
+									hybridMode = false,
+								},
+							},
+						})
+					end,
+					["tsserver"] = function()
+						lspconfig.tsserver.setup({
+							capabilities = lsp_capabilities,
+							on_attach = on_attach,
+							init_options = {
+								plugins = {
+									{
+										name = "@vue/typescript-plugin",
+										location = vue_language_server_path,
+										languages = { "vue" },
+									},
+								},
+							},
+						})
+					end,
+				},
 			})
 		end,
 	},
