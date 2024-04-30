@@ -15,6 +15,7 @@ return {
 						"terraform_fmt",
 						"eslint_d",
 						"golangci_lint",
+						"ktlint",
 					},
 					-- auto-install configured formatters & linters (with null-ls)
 					automatic_installation = true,
@@ -44,6 +45,7 @@ return {
 						end,
 					}),
 					diagnostics.buildifier,
+					diagnostics.ktlint,
 					formatting.stylua,
 					formatting.buildifier,
 					formatting.goimports,
@@ -51,6 +53,7 @@ return {
 					require("none-ls.formatting.rustfmt"),
 					formatting.terraform_fmt,
 					formatting.nixpkgs_fmt,
+					formatting.ktlint,
 				},
 
 				-- configure format on save

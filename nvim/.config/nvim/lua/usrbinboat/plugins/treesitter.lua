@@ -27,6 +27,7 @@ return {
 					"vimdoc",
 					"vue",
 					"yaml",
+					"kotlin",
 				},
 				highlight = {
 					enable = true,
