@@ -17,20 +17,20 @@ CARGOPATH="$HOME/.cargo"
 export PATH="$CARGOPATH/bin:$PATH"
 
 if [[ "$(uname)" == "Darwin" ]]; then
-    BREW_PATH="/opt/homebrew"
-    export PATH="$BREW_PATH/bin:$PATH"
+    export HOMEBREW_PREFIX="/opt/homebrew";
+    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
-    export JAVA_HOME="$BREW_PATH/opt/openjdk@11"
+    export JAVA_HOME="$HOMEBREW_PREFIX/opt/openjdk@11"
     export PATH="$JAVA_HOME/bin:$PATH"
 fi
 
 if [[ "$(uname)" == "Linux" ]]; then
     export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
-    export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
-    export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
-    export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
-    export MANPATH="/home/linuxbrew/.linuxbrew/share/man${MANPATH+:$MANPATH}:";
-    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
+    export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar";
+    export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew";
+    export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin${PATH+:$PATH}";
+    export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:";
+    export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}";
 fi
 
 # added by Nix installer
