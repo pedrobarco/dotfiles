@@ -2,32 +2,32 @@ return {
 	{
 		"nvimtools/none-ls.nvim",
 		dependencies = {
-			{
-				"jayp0521/mason-null-ls.nvim",
-				dependencies = { "williamboman/mason.nvim" },
-				opts = {
-					-- list of formatters & linters for mason to install
-					ensure_installed = {
-						"buildifier",
-						"goimports",
-						"prettierd",
-						"stylua",
-						"terraform_fmt",
-						"eslint_d",
-						"golangci_lint",
-						"ktlint",
-					},
-					-- auto-install configured formatters & linters (with null-ls)
-					automatic_installation = true,
-				},
-			},
+			{ "jayp0521/mason-null-ls.nvim", dependencies = { "williamboman/mason.nvim" } },
 			{ "nvimtools/none-ls-extras.nvim" },
 		},
 		config = function()
+			local mason_null_ls = require("mason-null-ls")
+
+			mason_null_ls.setup({
+				-- list of formatters & linters for mason to install
+				ensure_installed = {
+					"buildifier",
+					"goimports",
+					"prettierd",
+					"stylua",
+					"terraform_fmt",
+					"eslint_d",
+					"golangci_lint",
+					"ktlint",
+				},
+				-- auto-install configured formatters & linters (with null-ls)
+				automatic_installation = true,
+				handlers = {},
+			})
+
 			local null_ls = require("null-ls")
 
 			-- for conciseness
-			local diagnostics = null_ls.builtins.diagnostics -- to setup linters
 			local formatting = null_ls.builtins.formatting -- to setup formatters
 
 			-- to setup format on save
@@ -38,22 +38,13 @@ return {
 				-- setup formatters & linters
 				sources = {
 					require("none-ls.code_actions.eslint_d"),
-					diagnostics.golangci_lint,
 					require("none-ls.code_actions.eslint_d").with({
 						condition = function(utils)
 							return utils.root_has_file_matches(".eslintrc.*")
 						end,
 					}),
-					diagnostics.buildifier,
-					diagnostics.ktlint,
-					formatting.stylua,
-					formatting.buildifier,
-					formatting.goimports,
-					formatting.prettierd,
 					require("none-ls.formatting.rustfmt"),
-					formatting.terraform_fmt,
 					formatting.nixpkgs_fmt,
-					formatting.ktlint,
 				},
 
 				-- configure format on save

@@ -32,6 +32,3 @@ alias gpr="open_pr"
 
 # reset branch to remote
 alias glf="force_pull"
-
-# zet
-alias zs="search_zet"
