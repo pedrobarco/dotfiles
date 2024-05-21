@@ -55,6 +55,7 @@ return {
 					"tsserver",
 					"volar",
 					"kotlin_language_server",
+					"gradle_ls",
 				},
 				-- auto-install configured servers (with lspconfig)
 				automatic_installation = true,
