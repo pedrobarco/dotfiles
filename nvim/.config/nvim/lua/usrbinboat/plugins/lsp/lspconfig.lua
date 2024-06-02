@@ -3,7 +3,11 @@ return {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			{ "williamboman/mason-lspconfig.nvim", dependencies = { "williamboman/mason.nvim" } },
-			{ "folke/neodev.nvim", opts = {} },
+			{
+				"folke/lazydev.nvim",
+				ft = "lua",
+				opts = {},
+			},
 			{ "hrsh7th/cmp-nvim-lsp" },
 		},
 		config = function()
