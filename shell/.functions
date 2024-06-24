@@ -12,6 +12,24 @@ clone() {
     git clone $url "$@" $REPOS/$repo
 }
 
+mkrepo() {
+    local repo=$(echo $1 | sed "s/\.git//g")
+    local repo_path="$REPOS/$repo"
+
+    [ -d $repo_path ] && echo "Repo already exists" && return
+
+    mkdir -p $repo_path
+    cd $repo_path > /dev/null
+    git init
+    cd - > /dev/null
+}
+
+rmrepo() {
+    local repo=$(echo $1 | sed "s/\.git//g")
+    local repo_path="$REPOS/$repo"
+    rm -rf $repo_path
+}
+
 open_pr() {
     local repo=$(git config --get remote.origin.url | cut -d "@" -f2 | sed "s/.git//g" | sed "s/:/\//g")
     local branch=$(git branch --show-current)
