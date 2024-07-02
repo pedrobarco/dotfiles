@@ -2,6 +2,7 @@ return {
 	{
 		"sainnhe/gruvbox-material",
 		priority = 1000,
+		enabled = false,
 		config = function()
 			vim.g.gruvbox_material_background = "hard"
 			vim.cmd.colorscheme("gruvbox-material")
@@ -10,6 +11,7 @@ return {
 	{
 		"sam4llis/nvim-tundra",
 		priority = 1000,
+		enabled = false,
 		config = function()
 			require("nvim-tundra").setup({
 				dim_inactive_windows = {
@@ -28,8 +30,7 @@ return {
 					neogit = true,
 				},
 			})
-			-- vim.g.tundra_biome = "artic"
-			-- vim.cmd.colorscheme("tundra")
+			vim.cmd.colorscheme("tundra")
 		end,
 	},
 }
