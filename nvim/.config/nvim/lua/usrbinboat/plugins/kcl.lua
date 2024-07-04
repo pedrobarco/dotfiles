@@ -3,6 +3,7 @@ return {
 	init = function()
 		vim.api.nvim_command([[autocmd BufRead,BufNewFile *.k set filetype=kcl]])
 	end,
+	enabled = false,
 	ft = {
 		"kcl",
 	},
