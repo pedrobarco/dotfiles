@@ -13,8 +13,10 @@ return {
 					"dockerfile",
 					"go",
 					"hcl",
+					"helm",
 					"javascript",
 					"json",
+					"kotlin",
 					"lua",
 					"markdown",
 					"markdown_inline",
@@ -27,7 +29,6 @@ return {
 					"vimdoc",
 					"vue",
 					"yaml",
-					"kotlin",
 				},
 				highlight = {
 					enable = true,
@@ -41,16 +42,28 @@ return {
 			})
 
 			local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+			---@diagnostic disable-next-line: inject-field
 			parser_config.bru = {
 				install_info = {
-					url = "https://github.com/pedrobarco/tree-sitter-bru", -- local path or git repo
-					files = { "src/parser.c" }, -- note that some parsers also require src/scanner.c or src/scanner.cc
-					-- optional entries:
-					branch = "main", -- default branch in case of git repo if different from master
-					generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-					requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+					url = "https://github.com/pedrobarco/tree-sitter-bru",
+					files = { "src/parser.c" },
+					branch = "main",
+					generate_requires_npm = false,
+					requires_generate_from_grammar = false,
 				},
 			}
+
+			---@diagnostic disable-next-line: inject-field
+			parser_config.kcl = {
+				install_info = {
+					url = "https://github.com/kcl-lang/tree-sitter-kcl",
+					files = { "src/parser.c" },
+					branch = "main",
+					generate_requires_npm = false,
+					requires_generate_from_grammar = false,
+				},
+			}
+			vim.api.nvim_command([[autocmd BufRead,BufNewFile *.k set filetype=kcl]])
 		end,
 	},
 	{
