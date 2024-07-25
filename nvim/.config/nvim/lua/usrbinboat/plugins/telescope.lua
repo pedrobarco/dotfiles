@@ -104,6 +104,6 @@ return {
 			"<leader>gb",
 			require("telescope.builtin").git_branches,
 			desc = "list git branches (use <cr> to checkout)",
-		}, -- "gc" for git branch
+		}, -- "gb" for git branches
 	},
 }
