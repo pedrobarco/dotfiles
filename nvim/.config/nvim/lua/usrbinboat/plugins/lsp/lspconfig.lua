@@ -52,14 +52,14 @@ return {
 				ensure_installed = {
 					"bzl",
 					"gopls",
+					"gradle_ls",
+					"kotlin_language_server",
 					"lua_ls",
 					"rust_analyzer",
 					"terraformls",
 					"tflint",
 					"tsserver",
 					"volar",
-					"kotlin_language_server",
-					"gradle_ls",
 				},
 				-- auto-install configured servers (with lspconfig)
 				automatic_installation = true,
@@ -92,6 +92,19 @@ return {
 						})
 					end,
 				},
+			})
+
+			local server_config = require("lspconfig.configs")
+			server_config.kcl = {
+				default_config = {},
+			}
+
+			lspconfig.kcl.setup({
+				cmd = { "kcl-language-server" },
+				filetypes = { "kcl" },
+				root_dir = lspconfig.util.root_pattern(".git"),
+				capabilities = lsp_capabilities,
+				on_attach = on_attach,
 			})
 		end,
 	},
