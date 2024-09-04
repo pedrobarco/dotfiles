@@ -42,10 +42,7 @@ return {
 			end
 
 			local mason_lspconfig = require("mason-lspconfig")
-
 			local mason_registry = require("mason-registry")
-			local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
-				.. "/node_modules/@vue/language-server"
 
 			mason_lspconfig.setup({
 				-- list of servers for mason to install
@@ -77,6 +74,10 @@ return {
 						})
 					end,
 					["tsserver"] = function()
+						local vue_language_server_path = mason_registry
+							.get_package("vue-language-server")
+							:get_install_path() .. "/node_modules/@vue/language-server"
+
 						lspconfig.tsserver.setup({
 							capabilities = lsp_capabilities,
 							on_attach = on_attach,
