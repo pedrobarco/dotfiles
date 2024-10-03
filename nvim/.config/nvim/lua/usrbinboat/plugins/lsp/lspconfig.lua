@@ -55,7 +55,7 @@ return {
 					"rust_analyzer",
 					"terraformls",
 					"tflint",
-					"tsserver",
+					"ts_ls",
 					"volar",
 				},
 				-- auto-install configured servers (with lspconfig)
@@ -73,12 +73,12 @@ return {
 							},
 						})
 					end,
-					["tsserver"] = function()
+					["ts_ls"] = function()
 						local vue_language_server_path = mason_registry
 							.get_package("vue-language-server")
 							:get_install_path() .. "/node_modules/@vue/language-server"
 
-						lspconfig.tsserver.setup({
+						lspconfig.ts_ls.setup({
 							capabilities = lsp_capabilities,
 							on_attach = on_attach,
 							init_options = {
