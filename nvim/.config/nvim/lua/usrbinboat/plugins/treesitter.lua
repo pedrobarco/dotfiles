@@ -63,7 +63,22 @@ return {
 					requires_generate_from_grammar = false,
 				},
 			}
-			vim.api.nvim_command([[autocmd BufRead,BufNewFile *.k set filetype=kcl]])
+
+			vim.api.nvim_create_augroup("KCLFileType", { clear = true })
+			vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+				group = "KCLFileType",
+				pattern = "*.k",
+				callback = function()
+					vim.opt.filetype = "kcl"
+				end,
+			})
+			vim.api.nvim_create_autocmd({ "FileType" }, {
+				group = "KCLFileType",
+				pattern = "kcl",
+				callback = function()
+					vim.opt_local.commentstring = "# %s"
+				end,
+			})
 		end,
 	},
 	{
