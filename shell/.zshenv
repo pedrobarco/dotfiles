@@ -31,6 +31,9 @@ if [[ "$(uname)" == "Linux" ]]; then
     export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin${PATH+:$PATH}";
     export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:";
     export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}";
+
+    GOOGLE_CLOUD_SDK_PATH="/opt/google-cloud-sdk"
+    export PATH="$GOOGLE_CLOUD_SDK_PATH/bin:$PATH"
 fi
 
 # added by Nix installer
