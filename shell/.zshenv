@@ -16,6 +16,9 @@ export PATH="$YARNPATH/bin:$PATH"
 CARGOPATH="$HOME/.cargo"
 export PATH="$CARGOPATH/bin:$PATH"
 
+PYTHON_ROOT="$(python3 -m site --user-base)"
+export PATH="$PYTHON_ROOT/bin:$PATH"
+
 if [[ "$(uname)" == "Darwin" ]]; then
     export HOMEBREW_PREFIX="/opt/homebrew";
     export PATH="$HOMEBREW_PREFIX/bin:$PATH"
