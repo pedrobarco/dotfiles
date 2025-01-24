@@ -63,6 +63,17 @@ return {
 				automatic_installation = true,
 				handlers = {
 					default_setup,
+					["gopls"] = function()
+						lspconfig.gopls.setup({
+							capabilities = lsp_capabilities,
+							on_attach = on_attach,
+							settings = {
+								gopls = {
+									buildFlags = { "-tags=mage,wireinject,integration" },
+								},
+							},
+						})
+					end,
 					["volar"] = function()
 						lspconfig.volar.setup({
 							capabilities = lsp_capabilities,
