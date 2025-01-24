@@ -11,6 +11,7 @@ return {
 					"bash",
 					"css",
 					"dockerfile",
+					"gleam",
 					"go",
 					"hcl",
 					"helm",
@@ -77,6 +78,12 @@ return {
 				pattern = "kcl",
 				callback = function()
 					vim.opt_local.commentstring = "# %s"
+				end,
+			})
+			vim.api.nvim_create_autocmd({ "FileType" }, {
+				pattern = "gleam",
+				callback = function()
+					vim.opt_local.commentstring = "// %s"
 				end,
 			})
 		end,

@@ -95,6 +95,8 @@ return {
 					end,
 				},
 			})
+
+			lspconfig.gleam.setup({})
 		end,
 	},
 }
