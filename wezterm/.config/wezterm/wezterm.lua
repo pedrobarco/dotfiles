@@ -4,6 +4,10 @@ local function is_windows()
 	return wezterm.target_triple == "x86_64-pc-windows-msvc"
 end
 
+local function is_mac()
+	return wezterm.target_triple == "aarch64-apple-darwin" or wezterm.target_triple == "x86_64-apple-darwin"
+end
+
 local config = wezterm.config_builder()
 -- window settings
 config.enable_tab_bar = false
@@ -17,7 +21,7 @@ config.window_close_confirmation = "NeverPrompt"
 
 -- font settings
 config.font = wezterm.font({
-	family = "JetBrainsMono Nerd Font",
+	family = "JetBrainsMonoNL Nerd Font",
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 })
 config.font_size = 16
@@ -30,6 +34,10 @@ config.color_schemes = {
 
 if is_windows() then
 	config.default_prog = { "ubuntu" }
+end
+
+if is_mac() then
+	config.font_size = 18
 end
 
 return config
