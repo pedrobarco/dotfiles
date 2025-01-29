@@ -1,5 +1,8 @@
 return {
 	"vim-test/vim-test",
+	init = function()
+		vim.g["test#basic#start_normal"] = 1
+	end,
 	keys = {
 		{
 			"<leader>tn",
