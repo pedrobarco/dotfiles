@@ -15,7 +15,7 @@ if [[ ! -d $selected_repo ]]; then
     exit 0
 fi
 
-session_name=$(echo "$repo" | sed "s/[\.|\/]/_/g")
+session_name=$(echo "$repo" | sed "s/\./_/g")
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
