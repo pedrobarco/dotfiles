@@ -54,6 +54,11 @@ return {
 			},
 		},
 	},
+	cmd = {
+		"DiffviewOpen",
+		"DiffviewClose",
+		"DiffviewFileHistory",
+	},
 	keys = {
 		{
 			"<leader>hm",
