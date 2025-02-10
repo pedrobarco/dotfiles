@@ -24,7 +24,9 @@ config.font = wezterm.font({
 	family = "JetBrainsMonoNL Nerd Font",
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 })
-config.font_size = 16
+config.font_size = 14
+config.line_height = 1.3
+config.cell_width = 1.02
 
 -- color settings
 config.color_scheme = "gruvbox_material"
