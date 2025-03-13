@@ -45,6 +45,7 @@ return {
 					}),
 					require("none-ls.formatting.rustfmt"),
 					formatting.nixpkgs_fmt,
+					formatting.terraform_fmt,
 				},
 
 				-- configure format on save
