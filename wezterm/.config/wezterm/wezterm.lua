@@ -29,9 +29,10 @@ config.line_height = 1.3
 config.cell_width = 1.02
 
 -- color settings
-config.color_scheme = "gruvbox_material"
+config.color_scheme = "oldtale"
 config.color_schemes = {
 	["gruvbox_material"] = require("themes/gruvbox_material"),
+	["oldtale"] = require("themes/oldtale"),
 }
 
 if is_windows() then
