@@ -56,7 +56,7 @@ return {
 					"terraformls",
 					"tflint",
 					"ts_ls",
-					"volar",
+					"vue_ls",
 					"kcl",
 				},
 				-- auto-install configured servers (with lspconfig)
