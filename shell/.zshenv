@@ -21,7 +21,6 @@ export PATH="$PYTHON_ROOT/bin:$PATH"
 
 if [[ "$(uname)" == "Darwin" ]]; then
     export HOMEBREW_PREFIX="/opt/homebrew";
-    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 
     export JAVA_HOME="$HOMEBREW_PREFIX/opt/openjdk@11"
     export PATH="$JAVA_HOME/bin:$PATH"
@@ -29,11 +28,6 @@ fi
 
 if [[ "$(uname)" == "Linux" ]]; then
     export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
-    export HOMEBREW_CELLAR="$HOMEBREW_PREFIX/Cellar";
-    export HOMEBREW_REPOSITORY="$HOMEBREW_PREFIX/Homebrew";
-    export PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin${PATH+:$PATH}";
-    export MANPATH="$HOMEBREW_PREFIX/share/man${MANPATH+:$MANPATH}:";
-    export INFOPATH="$HOMEBREW_PREFIX/share/info:${INFOPATH:-}";
 
     GOOGLE_CLOUD_SDK_PATH="/opt/google-cloud-sdk"
     export PATH="$GOOGLE_CLOUD_SDK_PATH/bin:$PATH"
