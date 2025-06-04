@@ -4,4 +4,5 @@ return {
 	dir = repos .. "/pedrobarco/bruno.nvim",
 	opts = {},
 	ft = { "bru" },
+	enabled = false,
 }
