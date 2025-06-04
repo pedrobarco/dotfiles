@@ -8,6 +8,13 @@ local function is_mac()
 	return wezterm.target_triple == "aarch64-apple-darwin" or wezterm.target_triple == "x86_64-apple-darwin"
 end
 
+local function color_scheme(appearance, colors)
+	if appearance:find("Light") then
+		return colors.light
+	end
+	return colors.dark
+end
+
 local config = wezterm.config_builder()
 -- window settings
 config.enable_tab_bar = false
@@ -29,11 +36,14 @@ config.line_height = 1.3
 config.cell_width = 1.02
 
 -- color settings
-config.color_scheme = "oldtale"
 config.color_schemes = {
 	["gruvbox_material"] = require("themes/gruvbox_material"),
 	["oldtale"] = require("themes/oldtale"),
 }
+config.color_scheme = color_scheme(wezterm.gui.get_appearance(), {
+	dark = "oldtale",
+	light = "Github Light (Gogh)",
+})
 
 if is_windows() then
 	config.default_prog = { "ubuntu" }
