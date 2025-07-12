@@ -1,1 +1,4 @@
-/shell/.ssh/known_hosts
+.DS_Store
+
+shell/.ssh/known_hosts
+mpv/.config/mpv/watch_later
