@@ -39,9 +39,10 @@ config.font_size = 14
 config.color_schemes = {
 	["gruvbox_material"] = require("themes/gruvbox_material"),
 	["oldtale"] = require("themes/oldtale"),
+	["melange_dark"] = require("themes/melange_dark"),
 }
 config.color_scheme = color_scheme(wezterm.gui.get_appearance(), {
-	dark = "oldtale",
+	dark = "melange_dark",
 	light = "Github Light (Gogh)",
 })
 

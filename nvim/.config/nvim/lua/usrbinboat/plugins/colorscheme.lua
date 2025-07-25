@@ -11,7 +11,7 @@ return {
 	{
 		"topazape/oldtale.nvim",
 		priority = 1000,
-		enabled = true,
+		enabled = false,
 		config = function()
 			require("oldtale").setup({
 				integrations = {
@@ -25,6 +25,14 @@ return {
 				},
 			})
 			vim.cmd.colorscheme("oldtale")
+		end,
+	},
+	{
+		"savq/melange-nvim",
+		priority = 1000,
+		enabled = true,
+		config = function()
+			vim.cmd.colorscheme("melange")
 		end,
 	},
 }
