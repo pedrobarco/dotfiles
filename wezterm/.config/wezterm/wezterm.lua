@@ -42,7 +42,7 @@ config.color_schemes = {
 	["melange_dark"] = require("themes/melange_dark"),
 }
 config.color_scheme = color_scheme(wezterm.gui.get_appearance(), {
-	dark = "melange_dark",
+	dark = "oldtale",
 	light = "Github Light (Gogh)",
 })
 
