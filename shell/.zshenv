@@ -22,7 +22,7 @@ export PATH="$PYTHON_ROOT/bin:$PATH"
 if [[ "$(uname)" == "Darwin" ]]; then
     export HOMEBREW_PREFIX="/opt/homebrew";
 
-    export JAVA_HOME="$HOMEBREW_PREFIX/opt/openjdk@11"
+    export JAVA_HOME="$HOMEBREW_PREFIX/opt/openjdk@21"
     export PATH="$JAVA_HOME/bin:$PATH"
 fi
 
