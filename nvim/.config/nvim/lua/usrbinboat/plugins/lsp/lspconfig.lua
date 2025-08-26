@@ -61,35 +61,55 @@ return {
 				},
 			})
 
-			vim.lsp.config("volar", {
-				init_options = {
-					vue = {
-						hybridMode = false,
+			local vue_language_server_path = vim.fn.stdpath("data")
+				.. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+			local tsserver_filetypes = {
+				"typescript",
+				"javascript",
+				"javascriptreact",
+				"typescriptreact",
+				"vue",
+			}
+			local vue_plugin = {
+				name = "@vue/typescript-plugin",
+				location = vue_language_server_path,
+				languages = { "vue" },
+				configNamespace = "typescript",
+			}
+
+			vim.lsp.config("vtsls", {
+				settings = {
+					vtsls = {
+						tsserver = {
+							globalPlugins = {
+								vue_plugin,
+							},
+						},
 					},
 				},
+				filetypes = tsserver_filetypes,
 			})
 
 			vim.lsp.config("ts_ls", {
 				init_options = {
 					plugins = {
-						{
-							name = "@vue/typescript-plugin",
-							location = "",
-							languages = { "vue" },
-						},
+						vue_plugin,
 					},
 				},
+				filetypes = tsserver_filetypes,
 			})
 
 			vim.lsp.enable("gleam")
 
 			local mason_lspconfig = require("mason-lspconfig")
 			mason_lspconfig.setup({
+
 				-- list of servers for mason to install
 				ensure_installed = {
 					"bzl",
 					"gopls",
 					"gradle_ls",
+					"kcl",
 					"kotlin_language_server",
 					"lua_ls",
 					"rust_analyzer",
@@ -97,9 +117,14 @@ return {
 					"tflint",
 					"ts_ls",
 					"vue_ls",
-					"kcl",
+					"vtsls",
+					"tailwindcss",
 				},
-				automatic_enable = true,
+				automatic_enable = {
+					exclude = {
+						"ts_ls",
+					},
+				},
 			})
 		end,
 	},
