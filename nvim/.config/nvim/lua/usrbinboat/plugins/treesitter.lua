@@ -97,4 +97,5 @@ return {
 		},
 		opts = {},
 	},
+	{ "JoosepAlviste/nvim-ts-context-commentstring" },
 }
