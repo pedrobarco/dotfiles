@@ -11,7 +11,7 @@ return {
 	{
 		"topazape/oldtale.nvim",
 		priority = 1000,
-		enabled = true,
+		enabled = false,
 		config = function()
 			require("oldtale").setup({
 				integrations = {
@@ -33,6 +33,19 @@ return {
 		enabled = false,
 		config = function()
 			vim.cmd.colorscheme("melange")
+		end,
+	},
+	{
+		"Tsuzat/NeoSolarized.nvim",
+		priority = 1000,
+		enabled = true,
+		config = function()
+			require("NeoSolarized").setup({
+				style = "light",
+				transparent = false,
+				italics = false,
+			})
+			vim.cmd.colorscheme("NeoSolarized")
 		end,
 	},
 }

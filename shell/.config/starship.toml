@@ -17,7 +17,7 @@ error_symbol = "[❯](red)"
 vimcmd_symbol = "[N](green)"
 
 [git_branch]
-format = "[$branch]($style)"
+format = "[$branch]()"
 style = "white"
 
 [git_status]
