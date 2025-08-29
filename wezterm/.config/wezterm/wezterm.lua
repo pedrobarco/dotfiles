@@ -44,7 +44,7 @@ config.color_schemes = {
 	["neosolarized_light"] = require("themes/neosolarized_light"),
 }
 config.color_scheme = color_scheme(wezterm.gui.get_appearance(), {
-	dark = "neosolarized_light",
+	dark = "Builtin Solarized Light",
 	light = "neosolarized_light",
 })
 
