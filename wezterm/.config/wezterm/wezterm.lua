@@ -40,12 +40,10 @@ config.color_schemes = {
 	["gruvbox_material"] = require("themes/gruvbox_material"),
 	["oldtale"] = require("themes/oldtale"),
 	["melange_dark"] = require("themes/melange_dark"),
-	["neosolarized_dark"] = require("themes/neosolarized_dark"),
-	["neosolarized_light"] = require("themes/neosolarized_light"),
 }
 config.color_scheme = color_scheme(wezterm.gui.get_appearance(), {
-	dark = "Builtin Solarized Light",
-	light = "neosolarized_light",
+	dark = "zenbones_dark",
+	light = "zenbones",
 })
 
 if is_windows() then

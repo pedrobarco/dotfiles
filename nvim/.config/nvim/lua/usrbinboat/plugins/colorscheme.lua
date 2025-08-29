@@ -36,16 +36,13 @@ return {
 		end,
 	},
 	{
-		"Tsuzat/NeoSolarized.nvim",
+		"zenbones-theme/zenbones.nvim",
+		dependencies = { "rktjmp/lush.nvim" },
 		priority = 1000,
 		enabled = true,
 		config = function()
-			require("NeoSolarized").setup({
-				style = "light",
-				transparent = false,
-				italics = false,
-			})
-			vim.cmd.colorscheme("NeoSolarized")
+			vim.o.background = "dark"
+			vim.cmd.colorscheme("zenbones")
 		end,
 	},
 }
