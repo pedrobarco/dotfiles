@@ -5,6 +5,7 @@ $directory\
 $git_branch\
 $git_state\
 $git_status\
+${custom.jj}\
 $line_break\
 $character"""
 
@@ -34,3 +35,23 @@ stashed = "≡"
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
 style = "white"
+
+[custom.jj]
+command = '''
+jj log -r@ -n1 --ignore-working-copy --no-graph --color always -T '
+separate(" ",
+  change_id.shortest(6),
+  commit_id.shortest(6),
+  bookmarks.map(|x| if(
+    x.name().substr(0, 20).starts_with(x.name()),
+    x.name().substr(0, 20),
+    x.name().substr(0, 19) ++ "…")
+  ).join(" "),
+  if(conflict, "conflict"),
+  if(divergent, "divergent"),
+  if(hidden, "hidden"),
+)
+'
+'''
+detect_folders = [".jj"]
+format = " $output"
