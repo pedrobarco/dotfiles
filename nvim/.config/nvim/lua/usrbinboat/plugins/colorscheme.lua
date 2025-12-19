@@ -39,10 +39,23 @@ return {
 		"zenbones-theme/zenbones.nvim",
 		dependencies = { "rktjmp/lush.nvim" },
 		priority = 1000,
-		enabled = true,
+		enabled = false,
 		config = function()
 			vim.o.background = "dark"
 			vim.cmd.colorscheme("zenbones")
+		end,
+	},
+	{
+		"scottmckendry/cyberdream.nvim",
+		priority = 1000,
+		enabled = true,
+		config = function()
+			require("cyberdream").setup({
+				colors = {
+					bg = "#0d0d0d",
+				},
+			})
+			vim.cmd.colorscheme("cyberdream")
 		end,
 	},
 }

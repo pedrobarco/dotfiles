@@ -40,9 +40,10 @@ config.color_schemes = {
 	["gruvbox_material"] = require("themes/gruvbox_material"),
 	["oldtale"] = require("themes/oldtale"),
 	["melange_dark"] = require("themes/melange_dark"),
+	["cyberdream"] = require("themes/cyberdream"),
 }
 config.color_scheme = color_scheme(wezterm.gui.get_appearance(), {
-	dark = "zenbones_dark",
+	dark = "cyberdream",
 	light = "zenbones",
 })
 
