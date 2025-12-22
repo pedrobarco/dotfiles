@@ -43,6 +43,34 @@ force_pull() {
     git reset --hard "origin/${branch}"
 }
 
+prune_fetch() {
+    local main_branch="main"
+    if git show-ref --verify --quiet refs/heads/main; then
+        main_branch="main"
+    elif git show-ref --verify --quiet refs/heads/master; then
+        main_branch="master"
+    else
+        echo "error: no local 'main' or 'master' branch found."
+        return 1
+    fi
+
+    # fetch and prune remote branches
+    git fetch -p
+
+    # get list of branches that are gone
+    local gone_branches=$(git branch -vv | awk '/: gone]/ {print $1}')
+    if [ -z "$gone_branches" ]; then
+        return 0
+    fi
+
+    # delete merged branches
+    for b in $gone_branches; do
+        if git merge-base --is-ancestor "$b" "$main_branch"; then
+            git branch -d "$b"
+        fi
+    done
+}
+
 netshoot() {
     local overrides='{"metadata":{"annotations":{"sidecar.istio.io/inject":"false"}}}'
     local ns="${1:-$(kubectl config view --minify --output 'jsonpath={..namespace}'; echo)}"

@@ -32,3 +32,6 @@ alias gpr="open_pr"
 
 # reset branch to remote
 alias glf="force_pull"
+
+# fetch and prune
+alias gfp="prune_fetch"
