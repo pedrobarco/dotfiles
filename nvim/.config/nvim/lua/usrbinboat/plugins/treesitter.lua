@@ -1,71 +1,67 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
 		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			local configs = require("nvim-treesitter.configs")
-
-			---@diagnostic disable-next-line: missing-fields
-			configs.setup({
-				ensure_installed = {
-					"bash",
-					"css",
-					"dockerfile",
-					"gleam",
-					"go",
-					"hcl",
-					"helm",
-					"javascript",
-					"json",
-					"kotlin",
-					"lua",
-					"markdown",
-					"markdown_inline",
-					"nix",
-					"python",
-					"rust",
-					"terraform",
-					"typescript",
-					"vim",
-					"vimdoc",
-					"vue",
-					"yaml",
-				},
-				highlight = {
-					enable = true,
-				},
-				indent = {
-					enable = true,
-				},
-				incremental_selection = {
-					enable = true,
-				},
+			require("nvim-treesitter").setup({
+				install_dir = vim.fn.stdpath("data") .. "/site",
 			})
 
-			local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-			---@diagnostic disable-next-line: inject-field
-			parser_config.bru = {
-				install_info = {
-					url = "https://github.com/pedrobarco/tree-sitter-bru",
-					files = { "src/parser.c" },
-					branch = "main",
-					generate_requires_npm = false,
-					requires_generate_from_grammar = false,
-				},
+			-- install parsers
+			local parsers = {
+				"bash",
+				"css",
+				"dockerfile",
+				"gleam",
+				"go",
+				"hcl",
+				"helm",
+				"javascript",
+				"json",
+				"kotlin",
+				"lua",
+				"markdown",
+				"markdown_inline",
+				"nix",
+				"python",
+				"rust",
+				"terraform",
+				"typescript",
+				"vim",
+				"vimdoc",
+				"vue",
+				"yaml",
 			}
+			require("nvim-treesitter").install(parsers)
 
-			---@diagnostic disable-next-line: inject-field
-			parser_config.kcl = {
-				install_info = {
-					url = "https://github.com/kcl-lang/tree-sitter-kcl",
-					files = { "src/parser.c" },
-					branch = "main",
-					generate_requires_npm = false,
-					requires_generate_from_grammar = false,
-				},
-			}
+			-- enable highlighting and indentation for all installed parsers
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					if pcall(vim.treesitter.start) then
+						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
+				end,
+			})
+
+			-- register custom parsers
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "TSUpdate",
+				callback = function()
+					require("nvim-treesitter.parsers").bru = {
+						install_info = {
+							url = "https://github.com/pedrobarco/tree-sitter-bru",
+							branch = "main",
+						},
+					}
+					require("nvim-treesitter.parsers").kcl = {
+						install_info = {
+							url = "https://github.com/kcl-lang/tree-sitter-kcl",
+							branch = "main",
+						},
+					}
+				end,
+			})
 
 			vim.api.nvim_create_augroup("KCLFileType", { clear = true })
 			vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {

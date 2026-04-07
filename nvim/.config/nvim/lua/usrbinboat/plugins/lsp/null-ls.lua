@@ -37,14 +37,11 @@ return {
 			null_ls.setup({
 				-- setup formatters & linters
 				sources = {
-					require("none-ls.code_actions.eslint_d"),
 					require("none-ls.code_actions.eslint_d").with({
 						condition = function(utils)
 							return utils.root_has_file_matches(".eslintrc.*")
 						end,
 					}),
-					require("none-ls.formatting.rustfmt"),
-					formatting.nixpkgs_fmt,
 					formatting.terraform_fmt,
 				},
 

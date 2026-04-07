@@ -61,7 +61,9 @@ return {
 		},
 		{
 			"<leader>ff",
-			require("telescope.builtin").find_files,
+			function()
+				require("telescope.builtin").find_files()
+			end,
 			desc = "find files within current working directory, respects .gitignore",
 		},
 		{
@@ -80,29 +82,45 @@ return {
 		},
 		{
 			"<leader>fb",
-			require("telescope.builtin").buffers,
+			function()
+				require("telescope.builtin").buffers()
+			end,
 			desc = "list open buffers in current neovim instance",
 		},
-		{ "<leader>fh", require("telescope.builtin").help_tags, desc = "list available help tags" },
+		{
+			"<leader>fh",
+			function()
+				require("telescope.builtin").help_tags()
+			end,
+			desc = "list available help tags",
+		},
 		{
 			"<leader>fls",
-			require("telescope.builtin").lsp_document_symbols,
+			function()
+				require("telescope.builtin").lsp_document_symbols()
+			end,
 			desc = "list LSP document symbols in the current buffer",
 		},
 		-- git commands
 		{
 			"<leader>gc",
-			require("telescope.builtin").git_commits,
+			function()
+				require("telescope.builtin").git_commits()
+			end,
 			desc = "list all git commits (use <cr> to checkout)",
 		}, -- "gc" for git commits
 		{
 			"<leader>gfc",
-			require("telescope.builtin").git_bcommits,
+			function()
+				require("telescope.builtin").git_bcommits()
+			end,
 			desc = "list git commits for current file/buffer (use <cr> to checkout)",
 		}, -- "gfc" for git file commits
 		{
 			"<leader>gb",
-			require("telescope.builtin").git_branches,
+			function()
+				require("telescope.builtin").git_branches()
+			end,
 			desc = "list git branches (use <cr> to checkout)",
 		}, -- "gb" for git branches
 	},

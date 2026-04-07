@@ -106,19 +106,19 @@ return {
 
 				-- list of servers for mason to install
 				ensure_installed = {
-					"bzl",
 					"gopls",
 					"gradle_ls",
 					"kcl",
 					"kotlin_language_server",
 					"lua_ls",
 					"rust_analyzer",
+					"tailwindcss",
 					"terraformls",
 					"tflint",
 					"ts_ls",
-					"vue_ls",
 					"vtsls",
-					"tailwindcss",
+					"vue_ls",
+					"starpls",
 				},
 				automatic_enable = {
 					exclude = {
