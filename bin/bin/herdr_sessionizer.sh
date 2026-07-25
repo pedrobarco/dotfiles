@@ -11,6 +11,12 @@ if [[ -z $repo ]]; then
         | fzy)
 fi
 
+# bail on empty selection (e.g. fzy cancelled with esc); an empty repo would
+# otherwise resolve $selected_repo to $REPOS itself and create a blank workspace
+if [[ -z $repo ]]; then
+    exit 0
+fi
+
 selected_repo="$REPOS/$repo"
 if [[ ! -d $selected_repo ]]; then
     exit 0
