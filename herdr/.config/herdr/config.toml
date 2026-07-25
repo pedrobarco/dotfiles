@@ -2,6 +2,29 @@
 [keys]
 prefix = "ctrl+a"
 
+# tmux-style overrides (only keys that differ from herdr defaults; tmux verbs
+# already matching a default — new_tab, next/previous_tab, switch_tab, close_tab,
+# close_pane, zoom, copy_mode, resize_mode — are left on their defaults)
+rename_tab = "prefix+comma"       # tmux: rename-window
+split_vertical = "prefix+%"       # tmux: split-window -h (side-by-side)
+split_horizontal = "prefix+quote" # tmux: split-window (stacked)
+swap_pane_left = "prefix+{"       # tmux: swap-pane -U
+swap_pane_right = "prefix+}"      # tmux: swap-pane -D
+last_pane = ["prefix+a", "prefix+semicolon"]  # tmux: prefix+a (screen) and ; (last-pane)
+
+# tmux-style session/workspace management
+detach = "prefix+d"               # tmux: detach-client
+goto = "prefix+w"                 # native unified picker (workspaces + tabs + agents; press / to search)
+settings = "prefix+shift+s"       # relocated (moved off prefix+s)
+previous_workspace = ["prefix+(", "prefix+shift+k"]  # tmux: switch-client -p
+next_workspace = ["prefix+)", "prefix+shift+j"]      # tmux: switch-client -n
+rename_workspace = "prefix+$"     # tmux: rename-session
+
+# agents (no tmux equivalent; unset by default in herdr). indexed focus_agent is
+# avoided because terminals can't encode ctrl/alt/shift+digit; use letter cycling
+next_agent = "prefix+j"           # cycle to next agent (by urgency, see [ui])
+previous_agent = "prefix+k"       # cycle to previous agent
+
 # vim-herdr-navigation: seamless ctrl+h/j/k/l between herdr panes and vim splits
 # https://github.com/paulbkim-dev/vim-herdr-navigation
 [[keys.command]]
@@ -27,3 +50,41 @@ key = "ctrl+l"
 type = "plugin_action"
 command = "vim-herdr-navigation.right"
 description = "navigate right (vim/herdr)"
+
+# repo/workspace switcher: fzy-pick a git repo under $REPOS, then focus its
+# workspace if one exists (matched by label) or create a new one
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec \"$HOME/bin/herdr_sessionizer.sh\""
+description = "repo/workspace switcher"
+width = "80%"
+height = "80%"
+
+# workspace picker: fzy-pick an open workspace (by status) and focus it
+# (tmux: choose-tree -Zs — workspaces = sessions)
+[[keys.command]]
+key = "prefix+s"
+type = "popup"
+command = "exec \"$HOME/bin/herdr_workspace_picker.sh\""
+description = "workspace picker"
+width = "80%"
+height = "80%"
+
+# agent picker: fzy-pick an agent pane (by status) and focus it
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "exec \"$HOME/bin/herdr_agent_picker.sh\""
+description = "agent picker"
+width = "80%"
+height = "80%"
+
+[ui]
+# order the agent panel by attention (blocked > done > working > idle) so
+# focus_agent indexes and agent cycling mean "Nth most urgent agent"
+agent_panel_sort = "priority"
+
+[theme]
+name = "terminal"
+auto_switch = false
