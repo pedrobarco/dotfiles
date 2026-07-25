@@ -1,0 +1,29 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "augment/claude-opus-4-8",
+  "provider": {
+    "augment": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Augment (via AOP)",
+      "options": {
+        "baseURL": "http://localhost:7888/v1"
+      },
+      "models": {
+        "claude-opus-4-8": { "name": "Claude Opus 4.8" },
+        "claude-opus-4-8-high": { "name": "Claude Opus 4.8 (high)" },
+        "claude-opus-4-8-medium": { "name": "Claude Opus 4.8 (medium)" },
+        "claude-opus-4-8-xhigh": { "name": "Claude Opus 4.8 (xhigh)" },
+        "claude-sonnet-4-6": { "name": "Claude Sonnet 4.6" },
+        "claude-sonnet-4-5": { "name": "Claude Sonnet 4.5" },
+        "claude-haiku-4-5": { "name": "Claude Haiku 4.5" }
+      }
+    }
+  },
+  "mcp": {
+    "augment-context-engine": {
+      "type": "local",
+      "command": ["auggie", "--mcp", "--mcp-auto-workspace"],
+      "enabled": true
+    }
+  }
+}
