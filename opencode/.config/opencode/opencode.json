@@ -18,12 +18,5 @@
         "claude-haiku-4-5": { "name": "Claude Haiku 4.5" }
       }
     }
-  },
-  "mcp": {
-    "augment-context-engine": {
-      "type": "local",
-      "command": ["auggie", "--mcp", "--mcp-auto-workspace"],
-      "enabled": true
-    }
   }
 }
