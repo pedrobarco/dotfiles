@@ -1,0 +1,5 @@
+# herdr writes plugin checkouts, registry state, and logs into this dir;
+# track only the config, ignore everything else it generates.
+*
+!.gitignore
+!config.toml
