@@ -80,6 +80,14 @@ description = "agent picker"
 width = "80%"
 height = "80%"
 
+# worktree manager (worktrunk): fzf-pick a worktree/branch — enter switches or
+# creates, ctrl-x removes. pairs with prefix+t (repo sessionizer)
+[[keys.command]]
+key = "prefix+shift+t"
+type = "plugin_action"
+command = "worktrunk.manage"
+description = "worktree switch/create/remove"
+
 [ui]
 # order the agent panel by attention (blocked > done > working > idle) so
 # focus_agent indexes and agent cycling mean "Nth most urgent agent"

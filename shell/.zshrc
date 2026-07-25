@@ -48,5 +48,10 @@ antidote load
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
 eval "$(starship init zsh)"
 # }}}
+# Worktrunk {{{
+# =========
+# git worktree manager; the shell function lets `wt switch` cd into the worktree
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+# }}}
 
 # vim:foldmethod=marker:foldlevel=0:sts=4:ts=4:sw=4:et
