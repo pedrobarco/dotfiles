@@ -1,0 +1,30 @@
+version = 1
+agents = ["opencode"]
+
+# Reconcile after edits:
+#   npx --yes @sentry/dotagents@latest --user install
+
+[[skills]]
+name = "herdr"
+source = "pedrobarco/herdr"
+path = "."
+
+[[skills]]
+name = "skill-creator"
+source = "anthropics/skills"
+path = "skills/skill-creator"
+
+[[skills]]
+name = "tdd"
+source = "mattpocock/skills"
+path = "skills/engineering/tdd"
+
+[[skills]]
+name = "grill-with-docs"
+source = "mattpocock/skills"
+path = "skills/engineering/grill-with-docs"
+
+[[skills]]
+name = "impeccable"
+source = "pbakaus/impeccable"
+path = ".agents/skills/impeccable"

@@ -1,3 +1,4 @@
+onboarding = false
 # change default prefix to same as tmux (screen-style)
 [keys]
 prefix = "ctrl+a"
