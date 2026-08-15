@@ -28,3 +28,23 @@ path = "skills/engineering/grill-with-docs"
 name = "impeccable"
 source = "pbakaus/impeccable"
 path = ".agents/skills/impeccable"
+
+[[skills]]
+name = "generating-tickets"
+source = "pedrobarco/dotfiles"
+path = "agents/.agents/skills/generating-tickets"
+
+[[skills]]
+name = "prioritizing-work"
+source = "pedrobarco/dotfiles"
+path = "agents/.agents/skills/prioritizing-work"
+
+[[skills]]
+name = "implementing-features"
+source = "pedrobarco/dotfiles"
+path = "agents/.agents/skills/implementing-features"
+
+[[skills]]
+name = "reviewing-pull-requests"
+source = "pedrobarco/dotfiles"
+path = "agents/.agents/skills/reviewing-pull-requests"
