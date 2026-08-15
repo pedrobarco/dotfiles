@@ -5,7 +5,9 @@ description: "Judge whether a completed change is ready to land: with fresh cont
 
 # Reviewing Pull Requests
 
-This is the reviewer role of the agentic SDLC. It looks at a change with fresh eyes — deliberately separate from the developer that wrote it — reaches a verdict, and then either reports findings and next steps or (when able) merges and cleans up. It is a gate, not a rubber stamp.
+This is the reviewer/gate role of the agentic SDLC. It looks at a change with fresh eyes — deliberately separate from the developer that wrote it — reaches a verdict, and then either reports findings and next steps or (when able) merges and cleans up. It is a gate, not a rubber stamp.
+
+*Pipeline position: step 4 of 4 — upstream: `implementing-features`; downstream: `generating-tickets` (surfaced follow-ups feed back into the loop).*
 
 You are typically pointed at the work a developer produced with `implementing-features`. If no PR/branch is given, ask which one before starting.
 

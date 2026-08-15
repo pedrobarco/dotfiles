@@ -5,7 +5,9 @@ description: "Review the current state of a repository's main branch to surface 
 
 # Generating Tickets
 
-This is the reviewer role of the agentic SDLC. It runs in the repository root, assesses the current state of `main`, surfaces candidate work, and turns findings into a draft ticket list. It is a proposer, not an implementer and not a merger.
+This is the triage role of the agentic SDLC. It runs in the repository root, assesses the current state of `main`, surfaces candidate work, and turns findings into a draft ticket list. It is a proposer, not an implementer and not a merger.
+
+*Pipeline position: step 1 of 4 — entry point; upstream: `reviewing-pull-requests` (follow-ups feed back here); downstream: `prioritizing-work`.*
 
 Run this when you want to know what work a repo needs next, or to convert a review pass into tickets. To rank existing tickets and pick what to tackle, use `prioritizing-work` instead.
 

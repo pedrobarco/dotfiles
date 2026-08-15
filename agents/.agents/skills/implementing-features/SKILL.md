@@ -7,6 +7,8 @@ description: "Implement one scoped ticket or feature end-to-end inside an isolat
 
 This is the developer role of the agentic SDLC. It runs inside a single git worktree, implements exactly one ticket, verifies it, and opens a pull request. It owns its branch only; it never merges, never reviews itself, and never touches other worktrees or `main`.
 
+*Pipeline position: step 3 of 4 — upstream: `prioritizing-work`; downstream: `reviewing-pull-requests`.*
+
 You are typically dispatched here by `prioritizing-work` with a specific ticket. If no ticket is given, ask which one before starting.
 
 ## Scope

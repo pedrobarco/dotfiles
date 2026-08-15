@@ -7,6 +7,8 @@ description: "Rank an existing backlog by stated priority, value/complexity, eff
 
 This is the planner role of the agentic SDLC. It runs in the repository root, reads the existing backlog, ranks it, and recommends the next best candidates. It can optionally fire-and-forget a developer agent into an isolated worktree for the chosen candidate, then returns immediately — it never waits on, polls, or babysits developers.
 
+*Pipeline position: step 2 of 4 — upstream: `generating-tickets`; downstream: `implementing-features` (via dispatch).*
+
 To generate the backlog in the first place (review main → draft tickets), use `generating-tickets`.
 
 ## Scope
