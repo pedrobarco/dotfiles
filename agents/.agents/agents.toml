@@ -35,9 +35,19 @@ source = "pbakaus/impeccable"
 path = ".agents/skills/impeccable"
 
 [[skills]]
-name = "tuicr"
-source = "agavra/tuicr"
-path = "skills/tuicr"
+name = "plannotator-review"
+source = "backnotprop/plannotator"
+path = "apps/skills/core/plannotator-review"
+
+[[skills]]
+name = "plannotator-annotate"
+source = "backnotprop/plannotator"
+path = "apps/skills/core/plannotator-annotate"
+
+[[skills]]
+name = "plannotator-last"
+source = "backnotprop/plannotator"
+path = "apps/skills/core/plannotator-last"
 
 [[skills]]
 name = "generating-tickets"
