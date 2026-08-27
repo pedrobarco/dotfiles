@@ -4,9 +4,14 @@ agents = ["opencode"]
 # Reconcile after edits:
 #   npx --yes @sentry/dotagents@latest --user install
 
+[[mcp]]
+name = "notion"
+url = "https://mcp.notion.com/mcp"
+
 [[skills]]
 name = "herdr"
 source = "pedrobarco/herdr"
+branch = "master"
 path = "."
 
 [[skills]]
@@ -32,19 +37,23 @@ path = ".agents/skills/impeccable"
 [[skills]]
 name = "generating-tickets"
 source = "pedrobarco/dotfiles"
+branch = "master"
 path = "agents/.agents/skills/generating-tickets"
 
 [[skills]]
 name = "prioritizing-work"
 source = "pedrobarco/dotfiles"
+branch = "master"
 path = "agents/.agents/skills/prioritizing-work"
 
 [[skills]]
 name = "implementing-features"
 source = "pedrobarco/dotfiles"
+branch = "master"
 path = "agents/.agents/skills/implementing-features"
 
 [[skills]]
 name = "reviewing-pull-requests"
 source = "pedrobarco/dotfiles"
+branch = "master"
 path = "agents/.agents/skills/reviewing-pull-requests"
