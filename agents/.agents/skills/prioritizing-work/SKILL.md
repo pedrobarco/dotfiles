@@ -42,7 +42,7 @@ Output a ranked shortlist (top 3–5) where each entry states: ticket ID/title, 
 
 ## Optional dispatch (fire-and-forget)
 
-Only when the human picks a candidate to start. Dispatch fires immediately for the chosen candidate — no extra confirmation — then this skill returns to planning without waiting.
+Only when the human picks a candidate to start. Dispatch fires immediately for the chosen candidate — no extra confirmation — then this skill returns to planning without waiting. "Fire-and-forget" means never waiting for the developer to *finish*: the `agent prompt … --wait` in step 5 only blocks until the developer accepts the work (its first settled lifecycle state), which confirms the task was delivered — it does not poll to completion.
 
 Only dispatch from inside Herdr. Follow the `herdr` skill for all Herdr mechanics — verifying `HERDR_ENV=1`, workspace/pane/agent commands, reading IDs from JSON, and `--no-focus` conventions. Do not hardcode Herdr command syntax here; the installed binary is the authority. If not inside Herdr, say so and stop at recommending.
 
@@ -55,19 +55,19 @@ Worktrees are managed by **worktrunk** (`wt`), the same tool behind the `prefix+
    wt list --format json   # read the worktree .path for <branch>
    ```
 3. Create a fresh, focused herdr workspace rooted at that worktree path (label `dev-<repo>-<slug>`), per the `herdr` skill. Read the new workspace's root pane ID from the JSON response.
-4. Start a developer agent named `dev-<repo>-<slug>` in that root pane, per the `herdr` skill — using the agent **kind** and native **prompt args** from the provider matrix below (native args go after `--`).
-5. The one-shot prompt tells the developer to load `implementing-features` and implement the chosen ticket (include the ticket ID/link and acceptance criteria).
-6. Return immediately. Do not wait for or poll the developer. The developer opens a PR when done; CI and human review gate the merge.
+4. Start the developer agent **interactively** in that root pane, per the `herdr` skill — pass only the agent **kind** (from the matrix below) and `--pane`. Do **not** pass the task after `--`, and never a print/one-shot flag (auggie `-p`, claude `-p`, opencode `run`): those launch the agent in non-interactive mode, so Herdr never tracks its lifecycle → false `idle`, frozen state, and `agent prompt`/`agent wait` become unusable. Native args after `--` are only for reattach/config flags, never the task.
+5. Deliver the task via `herdr agent prompt dev-<repo>-<slug> "<prompt>" --wait` (per the `herdr` skill). The prompt tells the developer to load `implementing-features` and implement the chosen ticket (include the ticket ID/link and acceptance criteria). `--wait` returns as soon as the developer accepts the work — it confirms delivery, it does not wait for completion.
+6. Return immediately. Do not wait for or poll the developer past that acceptance. The developer opens a PR when done; CI and human review gate the merge.
 
-### Provider launch matrix
+### Provider kind matrix
 
-The `herdr` agent kind and the native prompt args (passed after `--`) are the only provider-specific glue. Everything else is identical, and the Herdr invocation itself comes from the `herdr` skill.
+The `herdr` agent kind is the only provider-specific glue. The task is **always** delivered via `herdr agent prompt` (step 5), never as native launch args — so there is no per-provider prompt syntax to track.
 
-| Provider | herdr kind | Native prompt args (after `--`) |
-| --- | --- | --- |
-| auggie | `auggie` | `-p "<prompt>"` (`--continue` / `--resume` to reattach; `--queue` for follow-ups) |
-| opencode | `opencode` | `run "<prompt>"` |
-| claude | `claude` | `-p "<prompt>"` |
+| Provider | herdr kind |
+| --- | --- |
+| auggie | `auggie` |
+| opencode | `opencode` |
+| claude | `claude` |
 
 Choose the provider from the repo/user config or the human's instruction.
 
@@ -80,7 +80,7 @@ Choose the provider from the repo/user config or the human's instruction.
 ## Definition of Done
 
 - A ranked, justified shortlist of next candidates presented (with blocked work called out).
-- If a candidate was chosen: a worktrunk worktree created for `feature/<feat>` or `hotfix/<bug>`, a fresh focused herdr workspace rooted at that worktree path, and a developer agent started in it (per the `herdr` skill, using the provider matrix) — then control returned without waiting.
+- If a candidate was chosen: a worktrunk worktree created for `feature/<feat>` or `hotfix/<bug>`, a fresh focused herdr workspace rooted at that worktree path, and a developer agent started interactively in it with the task delivered via `herdr agent prompt … --wait` (per the `herdr` skill, using the kind matrix) — then control returned without waiting for completion.
 
 ## Related
 
