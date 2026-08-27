@@ -69,7 +69,7 @@ The `herdr` agent kind is the only provider-specific glue. The task is **always*
 | opencode | `opencode` |
 | claude | `claude` |
 
-Choose the provider from the repo/user config or the human's instruction.
+Choose the provider from the repo/user config or the human's instruction. If none declares one, infer from what the repo/environment already uses (e.g. an installed CLI or existing agent config); if still ambiguous, ask once rather than defaulting to a provider.
 
 ## Hard rules
 
