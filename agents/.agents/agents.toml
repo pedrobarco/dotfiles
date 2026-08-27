@@ -35,6 +35,11 @@ source = "pbakaus/impeccable"
 path = ".agents/skills/impeccable"
 
 [[skills]]
+name = "tuicr"
+source = "agavra/tuicr"
+path = "skills/tuicr"
+
+[[skills]]
 name = "generating-tickets"
 source = "pedrobarco/dotfiles"
 branch = "master"
