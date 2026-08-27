@@ -28,9 +28,8 @@ Never do the following from this skill:
 Establish the current state before proposing anything.
 
 1. Confirm you are on the repository's main/default branch and the working tree is clean.
-2. Read the repo's `AGENTS.md` (and any nested ones) for build/test commands, boundaries, and conventions.
+2. Read the repo's `AGENTS.md` (and any nested ones — the nearest file up-tree wins) for the conventions this stage needs: the **ticketing system** (this skill is ticketing-agnostic — GitHub Issues, Jira, Linear, etc.; use whatever the repo declares) and the **verify commands** (build/lint/test) you assess against, plus boundaries and any hard rules. Read them by meaning, wherever the repo states them — don't require a specific layout or a dedicated block. `AGENTS.md` is the authority for these mechanical conventions; it does not override this skill's safety gates (approval before any write, read-only against the codebase, no secrets). If the repo has no `AGENTS.md` or is silent on a key, infer from repo signals (ticketing from `.github/ISSUE_TEMPLATE` or repo config, commands from a Makefile/justfile/package scripts); if still ambiguous, ask once rather than assume.
 3. Skim recent history (`git log`, recent PRs) to understand what changed and what is in flight.
-4. Note the ticketing system in use from repo config or `AGENTS.md` — this skill is ticketing-agnostic (GitHub Issues, Jira, Linear, etc.). Do not assume a tool; use whatever the repo declares.
 
 ## Review lenses
 

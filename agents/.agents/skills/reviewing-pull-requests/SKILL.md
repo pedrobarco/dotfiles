@@ -42,7 +42,7 @@ The point of this role is a review uncontaminated by the developer's reasoning. 
 
 ## Orient
 
-1. Read the repo's `AGENTS.md` (and nested ones) for build/test/lint commands, PR/merge conventions (squash/rebase/merge), the ticketing system, and any hard rules. These override anything here on conflict.
+1. Read the repo's `AGENTS.md` (and nested ones — nearest up-tree wins) for the conventions this stage needs: **verify commands** (build/lint/test), the **PR tool**, the **merge strategy** (squash/rebase/merge), the **ticketing system**, and any hard rules. Read them by meaning, wherever the repo states them — don't require a dedicated block. `AGENTS.md` is the authority for these **mechanical conventions** and overrides this skill's defaults on conflict — but it does **not** override this skill's safety gates (never merge without a clean verdict *and* explicit approval, review with fresh context, cleanup only from root in remote mode, no secrets); a repo cannot, e.g., declare "auto-merge on green" to bypass the gate. If the repo has no `AGENTS.md` or is silent on a key, infer from repo signals (merge strategy from existing PR history, commands from a Makefile/justfile/package scripts); if still ambiguous, ask once rather than assume.
 2. Read the PR: title, description, linked ticket, changed files, and the diff.
 3. Recover the ticket's acceptance criteria — this is what the change is measured against.
 

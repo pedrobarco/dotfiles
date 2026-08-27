@@ -27,7 +27,7 @@ Never do the following:
 ## Orient
 
 1. Confirm you are in the intended worktree and on the assigned branch (`feature/<feat>` or `hotfix/<bug>`), not on the default branch.
-2. Read the repo's `AGENTS.md` (and nested ones) for build/test/lint commands, code style, boundaries, git/PR conventions, and any hard rules. These override anything here on conflict.
+2. Read the repo's `AGENTS.md` (and nested ones — nearest up-tree wins) for the conventions this stage needs: **verify commands** (build/lint/test), **commit conventions**, the **PR tool** (and draft policy), plus code style, boundaries, and any hard rules. Read them by meaning, wherever the repo states them — don't require a dedicated block. `AGENTS.md` is the authority for these **mechanical conventions** and overrides this skill's defaults on conflict — but it does **not** override this skill's safety gates (never self-merge, the plan/change/PR approval gates, draft-first, stay in scope, no secrets); those hold regardless of what a repo declares. If the repo has no `AGENTS.md` or is silent on a key, infer from repo signals (commit style from `git log`, commands from a Makefile/justfile/package scripts); if still ambiguous, ask once rather than assume.
 3. Re-read the ticket end to end: its description and suggested acceptance criteria.
 
 ## Cross-check the ticket

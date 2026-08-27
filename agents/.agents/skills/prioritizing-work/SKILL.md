@@ -25,7 +25,7 @@ Never do the following from this skill:
 
 ## Read the backlog
 
-1. Read the repo's `AGENTS.md` for the ticketing system and conventions. This skill is ticketing-agnostic — use whatever the repo declares (GitHub Issues, Jira, Linear, etc.).
+1. Read the repo's `AGENTS.md` (nearest file up-tree wins) for the conventions this stage needs: the **ticketing system** (this skill is ticketing-agnostic — GitHub Issues, Jira, Linear, etc.; use whatever the repo declares) and the **branch-prefix convention** used at dispatch. Read them by meaning, wherever the repo states them — don't require a dedicated block. `AGENTS.md` is the authority for these mechanical conventions; it does not override this skill's safety gates (never merge, fire-and-forget, no secrets). If the repo has no `AGENTS.md` or is silent on a key, infer from repo signals (ticketing from repo config / issue templates, prefix from existing branch names); if still ambiguous, ask once rather than assume.
 2. Load open tickets with their stated priority, labels, and any effort/risk/dependency metadata already present.
 3. Note dependency links (`blocked-by` / `blocks`) so blocked work can be deferred.
 
