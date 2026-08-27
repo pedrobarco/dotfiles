@@ -48,7 +48,7 @@ Only dispatch from inside Herdr. Follow the `herdr` skill for all Herdr mechanic
 
 Worktrees are managed by **worktrunk** (`wt`), the same tool behind the `prefix+shift+t` worktree manager. herdr **workspaces** are the session unit. Each dispatch gets its own worktree *and* its own fresh workspace — never reuse a workspace, since parallel developers must not share a working directory.
 
-1. Derive names: branch `feature/<feat>` for features/refactors/chores or `hotfix/<bug>` for bug fixes (choose from the ticket's type). A `security` ticket routes by urgency — an urgent fix uses `hotfix/<bug>`, otherwise `feature/<feat>`. Workspace label + agent name `dev-<repo>-<slug>` (`<repo>` = repository name, `<slug>` = short slug from the ticket).
+1. Derive names. **Branch:** use the repo's branch-prefix convention from `AGENTS.md` when it declares one (e.g. `feat/`, `fix/`); otherwise default to `feature/<feat>` for features/refactors/chores or `hotfix/<bug>` for bug fixes (choose from the ticket's type). A `security` ticket routes by urgency — an urgent fix takes the bug/hotfix prefix, otherwise the feature prefix. Workspace label + agent name `dev-<repo>-<slug>` (`<repo>` = repository name, `<slug>` = short slug from the ticket).
 2. Create the worktree with worktrunk and read back its path (do not `cd` into it here):
    ```bash
    wt switch --create <branch> --no-cd
@@ -80,7 +80,7 @@ Choose the provider from the repo/user config or the human's instruction.
 ## Definition of Done
 
 - A ranked, justified shortlist of next candidates presented (with blocked work called out).
-- If a candidate was chosen: a worktrunk worktree created for `feature/<feat>` or `hotfix/<bug>`, a fresh dedicated herdr workspace rooted at that worktree path, and a developer agent started interactively in it with the task delivered via `herdr agent prompt … --wait` (per the `herdr` skill, using the kind matrix) — then control returned without waiting for completion.
+- If a candidate was chosen: a worktrunk worktree created on the derived branch (the repo's `AGENTS.md` prefix convention when declared, else `feature/<feat>` or `hotfix/<bug>`), a fresh dedicated herdr workspace rooted at that worktree path, and a developer agent started interactively in it with the task delivered via `herdr agent prompt … --wait` (per the `herdr` skill, using the kind matrix) — then control returned without waiting for completion.
 
 ## Related
 
