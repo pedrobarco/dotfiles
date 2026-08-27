@@ -68,6 +68,8 @@ The ticket is **not complete** until all of the following pass:
 
 Iterate until every check is green. Do not bypass, skip, or disable failing checks; fix the cause or, if genuinely blocked, stop and report why.
 
+Distinguish a check that fails *on your change* (must fix — never bypass) from a check that fails because the **local tooling environment is broken** (e.g. a pre-commit hook whose cached linter binary panics due to a toolchain version mismatch). For the latter, run the underlying tool directly to confirm your change is actually clean, then proceed and **note the bypass and your equivalent verification in the PR body** so the reviewer confirms CI is green. Do not silently `--no-verify`.
+
 ## Review the changes and get approval
 
 Once every check is green, stop and present the completed work for review before doing anything else. Summarize for the human:
