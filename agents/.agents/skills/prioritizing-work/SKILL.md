@@ -48,13 +48,13 @@ Only dispatch from inside Herdr. Follow the `herdr` skill for all Herdr mechanic
 
 Worktrees are managed by **worktrunk** (`wt`), the same tool behind the `prefix+shift+t` worktree manager. herdr **workspaces** are the session unit. Each dispatch gets its own worktree *and* its own fresh workspace — never reuse a workspace, since parallel developers must not share a working directory.
 
-1. Derive names: branch `feature/<feat>` for features/refactors/chores or `hotfix/<bug>` for bug fixes (choose from the ticket's type); workspace label + agent name `dev-<repo>-<slug>` (`<repo>` = repository name, `<slug>` = short slug from the ticket).
+1. Derive names: branch `feature/<feat>` for features/refactors/chores or `hotfix/<bug>` for bug fixes (choose from the ticket's type). A `security` ticket routes by urgency — an urgent fix uses `hotfix/<bug>`, otherwise `feature/<feat>`. Workspace label + agent name `dev-<repo>-<slug>` (`<repo>` = repository name, `<slug>` = short slug from the ticket).
 2. Create the worktree with worktrunk and read back its path (do not `cd` into it here):
    ```bash
    wt switch --create <branch> --no-cd
    wt list --format json   # read the worktree .path for <branch>
    ```
-3. Create a fresh, focused herdr workspace rooted at that worktree path (label `dev-<repo>-<slug>`), per the `herdr` skill. Read the new workspace's root pane ID from the JSON response.
+3. Create a fresh, dedicated herdr workspace rooted at that worktree path (label `dev-<repo>-<slug>`), per the `herdr` skill. Read the new workspace's root pane ID from the JSON response.
 4. Start the developer agent **interactively** in that root pane, per the `herdr` skill — pass only the agent **kind** (from the matrix below) and `--pane`. Do **not** pass the task after `--`, and never a print/one-shot flag (auggie `-p`, claude `-p`, opencode `run`): those launch the agent in non-interactive mode, so Herdr never tracks its lifecycle → false `idle`, frozen state, and `agent prompt`/`agent wait` become unusable. Native args after `--` are only for reattach/config flags, never the task.
 5. Deliver the task via `herdr agent prompt dev-<repo>-<slug> "<prompt>" --wait` (per the `herdr` skill). The prompt tells the developer to load `implementing-features` and implement the chosen ticket (include the ticket ID/link and acceptance criteria). `--wait` returns as soon as the developer accepts the work — it confirms delivery, it does not wait for completion.
 6. Return immediately. Do not wait for or poll the developer past that acceptance. The developer opens a PR when done; CI and human review gate the merge.
@@ -80,7 +80,7 @@ Choose the provider from the repo/user config or the human's instruction.
 ## Definition of Done
 
 - A ranked, justified shortlist of next candidates presented (with blocked work called out).
-- If a candidate was chosen: a worktrunk worktree created for `feature/<feat>` or `hotfix/<bug>`, a fresh focused herdr workspace rooted at that worktree path, and a developer agent started interactively in it with the task delivered via `herdr agent prompt … --wait` (per the `herdr` skill, using the kind matrix) — then control returned without waiting for completion.
+- If a candidate was chosen: a worktrunk worktree created for `feature/<feat>` or `hotfix/<bug>`, a fresh dedicated herdr workspace rooted at that worktree path, and a developer agent started interactively in it with the task delivered via `herdr agent prompt … --wait` (per the `herdr` skill, using the kind matrix) — then control returned without waiting for completion.
 
 ## Related
 

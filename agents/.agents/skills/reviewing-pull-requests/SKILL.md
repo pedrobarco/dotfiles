@@ -83,11 +83,13 @@ Present the verdict to the human. Two outcomes:
 
 Execute only in remote mode, after the human explicitly approves, and only from the repository root. Never from inside the worktree.
 
+Dispatch is fire-and-forget, so you did **not** inherit the branch or `dev-<repo>-<slug>` from `prioritizing-work` — recover them: the **branch** is the PR head (`gh pr view <pr>` → head ref), and the developer's **worktree path** comes from `wt list --format json` for that branch. Match the herdr agent/workspace via `herdr agent list` / `herdr workspace list` on that worktree path (or the ticket slug) rather than assuming the name.
+
 1. **Merge** the PR using the repo's convention from `AGENTS.md` (`gh pr merge <pr> --squash|--rebase|--merge`, or the declared tool).
-2. **Tear down the developer's herdr agent + workspace** — per the `herdr` skill (verify `HERDR_ENV=1`, find the `dev-<repo>-<slug>` agent/workspace, stop the agent, close its workspace). Do not hardcode Herdr command syntax; the installed binary is the authority.
+2. **Tear down the developer's herdr agent + workspace** — per the `herdr` skill (verify `HERDR_ENV=1`, find the `dev-<repo>-<slug>` agent/workspace as recovered above, stop the agent, close its workspace). Do not hardcode Herdr command syntax; the installed binary is the authority.
 3. **Remove the worktree** with worktrunk from the root, after confirming nothing is checked out there:
    ```bash
-   wt remove <branch>   # worktrunk; run from the main checkout, not the worktree
+   wt remove <branch>   # worktrunk; <branch> = the PR head recovered above; run from the main checkout, not the worktree
    ```
 4. Report back: merge result, workspace/agent torn down, worktree removed, and any non-blocking follow-ups left for later.
 
