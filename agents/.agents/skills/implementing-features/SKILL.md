@@ -21,7 +21,7 @@ Never do the following:
 
 - Merge the PR or push to `main`/the default branch.
 - Review or approve your own work as the gate.
-- Edit files outside this worktree, or create nested worktrees. The worktree's lifecycle (creation and later removal via worktrunk) is owned by the dispatcher/human, not by you — never remove or switch it.
+- Edit files outside this worktree, or create nested worktrees. The worktree's lifecycle (creation and later removal via worktrunk (`wt`)) is owned by the dispatcher/human, not by you — never remove or switch it.
 - Expand scope beyond the ticket. If the ticket is wrong or too big, stop and report back.
 
 ## Orient

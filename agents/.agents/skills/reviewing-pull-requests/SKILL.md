@@ -34,7 +34,7 @@ Never do the following:
 
 ## Get fresh context
 
-The point of this role is a review uncontaminated by the developer's reasoning. Do the review in a **fresh-context subagent** (the provider's native subagent/Task primitive — auggie, opencode, and claude each expose one), not in the context that implemented the change. A subagent gives a clean context window even when launched from the developer's own session (local mode).
+The point of this role is a review uncontaminated by the developer's reasoning. Do the review in a **fresh-context subagent** (the provider's native subagent/Task primitive — auggie, opencode, claude, and cursor each expose one), not in the context that implemented the change. A subagent gives a clean context window even when launched from the developer's own session (local mode).
 
 - **Remote:** the subagent reads the PR through the repo's PR tool (`gh pr view <pr>`, `gh pr diff <pr>`, `gh pr checks <pr>`, or the tool `AGENTS.md` declares) — it does not need to `cd` into the worktree.
 - **Local:** the subagent reads the live worktree (diff against the base branch, changed files, and can run the repo's checks) since the code is on disk.
