@@ -18,5 +18,11 @@
         "claude-haiku-4-5": { "name": "Claude Haiku 4.5" }
       }
     }
+  },
+  "mcp": {
+    "notion": {
+      "type": "remote",
+      "url": "https://mcp.notion.com/mcp"
+    }
   }
 }

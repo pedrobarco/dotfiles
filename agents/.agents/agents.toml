@@ -1,5 +1,9 @@
 version = 1
-agents = ["opencode"]
+
+# Agent targets — dotagents projects skills, MCP, hooks, and subagents to every
+# ID listed here on `npx @sentry/dotagents --user install`.
+# Supported: claude, codex, cursor, opencode, vscode — add or remove as needed.
+agents = ["opencode", "cursor"]
 
 # Reconcile after edits:
 #   npx --yes @sentry/dotagents@latest --user install
