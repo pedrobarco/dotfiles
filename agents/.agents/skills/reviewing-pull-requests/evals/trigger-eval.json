@@ -1,0 +1,22 @@
+[
+  {"query": "review the open PR on feature/csv-export and tell me if it's ready to merge", "should_trigger": true},
+  {"query": "the dev agent just opened a pull request for issue #212 — give it a fresh-eyes review before i merge", "should_trigger": true},
+  {"query": "gate this PR: check it meets the ticket's acceptance criteria and CI is green, then recommend merge or not", "should_trigger": true},
+  {"query": "close out the developer's work on the search branch — review, and if it's clean merge it and clean up the worktree", "should_trigger": true},
+  {"query": "do a pre-PR self-check on my current worktree before i open a pull request", "should_trigger": true},
+  {"query": "is the change on this branch good enough to land? review the diff against the ticket", "should_trigger": true},
+  {"query": "review PR #340 with a fresh context separate from whoever wrote it and give a verdict", "should_trigger": true},
+  {"query": "look over the finished feature branch and decide whether we should merge and tear down the worktree", "should_trigger": true},
+  {"query": "implement the changes for issue #212 and open the PR", "should_trigger": false},
+  {"query": "which ticket should i work on next from the backlog?", "should_trigger": false},
+  {"query": "review main and draft tickets for the problems you find", "should_trigger": false},
+  {"query": "prioritize my open issues and dispatch a developer on the top one", "should_trigger": false},
+  {"query": "just merge PR #340, i've already reviewed it myself", "should_trigger": false},
+  {"query": "write more unit tests to raise coverage on the payments module", "should_trigger": false},
+  {"query": "summarize what this pull request changes so i can paste it in slack", "should_trigger": false},
+  {"query": "resolve the merge conflicts on my PR branch", "should_trigger": false},
+  {"query": "remove the worktree for the old release branch, i'm done with it", "should_trigger": false},
+  {"query": "explain why CI is failing on this pull request", "should_trigger": false},
+  {"query": "set up branch protection rules requiring one approval before merge", "should_trigger": false},
+  {"query": "rebase this PR onto the latest main", "should_trigger": false}
+]

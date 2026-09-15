@@ -7,16 +7,16 @@ description: "Judge whether a completed change is ready to land: with fresh cont
 
 This is the reviewer/gate role of the agentic SDLC. It looks at a change with fresh eyes — deliberately separate from the developer that wrote it — reaches a verdict, and then either reports findings and next steps or (when able) merges and cleans up. It is a gate, not a rubber stamp.
 
-*Pipeline position: step 4 of 4 — upstream: `implementing-features`; downstream: `generating-tickets` (surfaced follow-ups feed back into the loop).*
+*Pipeline position: the reviewer/gate role, run in two places — **local mode** inside the `plan-task` loop (a fresh-eyes check of `implement-task`'s change before the PR) and **remote mode** as the standalone merge gate on an open PR. Surfaced follow-ups feed back into `generating-tickets`.*
 
-You are typically pointed at the work a developer produced with `implementing-features`. If no PR/branch is given, ask which one before starting.
+You are typically pointed at the change `implement-task` produced (local mode) or an open PR to gate (remote mode). If no PR/branch is given, ask which one before starting.
 
 ## Where this runs (two modes)
 
 The **review logic is identical** in both modes — only the launch location and the post-verdict actions differ. Pick the mode from where you were launched:
 
-- **Local (from the developer's workspace)** — a fast pre-PR self-check. Run a fresh-context **subagent within the developer's session** to review the live worktree + diff before a PR exists. This mode is **review-only**: it is inside the worktree, so it can *never* merge or remove the worktree. Its clean verdict is "ready — go open the PR"; its not-clean verdict hands findings back to the developer.
-- **Remote (from the repository root)** — the authoritative merge gate. Review the **open PR** (diff + CI) with a fresh-context subagent at the root. Only this mode may merge the PR and tear down the developer's worktree + herdr workspace, because only the root sits outside the worktree.
+- **Local (from the implementer's workspace)** — a fast pre-PR self-check. Run a fresh-context **subagent within the `implement-task` (session 2) workspace** to review the live worktree + diff before a PR exists. This mode is **review-only**: it is inside the worktree, so it can *never* merge or remove the worktree. Its clean verdict is "ready — go open the PR"; its not-clean verdict hands findings back to `implement-task` (session 2).
+- **Remote (from the repository root)** — the authoritative merge gate. Review the **open PR** (diff + CI) with a fresh-context subagent at the root. Only this mode may merge the PR and tear down the loop's worktree + herdr workspace, because only the root sits outside the worktree.
 
 If you need to merge/clean up but were launched locally, stop and hand off to a root-launched review — do not attempt it from the worktree.
 
@@ -24,7 +24,7 @@ If you need to merge/clean up but were launched locally, stop and hand off to a 
 
 - Review one change (open PR in remote mode, or the live worktree/diff in local mode) against its ticket and the repo's own checks.
 - Reach a clear verdict and present it.
-- **Remote mode only:** on a clean verdict **and explicit approval**, merge the PR and tear down the developer's worktree + herdr workspace — all from the repository root.
+- **Remote mode only:** on a clean verdict **and explicit approval**, merge the PR and tear down the loop's worktree + herdr workspace — all from the repository root.
 
 Never do the following:
 
@@ -74,19 +74,19 @@ Classify each finding as **blocking** (must fix before merge) or **non-blocking*
 Present the verdict to the human. Two outcomes:
 
 **Clean** — gates pass and there are no blocking findings. Summarize what was reviewed and why it's ready, and list any non-blocking follow-ups.
-- **Local mode:** the verdict is "ready — open the PR" (the developer's PR-draft gate takes it from there). Do not merge or clean up.
+- **Local mode:** the verdict is "ready — open the PR" (`create-pr` in session 1 takes it from there). Do not merge or clean up.
 - **Remote mode:** **recommend merge + cleanup**, then stop and ask for explicit approval before executing (see below).
 
-**Not clean** — a gate failed or there are blocking findings. Do not merge. Summarize the findings (grouped, located, blocking vs non-blocking) and suggest next steps: hand back to the developer to address, or file follow-up tickets via `generating-tickets`. Leave the PR and worktree in place.
+**Not clean** — a gate failed or there are blocking findings. Do not merge. Summarize the findings (grouped, located, blocking vs non-blocking) and suggest next steps: hand back to `implement-task` (session 2) to address, or file follow-up tickets via `generating-tickets`. Leave the PR and worktree in place.
 
 ## Merge and cleanup (remote mode only, when clean and approved)
 
 Execute only in remote mode, after the human explicitly approves, and only from the repository root. Never from inside the worktree.
 
-Dispatch is fire-and-forget, so you did **not** inherit the branch or `dev-<repo>-<slug>` from `prioritizing-work` — recover them: the **branch** is the PR head (`gh pr view <pr>` → head ref), and the developer's **worktree path** comes from `wt list --format json` for that branch. Match the herdr agent/workspace via `herdr agent list` / `herdr workspace list` on that worktree path (or the ticket slug) rather than assuming the name.
+Dispatch is fire-and-forget, so you did **not** inherit the branch or `wf-<repo>-<slug>` from the `plan-task` loop — recover them: the **branch** is the PR head (`gh pr view <pr>` → head ref), and the loop's **worktree path** comes from `wt list --format json` for that branch. Match the herdr agent/workspace via `herdr agent list` / `herdr workspace list` on that worktree path (or the ticket slug) rather than assuming the name.
 
 1. **Merge** the PR using the repo's convention from `AGENTS.md` (`gh pr merge <pr> --squash|--rebase|--merge`, or the declared tool).
-2. **Tear down the developer's herdr agent + workspace** — per the `herdr` skill (verify `HERDR_ENV=1`, find the `dev-<repo>-<slug>` agent/workspace as recovered above, stop the agent, close its workspace). Do not hardcode Herdr command syntax; the installed binary is the authority.
+2. **Tear down the loop's herdr agent + workspace** — per the `herdr` skill (verify `HERDR_ENV=1`, find the `wf-<repo>-<slug>` agent/workspace as recovered above, stop the agent, close its workspace). Do not hardcode Herdr command syntax; the installed binary is the authority.
 3. **Remove the worktree** with worktrunk from the root, after confirming nothing is checked out there:
    ```bash
    wt remove <branch>   # worktrunk; <branch> = the PR head recovered above; run from the main checkout, not the worktree
@@ -105,7 +105,7 @@ Dispatch is fire-and-forget, so you did **not** inherit the branch or `dev-<repo
 - Change reviewed against its acceptance criteria, the repo's checks, and the quality lenses — with fresh context, in the correct mode for where it was launched.
 - A clear verdict presented: clean or not clean (findings + next steps).
 - Local mode, clean: verdict is "ready — open the PR"; nothing merged or removed.
-- Remote mode, clean and approved: PR merged per repo convention, developer's herdr agent + workspace torn down, worktree removed — all from the root — and results reported.
+- Remote mode, clean and approved: PR merged per repo convention, the loop's herdr agent + workspace torn down, worktree removed — all from the root — and results reported.
 - If not clean: findings summarized with next steps; nothing merged or removed.
 
 ## Related

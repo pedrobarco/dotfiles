@@ -1,0 +1,22 @@
+[
+  {"query": "i've got a backlog of like 30 open issues, help me decide what to work on next", "should_trigger": true},
+  {"query": "prioritize these tickets by effort and risk and tell me the top 3 to pick up this week", "should_trigger": true},
+  {"query": "what's the next best thing to tackle in this repo given the dependencies between issues?", "should_trigger": true},
+  {"query": "rank my open github issues and then kick off a dev agent on whichever one you pick first", "should_trigger": true},
+  {"query": "i need to plan the next few moves for this project — which tickets give the most value for least complexity?", "should_trigger": true},
+  {"query": "some of these issues are blocked by others. sort out what i can actually start now and recommend one", "should_trigger": true},
+  {"query": "pick a ticket and dispatch a developer into a worktree to start on it", "should_trigger": true},
+  {"query": "we have too much in the backlog. give me a justified shortlist of what to do next", "should_trigger": true},
+  {"query": "review main and come up with a list of new tickets we should file", "should_trigger": false},
+  {"query": "audit the codebase and draft issues for the tech debt you find", "should_trigger": false},
+  {"query": "implement the top-priority ticket yourself, don't just tell me which one it is", "should_trigger": false},
+  {"query": "go ahead and code up issue #212 in a worktree and open the PR", "should_trigger": false},
+  {"query": "review the open PR on the feature/search branch and decide if we can merge", "should_trigger": false},
+  {"query": "what order were these commits made in?", "should_trigger": false},
+  {"query": "estimate how many story points this one epic is", "should_trigger": false},
+  {"query": "close all the stale issues that haven't been touched in 6 months", "should_trigger": false},
+  {"query": "help me write acceptance criteria for a single feature i'm scoping", "should_trigger": false},
+  {"query": "assign these jira tickets to the right people on my team", "should_trigger": false},
+  {"query": "which of my three git worktrees is checked out to the release branch?", "should_trigger": false},
+  {"query": "build a burndown chart for the current sprint", "should_trigger": false}
+]

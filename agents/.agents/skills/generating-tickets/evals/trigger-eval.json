@@ -1,0 +1,22 @@
+[
+  {"query": "can you look over the main branch of this repo and tell me what work it needs? i want a list of issues/features/refactors i should file", "should_trigger": true},
+  {"query": "do a triage pass on this codebase and turn what you find into tickets i can create in linear", "should_trigger": true},
+  {"query": "i just inherited this service and have no idea what state it's in. review it and draft some tickets for the obvious problems", "should_trigger": true},
+  {"query": "we're about to onboard two contractors. can you scan the repo and write up a backlog of well-scoped issues for them to pick up?", "should_trigger": true},
+  {"query": "convert your review findings into github issues (draft them first, don't create anything yet)", "should_trigger": true},
+  {"query": "audit the codebase for tech debt and security gaps and propose tickets for the ones worth fixing", "should_trigger": true},
+  {"query": "what should we build next in this repo — surface candidate work and write it up as issues", "should_trigger": true},
+  {"query": "go through main, find the missing tests and error handling, and draft tickets for them", "should_trigger": true},
+  {"query": "i already have 40 open issues in jira — help me figure out which 3 to tackle first this sprint", "should_trigger": false},
+  {"query": "pick the next ticket for me to work on based on priority and dependencies", "should_trigger": false},
+  {"query": "implement issue PROJ-214, the one about the null pointer in the auth middleware", "should_trigger": false},
+  {"query": "review this pull request and tell me if it's ready to merge", "should_trigger": false},
+  {"query": "write unit tests for the payments module", "should_trigger": false},
+  {"query": "fix the failing CI on my branch", "should_trigger": false},
+  {"query": "summarize what changed in the last 10 commits on main", "should_trigger": false},
+  {"query": "create a jira ticket titled 'update readme' with this exact body i'm pasting", "should_trigger": false},
+  {"query": "refactor the database layer to use connection pooling", "should_trigger": false},
+  {"query": "generate release notes from the merged PRs since v1.2", "should_trigger": false},
+  {"query": "set up a github actions workflow to run our linter", "should_trigger": false},
+  {"query": "what's the difference between our staging and prod configs?", "should_trigger": false}
+]
