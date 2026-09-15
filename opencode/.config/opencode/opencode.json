@@ -19,6 +19,31 @@
       }
     }
   },
+  "agent": {
+    "planner": {
+      "mode": "primary",
+      "model": "augment/claude-opus-4-8-high",
+      "description": "Session 1: plan a task or ticket, run the in-workflow review and draft the PR in-session, and delegate only implementation to session 2 (plan-task skill). Read/reason/git-metadata only.",
+      "permission": { "edit": "deny" }
+    },
+    "implementer": {
+      "mode": "primary",
+      "model": "augment/claude-sonnet-4-6",
+      "description": "Session 2: implement an approved plan on a feature branch, kept alive across the review fix loop (implement-task skill)."
+    },
+    "reviewer": {
+      "mode": "subagent",
+      "model": "augment/claude-opus-4-8-medium",
+      "description": "In-workflow fresh-eyes review of the live worktree before a PR exists; spawned by the planner, review-only, never edits (reviewing-pull-requests, local mode).",
+      "permission": { "edit": "deny" }
+    },
+    "pr-reviewer": {
+      "mode": "primary",
+      "model": "augment/claude-opus-4-8-medium",
+      "description": "Standalone remote-PR merge gate: fresh-eyes review of an open PR from the repo root; may merge and tear down only on a clean verdict with explicit approval (reviewing-pull-requests, remote mode).",
+      "permission": { "edit": "deny" }
+    }
+  },
   "mcp": {
     "notion": {
       "type": "remote",
