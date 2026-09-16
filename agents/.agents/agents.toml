@@ -66,22 +66,22 @@ branch = "master"
 path = "agents/.agents/skills/prioritizing-work"
 
 [[skills]]
-name = "plan-task"
+name = "planning-tasks"
 source = "pedrobarco/dotfiles"
 branch = "master"
-path = "agents/.agents/skills/plan-task"
+path = "agents/.agents/skills/planning-tasks"
 
 [[skills]]
-name = "implement-task"
+name = "implementing-tasks"
 source = "pedrobarco/dotfiles"
 branch = "master"
-path = "agents/.agents/skills/implement-task"
+path = "agents/.agents/skills/implementing-tasks"
 
 [[skills]]
-name = "create-pr"
+name = "creating-pull-requests"
 source = "pedrobarco/dotfiles"
 branch = "master"
-path = "agents/.agents/skills/create-pr"
+path = "agents/.agents/skills/creating-pull-requests"
 
 [[skills]]
 name = "reviewing-pull-requests"

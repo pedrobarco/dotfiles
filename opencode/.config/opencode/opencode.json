@@ -23,13 +23,13 @@
     "planner": {
       "mode": "primary",
       "model": "augment/claude-opus-4-8-high",
-      "description": "Reasoning role (read/reason/git-metadata only, edit-denied): plan a task, rank or triage a backlog, and draft PRs (plan-task, prioritizing-work, generating-tickets, create-pr).",
+      "description": "Reasoning role (read/reason/git-metadata only, edit-denied): plan a task, rank or triage a backlog, and draft PRs (planning-tasks, prioritizing-work, generating-tickets, creating-pull-requests).",
       "permission": { "edit": "deny" }
     },
     "implementer": {
       "mode": "primary",
       "model": "augment/claude-sonnet-4-6",
-      "description": "Implementer role: implement an approved plan on its feature branch in a dedicated worktree, verify, commit, and push (implement-task)."
+      "description": "Implementer role: implement an approved plan on its feature branch in a dedicated worktree, verify, commit, and push (implementing-tasks)."
     },
     "reviewer": {
       "mode": "subagent",

@@ -1,17 +1,17 @@
 ---
-name: create-pr
-description: "Open a draft-first pull request for a reviewed, already-pushed feature branch, linked to its ticket. Use when a change has been implemented, verified, and reviewed clean and you need to open its PR. Not for planning (plan-task), writing or committing feature code (implement-task), reviewing a change (reviewing-pull-requests), or merging. Git/gh only — it writes no feature files, presents the draft before creating, and never merges: CI and human review gate the merge."
+name: creating-pull-requests
+description: "Open a draft-first pull request for a reviewed, already-pushed feature branch, linked to its ticket. Use when a change has been implemented, verified, and reviewed clean and you need to open its PR. Not for planning (planning-tasks), writing or committing feature code (implementing-tasks), reviewing a change (reviewing-pull-requests), or merging. Git/gh only — it writes no feature files, presents the draft before creating, and never merges: CI and human review gate the merge."
 ---
 
-# Create PR
+# Creating Pull Requests
 
 This is the **PR-opening** capability of the agentic SDLC. It takes a change that is already implemented, verified, reviewed clean, committed, and pushed, and opens a **draft-first** pull request linked to its ticket. It uses git and the PR tool only — it writes no feature files — and it stops before merge.
 
 ## Run context
 
 - **Role / model:** the **planner** (reasoning) role — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. Git and PR-tool metadata only; no file writes.
-- **Location:** the task's main `<repo>-<slug>-plan` session at the repository root (or its main checkout), **not** inside the feature worktree. Target the feature branch explicitly — recover the worktree path from `wt list --format json` for the branch and read diffs with `git -C <worktree>`, and name the branch as the PR head (`gh pr create --head <branch>`) rather than assuming the root's checked-out branch.
-- **On entry:** confirm the preconditions below and read the repo's `AGENTS.md`. If the branch is not pushed or not reviewed clean, stop — that work belongs to `implement-task` and `reviewing-pull-requests`.
+- **Location:** the task's main `<repo>-<slug>-plan` workspace at the repository root (or its main checkout), **not** inside the feature worktree. Target the feature branch explicitly — recover the worktree path from `wt list --format json` for the branch (`.items[].worktree.path`, matched by `.items[].branch`) and read diffs with `git -C <worktree>`, and name the branch as the PR head (`gh pr create --head <branch>`) rather than assuming the root's checked-out branch.
+- **On entry:** confirm the preconditions below and read the repo's `AGENTS.md`. If the branch is not pushed or not reviewed clean, stop — that work belongs to `implementing-tasks` and `reviewing-pull-requests`.
 
 ## Scope
 
@@ -26,11 +26,11 @@ Never do the following:
 
 ## Preconditions
 
-Confirm all of these before drafting. If any fails, hand back to `implement-task` rather than fixing it here:
+Confirm all of these before drafting. If any fails, hand back to `implementing-tasks` rather than fixing it here:
 
 - The change is **reviewed clean** (the pre-PR review returned a clean verdict).
 - The work is **committed** on the feature branch with a clean tree (no uncommitted changes, no stray files, no secrets).
-- The branch is **pushed** to the remote and **up to date with its base** (not behind — rebasing + re-verifying belongs to `implement-task`).
+- The branch is **pushed** to the remote and **up to date with its base** (not behind — rebasing + re-verifying belongs to `implementing-tasks`).
 
 ## Orient
 
@@ -63,12 +63,12 @@ Do not merge, and do not mark the PR ready-for-review unless the repo's conventi
 
 ## Definition of Done
 
-- Preconditions confirmed (reviewed clean, committed, pushed, up to date with base) or handed back to `implement-task`.
+- Preconditions confirmed (reviewed clean, committed, pushed, up to date with base) or handed back to `implementing-tasks`.
 - PR draft (title + body) presented with the ticket link and verification summary, and approved before creation.
 - PR opened draft-first with the approved title/body, targeting the correct base and linked to the ticket.
 - PR link reported back. The merge is left to CI + human review.
 
 ## Related
 
-- The change this opens a PR for is produced by `implement-task` and reviewed clean by `reviewing-pull-requests` (local mode).
+- The change this opens a PR for is produced by `implementing-tasks` and reviewed clean by `reviewing-pull-requests` (local mode).
 - Reviewing the resulting open PR as the merge gate: `reviewing-pull-requests` (remote mode).

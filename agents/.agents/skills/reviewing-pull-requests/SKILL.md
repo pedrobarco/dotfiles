@@ -11,11 +11,11 @@ You are pointed at either a change on a feature branch/worktree before a PR exis
 
 ## Run context
 
-The **review logic is identical** in both modes, which both run from the task's `<repo>-<slug>-plan` session at the repo root — only the subject reviewed and the post-verdict powers differ.
+The **review logic is identical** in both modes, which both run from the task's `<repo>-<slug>-plan` workspace at the repo root — only the subject reviewed and the post-verdict powers differ.
 
 - **Role / model:** a **reviewer** role with **fresh context**, distinct from the implementer — the reserved `<repo>-<slug>-review` agent, on opencode the `reviewer` agent for local mode and the `pr-reviewer` agent for remote mode (both `augment/claude-opus-4-8-medium`, `edit: deny`); on cursor, Grok. Review-only; never edits code.
-- **Location — both modes run from the task's `<repo>-<slug>-plan` session at the repo root:**
-  - **Local** — a fast pre-PR self-check, run as a fresh-context subagent that reads the implementer's feature worktree + diff on disk (`git -C <worktree>`) before a PR exists. Launched either by a human or **auto-launched by `implement-task`** once its branch is pushed (only when the task's `<repo>-<slug>-plan` session is live to route the verdict to). It never merges or removes the worktree. Clean verdict = "ready — open the PR"; not-clean hands findings back to `implement-task`.
+- **Location — both modes run from the task's `<repo>-<slug>-plan` workspace at the repo root:**
+  - **Local** — a fast pre-PR self-check, run as a fresh-context subagent that reads the implementer's feature worktree + diff on disk (`git -C <worktree>`) before a PR exists. Launched either by a human or **auto-launched by `implementing-tasks`** once its branch is pushed (only when the task's `<repo>-<slug>-plan` workspace is live to route the verdict to). It never merges or removes the worktree. Clean verdict = "ready — open the PR"; not-clean hands findings back to `implementing-tasks`.
   - **Remote** — the authoritative merge gate reviewing the open PR (diff + CI) with a fresh-context subagent. Only this mode may merge the PR and tear down the worktree + `<repo>-<slug>-dev` workspace.
 - **On entry:** read the repo's `AGENTS.md` and recover the ticket + acceptance criteria. Merge/cleanup happens only in remote mode; in local mode, always hand off rather than merge or tear down.
 
@@ -73,24 +73,24 @@ Classify each finding as **blocking** (must fix before merge) or **non-blocking*
 Present the verdict to the human. Two outcomes:
 
 **Clean** — gates pass and there are no blocking findings. Summarize what was reviewed and why it's ready, and list any non-blocking follow-ups.
-- **Local mode:** the verdict is "ready — open the PR" (`create-pr` takes it from there). Do not merge or clean up.
+- **Local mode:** the verdict is "ready — open the PR" (`creating-pull-requests` takes it from there). Do not merge or clean up.
 - **Remote mode:** **recommend merge + cleanup**, then stop and ask for explicit approval before executing (see below).
 
-**Not clean** — a gate failed or there are blocking findings. Do not merge. Summarize the findings (grouped, located, blocking vs non-blocking) and suggest next steps: hand back to `implement-task` to address, or file follow-up tickets via `generating-tickets`. Leave the PR and worktree in place.
+**Not clean** — a gate failed or there are blocking findings. Do not merge. Summarize the findings (grouped, located, blocking vs non-blocking) and suggest next steps: hand back to `implementing-tasks` to address, or file follow-up tickets via `generating-tickets`. Leave the PR and worktree in place.
 
 ## Merge and cleanup (remote mode only, when clean and approved)
 
 Execute only in remote mode, after the human explicitly approves, and only from the repository root. Never from inside the worktree.
 
-You review with fresh context, so you did **not** inherit the branch, slug, or `<repo>-<slug>-dev` workspace — recover them. The task shares one `<slug>` across every entity (`<repo>-<slug>-dev`, `<repo>-<slug>-review`), so recovering the slug recovers all the names. The **branch** is the PR head (`gh pr view <pr>` → head ref), and the **worktree path** comes from `wt list --format json` for that branch; the `<slug>` is the branch/ticket slug. Confirm the live names against `herdr agent list` / `herdr workspace list` (matching the `<repo>-<slug>-dev` workspace on that worktree path) rather than assuming they are still running.
+You review with fresh context, so you did **not** inherit the branch, slug, or `<repo>-<slug>-dev` workspace — recover them. The task shares one `<slug>` across every entity (`<repo>-<slug>-dev`, `<repo>-<slug>-review`), so recovering the slug recovers all the names. The **branch** is the PR head (`gh pr view <pr>` → head ref); the **worktree path** and the branch's `<repo>-<slug>-dev` workspace id both come from `herdr worktree list --json` (`.result.worktrees[]` matched by `.branch` → `.path` and `.open_workspace_id`) — or, for the path alone, `wt list --format json` (`.items[].worktree.path`, matched by `.items[].branch`); the `<slug>` is the branch/ticket slug. Confirm the live names against `herdr agent list` / `herdr workspace list` (matching the `<repo>-<slug>-dev` workspace on that worktree path) rather than assuming they are still running.
 
 1. **Merge** the PR using the repo's convention from `AGENTS.md` (`gh pr merge <pr> --squash|--rebase|--merge`, or the declared tool).
-2. **Tear down the task's dev session** — per the `herdr` skill (verify `HERDR_ENV=1`, stop the implementer agent `<repo>-<slug>-dev` if still live, then close its workspace `<repo>-<slug>-dev` — both recovered by slug above). Leave the main `<repo>-<slug>-plan` session untouched. Do not hardcode Herdr command syntax; the installed binary is the authority.
-3. **Remove the worktree** with worktrunk from the root, after confirming nothing is checked out there:
+2. **Remove the worktree, then close its workspace** — the inverse of how `implementing-tasks` created them, and exactly what the worktrunk plugin's remove does. Run from the root, after confirming nothing is checked out there:
    ```bash
-   wt remove <branch>   # worktrunk; <branch> = the PR head recovered above; run from the main checkout, not the worktree
+   wt remove <branch>   # worktrunk owns the checkout, branch, teardown hooks, and safety gates; <branch> = the PR head recovered above; run from the main checkout, not the worktree
    ```
-4. Report back: merge result, workspace/agent torn down, worktree removed, and any non-blocking follow-ups left for later.
+   Then close the now-empty `<repo>-<slug>-dev` workspace (its id recovered above) per the `herdr` skill — `herdr workspace close <id>`. Closing the workspace ends the panes hosting the implementer agent; there is **no** separate agent-stop verb. Leave the main `<repo>-<slug>-plan` workspace untouched. Do not hardcode Herdr command syntax; the installed binary is the authority.
+3. Report back: merge result, worktree removed and its `<repo>-<slug>-dev` workspace closed, and any non-blocking follow-ups left for later.
 
 ## Hard rules
 
@@ -104,7 +104,7 @@ You review with fresh context, so you did **not** inherit the branch, slug, or `
 - Change reviewed against its acceptance criteria, the repo's checks, and the quality lenses — with fresh context, in the correct mode for where it was launched.
 - A clear verdict presented: clean or not clean (findings + next steps).
 - Local mode, clean: verdict is "ready — open the PR"; nothing merged or removed.
-- Remote mode, clean and approved: PR merged per repo convention, the task's `<repo>-<slug>-dev` session (agent + workspace) torn down, worktree removed — all from the root — and results reported.
+- Remote mode, clean and approved: PR merged per repo convention, the task's worktree removed and its `<repo>-<slug>-dev` workspace closed — all from the root — and results reported.
 - If not clean: findings summarized with next steps; nothing merged or removed.
 
 ## Related
