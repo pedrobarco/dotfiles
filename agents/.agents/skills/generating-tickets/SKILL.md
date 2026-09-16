@@ -5,9 +5,13 @@ description: "Review the current state of a repository's main branch to surface 
 
 # Generating Tickets
 
-This is the triage role of the agentic SDLC. It runs in the repository root, assesses the current state of `main`, surfaces candidate work, and turns findings into a draft ticket list. It is a proposer, not an implementer and not a merger.
+This is the triage capability of the agentic SDLC. It assesses the current state of `main`, surfaces candidate work, and turns findings into a draft ticket list. It is a proposer, not an implementer and not a merger.
 
-*Pipeline position: step 1 of 4 — entry point; upstream: `reviewing-pull-requests` (follow-ups feed back here); downstream: `prioritizing-work`.*
+## Run context
+
+- **Role / model:** a **reasoning** role, read-only — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. It reads the codebase and writes only to the ticketing system, and only after approval.
+- **Location:** the repository root on a clean default branch. No worktree or herdr workspace is needed.
+- **On entry:** confirm you are on the default branch with a clean tree, then read the repo's `AGENTS.md` (ticketing system + verify commands).
 
 Run this when you want to know what work a repo needs next, or to convert a review pass into tickets. To rank existing tickets and pick what to tackle, use `prioritizing-work` instead.
 

@@ -1,83 +1,79 @@
 # Agentic SDLC Skills
 
-These six skills define a closed software-development loop. Each is a distinct
-**role** with a fixed place in the pipeline, its own scope, and hard boundaries
-it will not cross. Together they take a repository from "what needs doing?" all
-the way to a merged, reviewed change — with a human approval gate at every hand-off.
+These six skills are the capabilities of an agentic software-development loop.
+Each is a **self-contained capability** with its own `## Run context` (the role/model
+it runs as and where it runs), its own scope, and hard boundaries it will not cross.
+No skill knows its predecessor or successor — a **human sequences them**, approving at
+every hand-off. Together they can take a repository from "what needs doing?" all the
+way to a merged, reviewed change.
 
-Two standalone feeders (`generating-tickets`, `prioritizing-work`) and the remote
-merge gate (`reviewing-pull-requests`) run at the repo root. Between them sits the
-**`plan-task` loop** — a two-session unit that takes one ticket from plan to open
-PR: **session 1** reasons, coordinates, reviews, and opens the PR (`edit: deny` —
-never writes feature code); **session 2** is the only session that writes code.
+Two sanctioned exceptions to "no skill launches another" exist, both requiring a live
+Herdr session and neither acting as a gate: `prioritizing-work` may **dispatch** a planner
+into the task's `<repo>-<slug>-plan` session to start `plan-task` (a single entry launcher),
+and `implement-task` may **auto-launch** the local `reviewing-pull-requests` review once its
+branch is pushed — but only when the task's main `<repo>-<slug>-plan` session is live to route
+the verdict to; otherwise it stops and reports.
+Every state mutation (plan, commit, PR, merge) still needs explicit human approval.
 
-## The loop
+## Typical flow (human-driven)
 
-```
-        ┌───────────────────────┐
-        │  generating-tickets   │  triage — review main, draft tickets
-        └───────────┬───────────┘
-                    │ backlog
-                    ▼
-        ┌───────────────────────┐
-        │    prioritizing-work  │  planner — rank backlog, dispatch a planner
-        └───────────┬───────────┘
-                    │ dispatch (ticket → planner)
-                    ▼
-   ╔════════════════════════════════════════════════╗
-   ║                 plan-task loop                  ║
-   ║   ┌─────────────────────┐                       ║
-   ║   │      plan-task      │ session 1 — plan +     ║
-   ║   │   (coordination)    │ coordinate, no edits   ║
-   ║   └──────────┬──────────┘                       ║
-   ║              │ approved plan                     ║
-   ║              ▼                                   ║
-   ║   ┌─────────────────────┐                       ║
-   ║   │    implement-task   │ session 2 — the only   ║
-   ║   │    (writes code)    │ session that edits     ║
-   ║   └──────────┬──────────┘                       ║
-   ║              │ change                            ║
-   ║              ▼                                   ║
-   ║   ┌─────────────────────┐                       ║
-   ║   │ reviewing-pull-req.  │ local mode — fresh-   ║
-   ║   │    (local review)   │ eyes pre-PR check      ║
-   ║   └──────────┬──────────┘                       ║
-   ║              │ clean                             ║
-   ║              ▼                                   ║
-   ║   ┌─────────────────────┐                       ║
-   ║   │      create-pr      │ session 1 — open PR    ║
-   ║   └──────────┬──────────┘                       ║
-   ╚══════════════╪═════════════════════════════════╝
-                  │ pull request
-                  ▼
-        ┌───────────────────────┐
-        │reviewing-pull-requests│ remote mode — merge gate, clean up
-        └───────────┬───────────┘
-                    │ follow-ups feed back
-                    └──────────────► generating-tickets
-```
+A human runs the capabilities in whatever order the work needs; a common path is:
 
-## The roles
+1. `generating-tickets` — review `main`, draft a backlog.
+2. `prioritizing-work` — rank it; optionally dispatch a planner to start step 3.
+3. `plan-task` — cross-check one ticket, produce an approved plan.
+4. `implement-task` — build the plan in the `<repo>-<slug>-dev` session (feature worktree); commit and push.
+5. `reviewing-pull-requests` (local) — fresh-eyes check before a PR, in the `<repo>-<slug>-plan` session; `implement-task` auto-launches it there when that session is live, else a human runs it.
+6. `create-pr` — open the draft PR for the reviewed change.
+7. `reviewing-pull-requests` (remote) — merge gate on the open PR; merge + clean up.
 
-| Skill | Role | Runs in | Consumes | Produces |
-| --- | --- | --- | --- | --- |
-| `generating-tickets` | triage / proposer | repo root | `main` branch | draft tickets → backlog |
-| `prioritizing-work` | planner / dispatcher | repo root | backlog | ranked shortlist; dispatched planner |
-| `plan-task` | orchestrator (session 1) | coordination pane → worktree | one ticket | approved plan; owns worktree/workspace + review/PR coordination |
-| `implement-task` | implementer (session 2) | one git worktree | approved plan | committed + pushed change |
-| `create-pr` | PR opener (session 1) | worktree (git + gh) | reviewed change | an open PR |
-| `reviewing-pull-requests` | reviewer / gate | worktree (local) or repo root (remote) | a change / PR | verdict; merge + cleanup |
+Each step is entered directly and gated by a human. Review follow-ups can loop back to
+`generating-tickets`; blocking findings loop back to `implement-task`.
 
-`reviewing-pull-requests` appears twice on purpose: **local mode** runs inside the
-loop (a pre-PR self-check within session 2), **remote mode** is the standalone
-authoritative merge gate at the root. Same review logic, different launch location.
+## The capabilities
 
-Each skill also cross-links its neighbours in its own `## Related` section, so the
-agent can suggest the next step without you naming it.
+| Skill | Role / model | Runs in | Produces |
+| --- | --- | --- | --- |
+| `generating-tickets` | reasoning (read-only) | repo root, clean `main` | draft tickets → backlog |
+| `prioritizing-work` | planner / dispatcher | repo root | ranked shortlist; optional dispatched planner |
+| `plan-task` | planner (reasoning) | `<repo>-<slug>-plan` session, repo root | an approved plan (no worktree) |
+| `implement-task` | implementer | `<repo>-<slug>-dev` session, its own feature worktree | committed + pushed change |
+| `create-pr` | planner (reasoning) | `<repo>-<slug>-plan` session, repo root, targets the worktree (git + gh) | an open draft PR |
+| `reviewing-pull-requests` | reviewer / gate | `<repo>-<slug>-plan` session, repo root (both modes) | verdict; merge + cleanup (remote) |
+
+`reviewing-pull-requests` runs in two modes, both from the `<repo>-<slug>-plan` session at
+the repo root: **local** (a fresh-eyes check of a change before a PR exists, reading the
+feature worktree's diff) and **remote** (the authoritative merge gate on an open PR). Same
+review logic; only the subject reviewed and the post-verdict powers differ.
+
+Each skill also cross-links related capabilities in its own `## Related` section.
+
+## Naming — one slug per task
+
+Task artifacts key off a **single `<slug>`**, coined **once** and reused everywhere so
+they correlate (`<repo>` = repository name). If `prioritizing-work` dispatches, it coins
+the slug into the planner session/agent name and `plan-task` recovers it from there; otherwise
+the slug is coined from the branch/ticket when first needed. It is never re-derived — remote-mode
+teardown recovers it (from the branch/ticket) and targets these names directly:
+
+| Entity | Name |
+| --- | --- |
+| branch | repo prefix from `AGENTS.md`, else `feature/<slug>` or `hotfix/<slug>` |
+| worktree | keyed by the branch (`wt`) |
+| main session + workspace | `<repo>-<slug>-plan` (repo root; hosts plan, review, create-pr) |
+| dev session + workspace | `<repo>-<slug>-dev` (rooted at the feature worktree; hosts the implementer) |
+| planner agent | `<repo>-<slug>-plan` |
+| implementer agent | `<repo>-<slug>-dev` |
+| reviewer agent | `<repo>-<slug>-review` (runs in the `-plan` session) |
+
+The `<repo>-<slug>-plan` session at the repo root hosts the reasoning-role capabilities
+(`plan-task`, `create-pr`, and both review modes); the `<repo>-<slug>-dev` session hosts the
+implementer inside the feature worktree. Local review runs in the `-plan` session, reading the
+worktree's diff via `git -C <worktree>`.
 
 ## Shared invariants
 
-Every skill in the loop upholds the same contract — read these here once instead
+Every skill upholds the same contract — read these here once instead
 of re-deriving them from each file:
 
 - **AGENTS.md is the source of truth.** Skills are repo-agnostic. Build/test/lint
@@ -89,11 +85,12 @@ of re-deriving them from each file:
   PRs, merges) happens without an explicit approval step. Drafts are presented first.
 - **Secrets are never emitted.** No secret ever appears in a ticket, prompt, commit,
   PR body, command, or tool argument; discovered secrets are reported by location only.
-- **Session split, no self-merge.** Within the loop, session 1 reasons/coordinates/
-  reviews/opens the PR under `edit: deny` and session 2 is the only session that
-  writes feature code — so the work is never reviewed by the context that wrote it.
-  CI + human review own the merge decision; merge/cleanup happens only from the repo
-  root (remote mode), never from inside the worktree.
+- **Role separation, no self-merge.** The role that writes feature code (implementer,
+  `<repo>-<slug>-dev`) is never the role that reviews or opens the PR (reasoning/reviewer,
+  `edit: deny`, `<repo>-<slug>-plan`/`-review`), and review runs with fresh context — so work
+  is never reviewed by the context that wrote it. CI + human review own the merge decision;
+  merge/cleanup happens only in remote mode from the `<repo>-<slug>-plan` session at the repo
+  root, never in local mode.
 - **Tooling delegation.** Herdr mechanics live in the `herdr` skill; worktrees are
   managed by worktrunk (`wt`). Skills reference these rather than hardcoding syntax.
 
@@ -124,5 +121,6 @@ npx --yes @sentry/dotagents@latest --user install
 - Each skill should carry `evals/trigger-eval.json`. Run these (via `skill-creator`)
   after changing a description to catch trigger regressions before they ship. The
   newer loop skills (`plan-task`, `implement-task`, `create-pr`) don't have evals yet.
-- Keep each skill's `## Scope`, `## Hard rules`, and `## Definition of Done`
-  sections — they are the guardrails that keep roles from bleeding into each other.
+- Keep each skill's `## Run context`, `## Scope`, `## Hard rules`, and `## Definition
+  of Done` sections — `## Run context` pins the role/model and where the skill runs, and
+  the others are the guardrails that keep roles from bleeding into each other.

@@ -1,25 +1,28 @@
 ---
 name: plan-task
-description: "Plan one task from a description or ticket ID, then drive it to a PR across two sessions: session 1 (this skill) plans, runs the in-workflow fresh-eyes review, and drafts the PR; session 2 implements. Use when asked to take a single task or ticket from plan to PR, to plan and drive a feature to completion, or as the entry point of the implement/review loop. Not for ranking a backlog (prioritizing-work), drafting tickets (generating-tickets), reviewing someone else's open PR (reviewing-pull-requests, remote mode), or one-off chores. Session 1 is read/reason/git-metadata only — it never writes feature code and never self-merges; only the implementer session edits, and CI plus human review gate the merge."
+description: "Produce an approved implementation plan for one task, from a description or ticket ID: cross-check it against the codebase, then present small, individually verifiable steps and get approval. Use when asked to plan a task or ticket, or to turn a ticket into an approved plan before implementation. Not for writing code (implement-task), reviewing a change (reviewing-pull-requests), opening a PR (create-pr), ranking a backlog (prioritizing-work), or drafting tickets (generating-tickets). Read/reason only — it writes no feature code, creates no worktree, and stops at an approved plan."
 ---
 
 # Plan Task
 
-This is the orchestrator and entry point of the implement/review loop, run as **session 1** of a two-session workflow. Given a task **description or ticket ID**, it cross-checks the task, produces an approved implementation plan, sets up an isolated worktree and workspace, then delegates **only the coding** to a long-lived **session 2** (`implement-task`). Session 1 keeps the plan and acceptance criteria in context and runs the **in-workflow review** (fresh-eyes subagent) and **PR draft** itself, coordinating each hand-off behind a human gate.
+This is the **planning** capability of the agentic SDLC. Given a task **description or ticket ID**, it cross-checks the task against the current codebase and produces an **approved implementation plan** of small, verifiable steps. It plans only: it writes no feature code, creates no worktree, and hands nothing off — once the plan is approved, a human runs the next capability.
 
-*Pipeline position: session-1 orchestrator — delegates coding to session 2 (`implement-task`), runs review (`reviewing-pull-requests`, local mode) and `create-pr` in-session. Standalone (not driven by this skill): `generating-tickets`, `prioritizing-work`, and remote-PR review (`reviewing-pull-requests`, remote mode).*
+## Run context
+
+- **Role / model:** the **planner** (reasoning) role — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. Read/reason/git-metadata only.
+- **Location:** the task's main `<repo>-<slug>-plan` session at the repository root (or, run directly, the repo root / main checkout), reading the default branch. Recover the `<slug>` from the agent name if launched by `prioritizing-work`, else coin it from the ticket/task. No feature worktree is needed — planning reads the code where it already is.
+- **On entry:** resolve the task input (below) and read the repo's `AGENTS.md`. If you cannot read the codebase you are asked to plan against, stop and say so.
 
 ## Scope
 
-- Plan one task (from a description or a ticket ID) as small, verifiable steps.
-- Set up one dedicated worktree and one fresh workspace for the task.
-- Run session 1 in order — plan, in-workflow review, PR draft — delegating only the implement phase to session 2, stopping at each human gate.
+- Plan one task (from a description or a ticket ID) as small, individually verifiable steps.
+- Cross-check the task against the codebase before planning.
+- Stop at an approved plan.
 
 Never do the following from this skill:
 
-- Write or edit feature code — that happens only in the implementer session (session 1 is read/reason/git-metadata only).
-- Merge, or skip the plan-approval gate or any downstream write gate.
-- Reuse a workspace across tasks, or run two tasks in one worktree.
+- Write or edit feature code, or create the feature worktree / `<repo>-<slug>-dev` workspace — those belong to `implement-task`.
+- Merge, or skip the plan-approval gate.
 
 ## Orient
 
@@ -44,63 +47,20 @@ Summarize for the human:
 
 - The confirmed (or refined) acceptance criteria this plan satisfies.
 - The ordered steps, each with a one-line intent and how it will be verified.
+- The **branch name** this task will use, per the repo's prefix convention from `AGENTS.md` (else `feature/<slug>` for a feature/refactor/chore or `hotfix/<slug>` for a bug fix, from a short `<slug>` of the task) — so whoever implements it lands on the same branch/worktree.
 - Any assumptions, risks, or open questions from the cross-check.
 
-Stop and ask for approval. Do not create the worktree or delegate any work until the human approves the plan. If they request changes, revise and re-present.
-
-## Set up the worktree and workspace
-
-Only after the plan is approved. Worktrees are managed by **worktrunk** (`wt`); herdr **workspaces** are the session unit. The task gets its own worktree *and* its own fresh workspace — never reuse a workspace, and never run two tasks in one worktree.
-
-Only orchestrate from inside Herdr. Follow the `herdr` skill for all Herdr mechanics (verify `HERDR_ENV=1`, workspace/pane/agent commands, reading IDs from JSON, `--no-focus`). Do not hardcode Herdr syntax here; the installed binary is the authority. If not inside Herdr, say so and stop after the approved plan.
-
-1. Derive names. **Branch:** use the repo's prefix convention from `AGENTS.md` when declared (e.g. `feat/`, `fix/`); otherwise `feature/<slug>` for features/refactors/chores or `hotfix/<slug>` for bug fixes. Workspace label `wf-<repo>-<slug>` (`<repo>` = repository name, `<slug>` = short slug from the task).
-2. Create the worktree and read back its path (do not `cd` into it):
-   ```bash
-   wt switch --create <branch> --no-cd
-   wt list --format json   # read the worktree .path for <branch>
-   ```
-3. Create a fresh, dedicated herdr workspace rooted at that worktree path (label `wf-<repo>-<slug>`), per the `herdr` skill. Read the root pane ID from the JSON response.
-
-## Orchestrate the phases
-
-Two sessions per task. **Session 1 is this skill** — it runs plan, review, and PR draft itself, keeping the plan and acceptance criteria in context. **Session 2 is the implementer** — the only session that writes feature code, kept alive across the review fix loop so it retains context when findings come back.
-
-Follow the `herdr` skill for all session/agent mechanics (launch interactively as the model-pinned agent — pass the agent kind and `--pane`; never a print/one-shot flag, never the task after `--`; prompt with `herdr agent prompt <workspace> "<prompt>" --wait`). Pick the model per session from the matrix below.
-
-1. **Delegate implement (session 2).** Launch the implementer agent in the task's workspace and tell it to load `implement-task` and implement the approved plan (include the plan and acceptance criteria). It codes against the plan, runs the repo's build/lint/test, and stops at its own write gate. Keep this session alive for the fix loop.
-2. **Review in-session (session 1).** Spawn a **fresh-context subagent** (the `reviewer` kind) to load `reviewing-pull-requests` in **local mode** and review the live worktree diff against the plan. The subagent gives fresh eyes even though it is launched from session 1; it is review-only and never edits. If the verdict is not clean, relay the findings to the session-2 implementer and re-review — loop until clean.
-3. **Draft the PR in-session (session 1).** Load `create-pr` and open a draft-first PR for the reviewed change, linked to the ticket. This runs in session 1 (git/gh only — no file writes) and stops before merge.
-
-Surface each phase's result and gate to the human before advancing. Do not merge — CI and human review own the merge decision. Reviewing someone else's open PR is a separate, standalone job (`reviewing-pull-requests`, remote mode) and is not part of this loop.
-
-### Per-session model matrix
-
-Pick the model by target. On **opencode**, each session maps to a role agent pinned in `opencode.json`. On **cursor**, pass the slug per launch (`cursor-agent --model <slug>`, `--mode plan` for planning); cursor uses **Grok + Composer only**.
-
-| Session | Runs | opencode agent (model) | cursor model (slug) |
-| --- | --- | --- | --- |
-| 1 — reasoning / coordination | plan-task, in-workflow review (subagent), create-pr | `planner` (`augment/claude-opus-4-8-high`); review via `reviewer` (`augment/claude-opus-4-8-medium`) | Grok 4.6 (`grok-4.6`) |
-| 2 — implementation | implement-task | `implementer` (`augment/claude-sonnet-4-6`) | Composer 2.5 (`composer-2.5`) |
-
-Review runs in a **different model family than implement** (Opus vs Sonnet on opencode; Grok vs Composer on cursor) — enforced structurally, because the two sessions are two families. Choose the target from repo/user config or the human's instruction; if ambiguous, ask once. Confirm exact cursor slugs with `cursor-agent --list-models` before pinning.
+Stop and ask for approval. If they request changes, revise and re-present. The approved plan (with its acceptance criteria and branch name) is the output — a human takes it to `implement-task` from here.
 
 ## Hard rules
 
 - Never put secrets in prompts, commands, or tool arguments. Refer to any discovered secret as redacted and report only its location.
-- Never write feature code from session 1 — coding happens only in the implementer session (session 2).
-- Never merge from this skill, and never skip the plan-approval gate or a downstream write gate.
-- Never reuse a workspace or share a worktree between tasks.
+- Never write feature code or create the feature worktree / dev workspace from this skill — planning is read/reason only.
+- Never merge, and never skip the plan-approval gate.
 
 ## Definition of Done
 
 - Task resolved from a description or ticket ID and cross-checked against the project; acceptance criteria confirmed or refined with the human.
-- An implementation plan of small verifiable steps presented and approved before any worktree or delegation.
-- A worktrunk worktree created on the derived branch and a fresh dedicated herdr workspace (`wf-<repo>-<slug>`) rooted at it.
-- Session 2 delegated the implement phase; session 1 ran the in-workflow review (looped until clean) and drafted the PR — each result and gate surfaced to the human.
-- Control returned with the PR link. The merge is left to CI + human review.
-
-## Related
-
-- To rank a backlog and pick what to work on, use `prioritizing-work`; to draft tickets from `main`, use `generating-tickets`; to review someone else's open PR as the merge gate, use `reviewing-pull-requests` (remote mode). All are standalone and not driven by this skill.
-- Downstream phase skills: `implement-task` (session 2), `create-pr` (session 1); the in-workflow review reuses `reviewing-pull-requests` (local mode).
+- An implementation plan of small, individually verifiable steps presented and **approved**.
+- The branch name stated per the repo's convention so implementation lands consistently.
+- No feature code written and no worktree created — the approved plan is the deliverable.

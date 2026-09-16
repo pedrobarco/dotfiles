@@ -1,42 +1,56 @@
 ---
 name: implement-task
-description: "Implement an already-approved plan on a feature branch inside a dedicated git worktree, verify it against the repo's own checks, then commit and push — the coding session (session 2) of the plan-task loop. Use when dispatched by plan-task with an approved plan and acceptance criteria, or told to implement a plan in an existing worktree. Not for planning a task (plan-task), reviewing a change (reviewing-pull-requests), opening the PR (create-pr), or one-off chores outside a plan. Stays within its worktree/branch; it never reviews its own work, never opens the PR, and never merges."
+description: "Implement an already-approved plan on a feature branch inside a dedicated git worktree, verify it against the repo's own checks, then commit and push. Use when you have an approved plan and acceptance criteria to build, or are told to implement a plan in its feature worktree. Not for planning a task (plan-task), reviewing a change (reviewing-pull-requests), opening the PR (create-pr), or one-off chores outside a plan. Writes code only within its own worktree/branch; it never reviews its own work as the gate, never opens the PR, and never merges. Once its branch is pushed it may auto-launch the separate local reviewer role and relay the verdict, but only when the task's main `<repo>-<slug>-plan` session is live to route it to."
 ---
 
 # Implement Task
 
-This is the implementation session (**session 2**) of the `plan-task` loop — the only session that writes feature code. It receives an **already-approved plan** and acceptance criteria, implements them one small step at a time in a dedicated worktree, verifies against the repo's own checks, then commits and pushes the feature branch. It owns its branch only; it never re-plans, never reviews itself, never opens the PR, and never merges.
+This is the **implementation** capability of the agentic SDLC — the one that writes feature code. It receives an **already-approved plan** and acceptance criteria, implements them one small step at a time in a dedicated worktree, verifies against the repo's own checks, then commits and pushes the feature branch. It owns its branch only: it never re-plans, never reviews its own work as the gate, never opens the PR, and never merges.
 
-*Pipeline position: session 2 — dispatched by `plan-task` (session 1); its work is reviewed by `reviewing-pull-requests` (local mode) and shipped by `create-pr`, both in session 1.*
+If no approved plan is given, ask for it before starting — do not invent one (planning is a separate capability, `plan-task`).
 
-You are dispatched here by `plan-task` with a specific plan. If no plan is given, ask for it before starting — do not invent one (planning is session 1's job).
+## Run context
+
+- **Role / model:** the **implementer** role — on opencode the `implementer` agent (`augment/claude-sonnet-4-6`); on cursor, Composer. This is the only role that writes feature code.
+- **Location:** the task's `<repo>-<slug>-dev` session — inside the task's dedicated feature worktree, on its feature branch, in the herdr workspace `<repo>-<slug>-dev` rooted at that worktree. One worktree and one fresh workspace per task — never reuse a workspace or share a worktree between tasks.
+- **On entry — find or create the worktree/workspace.** Derive the branch and `<slug>` from the approved plan (branch per the repo's prefix convention, else `feature/<slug>`/`hotfix/<slug>`; `<repo>` = repository name). If you were launched into the worktree/workspace already, confirm you are in them and on the feature branch. Otherwise create them per this convention:
+
+  | Entity | Name |
+  | --- | --- |
+  | branch | repo prefix from `AGENTS.md` when declared; else `feature/<slug>` or `hotfix/<slug>` |
+  | worktree | keyed by the branch (`wt`) |
+  | dev session + workspace | `<repo>-<slug>-dev` |
+  | implementer agent (this one) | `<repo>-<slug>-dev` |
+
+  Create the worktree without cd-ing the root (`wt switch --create <branch> --no-cd`; read `.path` from `wt list --format json`), then a fresh herdr workspace `<repo>-<slug>-dev` rooted at that path. Follow the `herdr` skill for all Herdr mechanics (verify `HERDR_ENV=1`, `--no-focus`, reading IDs from JSON) and worktrunk for the worktree — do not hardcode their syntax; the installed binaries are the authority.
+- Then read the repo's `AGENTS.md` and re-read the approved plan.
 
 ## Scope
 
-- Implement the approved plan, in this worktree and on this branch.
+- Implement the approved plan, in this task's worktree and on its feature branch.
 - Verify using the repository's own checks; add or update tests for the new behavior.
 - Commit and push the feature branch using the repo's conventions.
-- Stay alive across the review fix loop, applying findings relayed from session 1.
+- Once pushed, launch the separate local reviewer role (fresh context) in the task's `<repo>-<slug>-plan` session and relay its verdict — but only when that main session is live to route it to; otherwise stop and report the branch is ready for local review.
+- If review findings come back on this branch, apply them here, re-verify, and re-push.
 
 Never do the following:
 
-- Re-plan or expand scope beyond the approved plan. If the plan is wrong or too big, stop and report back to session 1.
+- Re-plan or expand scope beyond the approved plan. If the plan is wrong or too big, stop and report it rather than silently deviating.
 - Review or approve your own work as the gate, or open/merge the PR.
-- Edit files outside this worktree, or create/remove/switch worktrees — the worktree lifecycle is owned by session 1 / the human.
+- Work in another task's worktree, or remove any worktree — this capability creates or enters only its own task's worktree.
 
 ## Orient
 
-1. Confirm you are in the intended worktree and on the assigned feature branch (per the repo's prefix convention), not the default branch.
-2. Read the repo's `AGENTS.md` (nearest up-tree wins) for the conventions this stage needs: **verify commands** (build/lint/test) and **commit conventions**. Read them by meaning, wherever the repo states them. `AGENTS.md` is the authority for these mechanical conventions and overrides this skill on conflict — but it never overrides the safety gates (the change-approval gate, no self-review, no self-merge, no secrets). If silent, infer from repo signals (`git log`, Makefile/justfile/package scripts); if still ambiguous, ask once.
-3. Re-read the approved plan and its acceptance criteria — this is exactly what you implement, no more.
+1. Read the repo's `AGENTS.md` (nearest up-tree wins) for the conventions this stage needs: **verify commands** (build/lint/test) and **commit conventions**. Read them by meaning, wherever the repo states them. `AGENTS.md` is the authority for these mechanical conventions and overrides this skill on conflict — but it never overrides the safety gates (the change-approval gate, no self-review, no self-merge, no secrets). If silent, infer from repo signals (`git log`, Makefile/justfile/package scripts); if still ambiguous, ask once.
+2. Re-read the approved plan and its acceptance criteria — this is exactly what you implement, no more.
 
 ## Cross-check the plan
 
-Before coding, confirm the plan still holds against the current state of the code — read the areas each step touches. If a step is already done, wrong, or blocked by something the plan missed, stop and report back to session 1 rather than silently deviating. Session 1 owns the plan; you flag drift, you do not re-plan.
+Before coding, confirm the plan still holds against the current state of the code — read the areas each step touches. If a step is already done, wrong, or blocked by something the plan missed, stop and report it rather than silently deviating. The plan is owned by the planner (`plan-task`); you flag drift, you do not re-plan.
 
 ## Implement
 
-Work the approved plan one step at a time, in small coherent increments, keeping the branch green step to step. Follow the existing conventions and structure of the codebase — match the surrounding style; do not restructure unrelated code. Keep the change focused on the approved acceptance criteria. If implementation reveals the plan was wrong, stop, report to session 1, and re-confirm rather than drifting from it.
+Work the approved plan one step at a time, in small coherent increments, keeping the branch green step to step. Follow the existing conventions and structure of the codebase — match the surrounding style; do not restructure unrelated code. Keep the change focused on the approved acceptance criteria. If implementation reveals the plan was wrong, stop, report it, and re-confirm rather than drifting from it.
 
 ## Verify
 
@@ -61,34 +75,46 @@ Once every check is green, stop and present the completed work before committing
 - How it was verified (which build/lint/test commands were run and their results).
 - Anything notable: trade-offs made, follow-ups deferred, or deviations flagged.
 
-Stop and ask for approval. The human (or session 1) may approve or request changes — make them, re-verify, and re-present. Do not commit until the change itself is approved. The independent fresh-eyes review is run by session 1 (`reviewing-pull-requests`, local mode), not by you.
+Stop and ask for approval. The human may approve or request changes — make them, re-verify, and re-present. Do not commit until the change itself is approved. The independent fresh-eyes review is a separate capability (`reviewing-pull-requests`, local mode) run by a different role — not by you.
 
-## Commit, push, and handle the fix loop
+## Commit, push, and handle review findings
 
 - Commit on the feature branch using the repo's commit conventions (read `AGENTS.md`; e.g. conventional commits, issue refs).
 - Keep the branch clean: no stray files, no unrelated changes, no committed secrets.
 - Rebase onto the current base branch if the branch has fallen behind, then re-run verification.
-- Push the branch to the remote so session 1 can open the PR.
-- **Stay alive.** When session 1's review relays findings, apply them here, re-verify, re-present, and re-push — you retain the plan and context across the loop. Do not open the PR yourself.
+- Push the branch to the remote so the PR can be opened (`create-pr`).
+- **If review findings come back** on this branch, apply them in this same worktree, re-verify, re-present, and re-push. Do not open the PR yourself.
+
+## Hand off to local review
+
+Once the branch is pushed, the change is ready for its fresh-eyes pre-PR review (`reviewing-pull-requests`, local mode) — a check by a **separate reviewer role**, not a gate. Because it is not a gate, you may launch it **without asking** — but only when the task's main `<repo>-<slug>-plan` session is live to route the verdict to.
+
+- **The main `<repo>-<slug>-plan` session is live** (you are inside Herdr and the task's `<repo>-<slug>-plan` planner session is still running): launch the review there. Per the `herdr` skill, start the reserved reviewer agent `<repo>-<slug>-review` in the **reviewer** role (fresh context, `edit: deny` — distinct from you) in that `-plan` session; it reads this branch's diff on disk via `git -C <worktree>`. Prompt it to load `reviewing-pull-requests` (local mode) and review this branch's diff against its base and the acceptance criteria; `--wait` for its verdict, then route that verdict to the `-plan` session and report it.
+  - **Clean:** report "ready — open the PR"; a human runs `create-pr` next. Do not open the PR yourself.
+  - **Not clean:** apply the blocking findings in this same worktree, re-verify, re-present for approval, re-push, and re-run the review.
+- **The main `<repo>-<slug>-plan` session is not reachable** (not inside Herdr, or it has ended): launch nothing. Stop and report that the branch is pushed and ready for local review, so a human can run `reviewing-pull-requests` (local mode).
+
+You never perform the review yourself — you only launch the separate reviewer role and relay its verdict. Follow the `herdr` skill for all Herdr mechanics (verify `HERDR_ENV=1`, `--no-focus`, reading IDs/state from JSON, discovering the live `-plan` session); do not hardcode Herdr syntax.
 
 ## Hard rules
 
 - Never put secrets in code, commits, commands, or tool arguments. Refer to any discovered secret as redacted and report only its location.
-- Stay within scope and within this worktree/branch; never create, remove, or switch worktrees.
-- Never review or merge your own work, and never open the PR — those are session 1's jobs.
+- Stay within scope and within your own task's worktree/branch; never work in or remove another task's worktree.
+- Never review or merge your own work, and never open the PR — those are separate roles.
 - Never commit before the change is approved, and never bypass a failing check on your own change.
 
 ## Definition of Done
 
-- Approved plan cross-checked against the code; drift (if any) reported to session 1 rather than silently reinterpreted.
+- Approved plan cross-checked against the code; drift (if any) reported rather than silently reinterpreted.
 - Plan implemented against the approved acceptance criteria, one verifiable step at a time.
 - Build clean, lint/format passing, tests passing (new behavior covered).
 - Completed changes summarized and approved before commit.
 - Changes committed on the feature branch (repo conventions), branch clean, rebased on base, and pushed.
-- Session kept alive for the review fix loop. The PR is opened by session 1 (`create-pr`); merge is left to CI + human review.
+- Local review handed off: when the main `<repo>-<slug>-plan` session is live, the separate `reviewer` role was launched there against the pushed diff and its verdict routed there; otherwise stopped and reported the branch ready for local review.
+- Review findings, if any, handled in the same worktree. The PR is opened separately (`create-pr`); merge is left to CI + human review.
 
 ## Related
 
-- Planning and orchestration: `plan-task` (session 1, dispatches this skill).
-- Fresh-eyes review of this change before the PR: `reviewing-pull-requests` (local mode), run by session 1 — not by you.
-- Opening the PR once the branch is pushed and reviewed: `create-pr` (session 1).
+- The approved plan this implements comes from `plan-task`.
+- Fresh-eyes review of this change before the PR: `reviewing-pull-requests` (local mode), run by a separate reviewer role — which you auto-launch in the `<repo>-<slug>-plan` session when it is live, else a human runs it.
+- Opening the PR once the branch is pushed and reviewed clean: `create-pr`.
