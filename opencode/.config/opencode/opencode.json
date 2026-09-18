@@ -32,9 +32,9 @@
       "description": "Implementer role: implement an approved plan on its feature branch in a dedicated worktree, verify, commit, and push (implementing-tasks)."
     },
     "reviewer": {
-      "mode": "subagent",
+      "mode": "primary",
       "model": "augment/claude-opus-4-8-medium",
-      "description": "Fresh-context review of a live worktree change before a PR exists; review-only, never edits (reviewing-pull-requests, local mode).",
+      "description": "Fresh-context review of a live worktree change before a PR exists; review-only, never edits (reviewing-pull-requests, local mode). Primary so Herdr can start it as an interactive pane.",
       "permission": { "edit": "deny" }
     },
     "pr-reviewer": {

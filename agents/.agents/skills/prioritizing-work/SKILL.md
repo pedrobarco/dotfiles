@@ -5,11 +5,11 @@ description: "Rank an existing backlog by stated priority, value/complexity, eff
 
 # Prioritizing Work
 
-This is the planner/dispatch capability of the agentic SDLC. It reads the existing backlog, ranks it, and recommends the next best candidates. It can optionally fire-and-forget a planner agent that starts `planning-tasks` for the chosen candidate, then returns immediately — it never waits on, polls, or babysits that work. This is one of two capabilities that may launch another (the other is `implementing-tasks`'s hand-off to local review); every other capability is run directly by a human.
+This is the planner/dispatch capability of the agentic SDLC. It reads the existing backlog, ranks it, and recommends the next best candidates. It can optionally fire-and-forget a planner agent that starts `planning-tasks` for the chosen candidate, then returns immediately — it never waits on, polls, or babysits that work. This is one of two capabilities that may launch another (the other is `implementing-tasks`, which starts the implementer when needed and may auto-launch local review); every other capability is run directly by a human.
 
 ## Run context
 
-- **Role / model:** the **planner** (reasoning) role — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. Read/reason only; the only write is launching a planner agent (below).
+- **Role:** the **planner** role. Read/reason only; the only write is launching a planner agent (below). OpenCode binds this role to `edit: deny`. On Cursor this role is Grok. Start the dispatched planner per the role-launch matrix.
 - **Location:** the repository root. Dispatch runs from inside Herdr and launches the planner into the task's `<repo>-<slug>-plan` workspace; if not inside Herdr, stop at recommending.
 - **On entry:** read the repo's `AGENTS.md` (ticketing system) and load the backlog.
 
@@ -54,13 +54,15 @@ Only dispatch from inside Herdr. Follow the `herdr` skill for all Herdr mechanic
 Dispatch here does **not** create a worktree or a dev workspace — that lifecycle belongs to `implementing-tasks`, run later by a human. This step only launches a planner into the task's `<repo>-<slug>-plan` workspace and hands it the ticket to plan.
 
 1. Derive a short `<slug>` from the ticket and the planner workspace/agent name `<repo>-<slug>-plan` (`<repo>` = repository name). This is the **single slug for the whole task**: `planning-tasks` recovers it from this agent name and names the branch from it, and the worktree, dev workspace `<repo>-<slug>-dev`, and implementer/reviewer agents (`<repo>-<slug>-dev`, `<repo>-<slug>-review`) all reuse it — so coin it once here. Do **not** derive a branch here — `planning-tasks` states it at plan-approval time.
-2. Start the planner agent **interactively** in the task's `<repo>-<slug>-plan` workspace at the repository root, per the `herdr` skill — pass only the agent **kind** (from the matrix below) and `--pane`. Do **not** pass the task after `--`, and never a print/one-shot flag (auggie `-p`, claude `-p`, opencode `run`): those launch the agent in non-interactive mode, so Herdr never tracks its lifecycle → false `idle`, frozen state, and `agent prompt`/`agent wait` become unusable. Native args after `--` are only for reattach/config flags, never the task.
+2. Start the planner agent **interactively** in the task's `<repo>-<slug>-plan` workspace at the repository root, per the `herdr` skill — pass `--kind` (from the matrix below), `--pane`, and the **planner** role args after `--`. Do **not** pass the task after `--`, and never a print/one-shot flag (auggie `-p`, claude `-p`, opencode `run`): those launch the agent in non-interactive mode, so Herdr never tracks its lifecycle → false `idle`, frozen state, and `agent prompt`/`agent wait` become unusable. Native args after `--` are the role-launch flags (and reattach/config flags), never the task.
 3. Deliver the ticket via `herdr agent prompt <repo>-<slug>-plan "<prompt>" --wait` (per the `herdr` skill). The prompt tells the planner to load `planning-tasks`, reuse the `<slug>` from its own agent name, and produce an approved plan for the chosen ticket (include the ticket ID/link and acceptance criteria). `planning-tasks` states the branch and stops at the approved plan; implementation is a later, human-run step. `--wait` returns as soon as the planner accepts the work — it confirms delivery, it does not wait for completion.
 4. Return immediately. Do not wait for or poll past that acceptance. The planner produces an approved plan; a human carries it forward from there.
 
-### Provider kind matrix
+### Provider kind and role-launch matrix
 
-The `herdr` agent kind is the only provider-specific glue. The task is **always** delivered via `herdr agent prompt` (step 3), never as native launch args — so there is no per-provider prompt syntax to track.
+The `herdr` agent kind plus the role args after `--` are the only provider-specific glue. Skills speak in **roles**. OpenCode binds models on the named agent; Cursor models are in this matrix. The task is **always** delivered via `herdr agent prompt` (step 3), never as native launch args.
+
+Choose the provider from the repo/user config or the human's instruction. If none declares one, infer from what the repo/environment already uses (e.g. an installed CLI or existing agent config); if still ambiguous, ask once rather than defaulting to a provider.
 
 | Provider | herdr kind |
 | --- | --- |
@@ -69,7 +71,18 @@ The `herdr` agent kind is the only provider-specific glue. The task is **always*
 | claude | `claude` |
 | cursor | `cursor` |
 
-Choose the provider from the repo/user config or the human's instruction. If none declares one, infer from what the repo/environment already uses (e.g. an installed CLI or existing agent config); if still ambiguous, ask once rather than defaulting to a provider.
+Role args after `--` (role selector only — never the task, never a one-shot flag):
+
+| Role | OpenCode | Cursor | claude / auggie |
+| --- | --- | --- | --- |
+| `planner` | `--agent planner` | `--model cursor-grok-4.6-high-fast` | none (CLI default) |
+| `implementer` | `--agent implementer` | `--model composer-2.5` | none (CLI default) |
+| `reviewer` | `--agent reviewer` | `--model cursor-grok-4.6-high-fast` | none (CLI default) |
+| `pr-reviewer` | `--agent pr-reviewer` | `--model cursor-grok-4.6-high-fast` | none (CLI default) |
+
+OpenCode models are bound on the named agent in `opencode.json` — pass `--agent`, not `--model`. Cursor: Grok for planner/reviewer, Composer for implementer. Do **not** add Cursor `--mode plan` when starting the `-plan` agent — that session is reused for `generating-tickets` and `creating-pull-requests`, which need git/ticket/PR writes. Planning stays read-only via this skill's hard rules. claude / auggie use that CLI's default unless the human overrides.
+
+This matrix is the launch convention for every SDLC role. `implementing-tasks` uses the same table to start the implementer and the local reviewer.
 
 ## Hard rules
 
@@ -80,7 +93,7 @@ Choose the provider from the repo/user config or the human's instruction. If non
 ## Definition of Done
 
 - A ranked, justified shortlist of next candidates presented (with blocked work called out).
-- If a candidate was chosen: a planner started interactively in the task's `<repo>-<slug>-plan` workspace at the repository root, with the ticket delivered via `herdr agent prompt … --wait` (per the `herdr` skill, using the kind matrix) — then control returned without waiting for completion.
+- If a candidate was chosen: a planner started interactively in the task's `<repo>-<slug>-plan` workspace at the repository root (kind + `planner` role args from the matrix), with the ticket delivered via `herdr agent prompt … --wait` (per the `herdr` skill) — then control returned without waiting for completion.
 
 ## Related
 

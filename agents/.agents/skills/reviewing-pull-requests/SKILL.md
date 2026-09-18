@@ -13,10 +13,10 @@ You are pointed at either a change on a feature branch/worktree before a PR exis
 
 The **review logic is identical** in both modes, which both run from the task's `<repo>-<slug>-plan` workspace at the repo root — only the subject reviewed and the post-verdict powers differ.
 
-- **Role / model:** a **reviewer** role with **fresh context**, distinct from the implementer — the reserved `<repo>-<slug>-review` agent, on opencode the `reviewer` agent for local mode and the `pr-reviewer` agent for remote mode (both `augment/claude-opus-4-8-medium`, `edit: deny`); on cursor, Grok. Review-only; never edits code.
+- **Role:** the **reviewer** role with **fresh context**, distinct from the implementer — the reserved `<repo>-<slug>-review` agent. Local mode is the `reviewer` role; remote mode is the `pr-reviewer` role. OpenCode binds both to `edit: deny`. On Cursor both are Grok (`cursor-grok-4.6-high-fast`). Review-only; never edits code. Launch local review with the role-launch matrix in `implementing-tasks`.
 - **Location — both modes run from the task's `<repo>-<slug>-plan` workspace at the repo root:**
-  - **Local** — a fast pre-PR self-check, run as a fresh-context subagent that reads the implementer's feature worktree + diff on disk (`git -C <worktree>`) before a PR exists. Launched either by a human or **auto-launched by `implementing-tasks`** once its branch is pushed (only when the task's `<repo>-<slug>-plan` workspace is live to route the verdict to). It never merges or removes the worktree. Clean verdict = "ready — open the PR"; not-clean hands findings back to `implementing-tasks`.
-  - **Remote** — the authoritative merge gate reviewing the open PR (diff + CI) with a fresh-context subagent. Only this mode may merge the PR and tear down the worktree + `<repo>-<slug>-dev` workspace.
+  - **Local** — a fast pre-PR self-check in a **fresh reviewer session** (`<repo>-<slug>-review`) that reads the implementer's feature worktree + diff on disk (`git -C <worktree>`) before a PR exists. Launched either by a human or **auto-launched by `implementing-tasks`** once its branch is pushed (only when the task's `<repo>-<slug>-plan` workspace is live to route the verdict to). It never merges or removes the worktree. Clean verdict = "ready — open the PR"; not-clean hands findings back to `implementing-tasks`.
+  - **Remote** — the authoritative merge gate reviewing the open PR (diff + CI) in a fresh `pr-reviewer` session. Only this mode may merge the PR and tear down the worktree + `<repo>-<slug>-dev` workspace.
 - **On entry:** read the repo's `AGENTS.md` and recover the ticket + acceptance criteria. Merge/cleanup happens only in remote mode; in local mode, always hand off rather than merge or tear down.
 
 ## Scope
@@ -33,11 +33,14 @@ Never do the following:
 
 ## Get fresh context
 
-The point of this role is a review uncontaminated by the developer's reasoning. Do the review in a **fresh-context subagent** (the provider's native subagent/Task primitive — auggie, opencode, claude, and cursor each expose one), not in the context that implemented the change. A subagent gives a clean context window; the reviewer role is separate from the implementer in both modes.
+The point of this role is a review uncontaminated by the developer's reasoning. The reviewer must be a **separate session** from the implementer — never review in the context that wrote the change.
 
-- **Remote:** the subagent reads the PR through the repo's PR tool (`gh pr view <pr>`, `gh pr diff <pr>`, `gh pr checks <pr>`, or the tool `AGENTS.md` declares) — it does not need to `cd` into the worktree.
-- **Local:** the subagent reads the live worktree (diff against the base branch, changed files, and can run the repo's checks) since the code is on disk.
-- Either way, give the subagent only the change reference and the ticket (ID/link + acceptance criteria). Let it form its own conclusions.
+- If you are already the reserved `<repo>-<slug>-review` agent (or an equivalent fresh reviewer / `pr-reviewer` session started for this review), **do the review in this context**. Do not nest another subagent — this session *is* the fresh context.
+- If you are still in the implementer's context, do not review here. Launch the reserved reviewer per the role-launch matrix in `implementing-tasks` (local) or start `pr-reviewer` (remote), or use the provider's native subagent/Task primitive only as a fallback when Herdr cannot start that agent.
+
+- **Remote:** read the PR through the repo's PR tool (`gh pr view <pr>`, `gh pr diff <pr>`, `gh pr checks <pr>`, or the tool `AGENTS.md` declares) — you do not need to `cd` into the worktree.
+- **Local:** read the live worktree (diff against the base branch, changed files, and you can run the repo's checks) since the code is on disk.
+- Either way, start from only the change reference and the ticket (ID/link + acceptance criteria). Form your own conclusions.
 
 ## Orient
 
@@ -97,7 +100,7 @@ You review with fresh context, so you did **not** inherit the branch, slug, or `
 - Never put secrets in review comments, commands, or tool arguments. Refer to any discovered secret as redacted and report only its location.
 - Never merge before a clean verdict **and** explicit human approval; CI + human review own the merge decision.
 - Merge and worktree removal happen only in remote mode, from the repository root — never from inside the worktree, never in local mode.
-- Do the review with fresh context (subagent), not the developer's context.
+- Do the review in a fresh reviewer session, not the developer's context. If you already are that session, do not nest another subagent.
 
 ## Definition of Done
 

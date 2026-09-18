@@ -9,7 +9,7 @@ This is the triage capability of the agentic SDLC. It assesses the current state
 
 ## Run context
 
-- **Role / model:** a **reasoning** role, read-only — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. It reads the codebase and writes only to the ticketing system, and only after approval.
+- **Role:** the **planner** role, read-only against the codebase. OpenCode binds this role to `edit: deny`. On Cursor this role is Grok (`cursor-grok-4.6-high-fast`, no `--mode plan` — ticket writes must be allowed). It reads the codebase and writes only to the ticketing system, and only after approval.
 - **Location:** the repository root on a clean default branch. No worktree or herdr workspace is needed.
 - **On entry:** confirm you are on the default branch with a clean tree, then read the repo's `AGENTS.md` (ticketing system + verify commands).
 

@@ -9,9 +9,9 @@ This is the **PR-opening** capability of the agentic SDLC. It takes a change tha
 
 ## Run context
 
-- **Role / model:** the **planner** (reasoning) role — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. Git and PR-tool metadata only; no file writes.
+- **Role:** the **planner** role. Git and PR-tool metadata only; no feature-file writes. OpenCode binds this role to `edit: deny`. On Cursor this role is Grok (`cursor-grok-4.6-high-fast`, no `--mode plan` — `gh` / the PR tool must be allowed).
 - **Location:** the task's main `<repo>-<slug>-plan` workspace at the repository root (or its main checkout), **not** inside the feature worktree. Target the feature branch explicitly — recover the worktree path from `wt list --format json` for the branch (`.items[].worktree.path`, matched by `.items[].branch`) and read diffs with `git -C <worktree>`, and name the branch as the PR head (`gh pr create --head <branch>`) rather than assuming the root's checked-out branch.
-- **On entry:** confirm the preconditions below and read the repo's `AGENTS.md`. If the branch is not pushed or not reviewed clean, stop — that work belongs to `implementing-tasks` and `reviewing-pull-requests`.
+- **On entry:** confirm the preconditions below and read the repo's `AGENTS.md`. If the branch is not pushed or not reviewed clean, stop — that work belongs to `implementing-tasks` and `reviewing-pull-requests`. If this Cursor session is in `--mode plan` (or otherwise cannot run the PR tool), do not continue here — start a planner in this `-plan` workspace with the matrix `planner` args (Grok, no `--mode plan`) and deliver the PR task via `herdr agent prompt`, or ask the human to switch out of plan mode.
 
 ## Scope
 

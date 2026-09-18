@@ -9,7 +9,7 @@ This is the **planning** capability of the agentic SDLC. Given a task **descript
 
 ## Run context
 
-- **Role / model:** the **planner** (reasoning) role — on opencode the `planner` agent (`augment/claude-opus-4-8-high`, `edit: deny`); on cursor, Grok. Read/reason/git-metadata only.
+- **Role:** the **planner** role. Read/reason/git-metadata only. OpenCode binds this role to `edit: deny`. Launch this role with the role-launch matrix in `prioritizing-work` (kind + `planner` args). On Cursor this role is Grok (`cursor-grok-4.6-high-fast`). Do not start this session with `--mode plan` — the same `-plan` agent later opens the PR and may write tickets.
 - **Location:** the task's main `<repo>-<slug>-plan` workspace at the repository root (or, run directly, the repo root / main checkout), reading the default branch. Recover the `<slug>` from the agent name if launched by `prioritizing-work`, else coin it from the ticket/task. No feature worktree is needed — planning reads the code where it already is.
 - **On entry:** resolve the task input (below) and read the repo's `AGENTS.md`. If you cannot read the codebase you are asked to plan against, stop and say so.
 
