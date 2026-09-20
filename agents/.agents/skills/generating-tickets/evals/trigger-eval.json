@@ -9,6 +9,7 @@
   {"query": "go through main, find the missing tests and error handling, and draft tickets for them", "should_trigger": true},
   {"query": "i already have 40 open issues in jira — help me figure out which 3 to tackle first this sprint", "should_trigger": false},
   {"query": "pick the next ticket for me to work on based on priority and dependencies", "should_trigger": false},
+  {"query": "write an implementation plan for PROJ-214", "should_trigger": false},
   {"query": "implement issue PROJ-214, the one about the null pointer in the auth middleware", "should_trigger": false},
   {"query": "review this pull request and tell me if it's ready to merge", "should_trigger": false},
   {"query": "write unit tests for the payments module", "should_trigger": false},

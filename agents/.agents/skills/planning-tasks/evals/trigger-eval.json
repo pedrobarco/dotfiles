@@ -1,0 +1,22 @@
+[
+  {"query": "write an implementation plan for PROJ-214", "should_trigger": true},
+  {"query": "turn ticket #88 into an approved plan of small verifiable steps", "should_trigger": true},
+  {"query": "plan the auth middleware null-pointer ticket before anyone codes it", "should_trigger": true},
+  {"query": "cross-check issue #212 against the codebase and give me a step-by-step plan", "should_trigger": true},
+  {"query": "I need an approved plan for adding CSV export, with acceptance criteria and a branch name", "should_trigger": true},
+  {"query": "break this ticket into small individually verifiable implementation steps", "should_trigger": true},
+  {"query": "plan this task: fix the race in the pane focus handler", "should_trigger": true},
+  {"query": "produce an implementation plan for the search feature ticket and get my approval", "should_trigger": true},
+  {"query": "which open tickets give the most value for least complexity?", "should_trigger": false},
+  {"query": "help me decide which ticket to work on next from the backlog", "should_trigger": false},
+  {"query": "implement the approved plan for PROJ-214 on this branch", "should_trigger": false},
+  {"query": "just start coding the CSV export, no plan needed", "should_trigger": false},
+  {"query": "review main and draft tickets for the problems you find", "should_trigger": false},
+  {"query": "review PR #340 and tell me if it's ready to land", "should_trigger": false},
+  {"query": "open a draft PR for the search branch", "should_trigger": false},
+  {"query": "write unit tests for the payments module", "should_trigger": false},
+  {"query": "rank my open issues by effort and risk", "should_trigger": false},
+  {"query": "create a jira ticket titled update readme with this exact body", "should_trigger": false},
+  {"query": "merge PR #12", "should_trigger": false},
+  {"query": "summarize the last 10 commits on main", "should_trigger": false}
+]

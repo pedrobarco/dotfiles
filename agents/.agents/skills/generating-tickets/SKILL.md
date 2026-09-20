@@ -1,39 +1,21 @@
 ---
 name: generating-tickets
-description: "Review the current state of a repository's main branch to surface issues, features, refactors, and risks, then draft tickets for approval. Use when triaging a repo, reviewing main for new work, turning review findings into tickets, or asking what work a codebase needs. Proposes a draft list first and never writes tickets without explicit approval."
+description: "Review the current state of a repository's default branch to surface issues, features, refactors, and risks, then draft tickets for approval. Use when triaging a repo, reviewing main or the default branch for new work, turning review findings into tickets, or asking what work a codebase needs. Not for ranking an existing backlog, planning or implementing a ticket, reviewing a pull request, or filing a ticket whose body the human already wrote. Proposes a draft list first and never writes tickets without explicit approval."
 ---
 
 # Generating Tickets
 
-This is the triage capability of the agentic SDLC. It assesses the current state of `main`, surfaces candidate work, and turns findings into a draft ticket list. It is a proposer, not an implementer and not a merger.
+Assess the current state of the default branch, surface candidate work, and turn findings into a draft ticket list. Propose only: do not implement, and do not write tickets until they are approved.
 
-## Run context
+## Inputs
 
-- **Role:** the **planner** role, read-only against the codebase. OpenCode binds this role to `edit: deny`. On Cursor this role is Grok (`cursor-grok-4.6-high-fast`, no `--mode plan` — ticket writes must be allowed). It reads the codebase and writes only to the ticketing system, and only after approval.
-- **Location:** the repository root on a clean default branch. No worktree or herdr workspace is needed.
-- **On entry:** confirm you are on the default branch with a clean tree, then read the repo's `AGENTS.md` (ticketing system + verify commands).
+- A clean checkout of the repository's default branch. If you are not on the default branch or the tree is dirty, stop and say so.
 
-Run this when you want to know what work a repo needs next, or to convert a review pass into tickets. To rank existing tickets and pick what to tackle, use `prioritizing-work` instead.
+## Orient
 
-## Scope
+Read the repo's `AGENTS.md` (nearest up-tree wins) for the conventions this step needs: the **ticketing system** (this skill is ticketing-agnostic — GitHub Issues, Jira, Linear, etc.; use whatever the repo declares) and the **verify commands** (build/lint/test) you assess against, plus boundaries and any hard rules. It wins on mechanical conventions; it does not override this skill's safety gates (approval before any write, read-only against the codebase, no secrets). If silent, infer from repo signals (ticketing from `.github/ISSUE_TEMPLATE` or repo config, commands from a Makefile/justfile/package scripts); if still ambiguous, ask once.
 
-- Review the main branch and propose work.
-- Draft tickets and present them for approval.
-- Write tickets to the configured system **only after explicit approval**.
-
-Never do the following from this skill:
-
-- Write or edit feature code.
-- Create, close, or merge branches or pull requests.
-- Create or modify tickets before approval is given.
-
-## Assess main
-
-Establish the current state before proposing anything.
-
-1. Confirm you are on the repository's main/default branch and the working tree is clean.
-2. Read the repo's `AGENTS.md` (and any nested ones — the nearest file up-tree wins) for the conventions this stage needs: the **ticketing system** (this skill is ticketing-agnostic — GitHub Issues, Jira, Linear, etc.; use whatever the repo declares) and the **verify commands** (build/lint/test) you assess against, plus boundaries and any hard rules. Read them by meaning, wherever the repo states them — don't require a specific layout or a dedicated block. `AGENTS.md` is the authority for these mechanical conventions; it does not override this skill's safety gates (approval before any write, read-only against the codebase, no secrets). If the repo has no `AGENTS.md` or is silent on a key, infer from repo signals (ticketing from `.github/ISSUE_TEMPLATE` or repo config, commands from a Makefile/justfile/package scripts); if still ambiguous, ask once rather than assume.
-3. Skim recent history (`git log`, recent PRs) to understand what changed and what is in flight.
+Skim recent history (`git log`, recent PRs) to understand what changed and what is in flight.
 
 ## Review lenses
 
@@ -79,11 +61,7 @@ If approval is not given, leave the drafts as a pending proposal and take no wri
 
 ## Definition of Done
 
-- Main branch assessed and review lenses applied.
+- Default branch assessed and review lenses applied.
 - A draft ticket list presented for approval.
 - On approval: approved tickets created in the configured system, with IDs/links reported back.
 - No code changed, no branches or PRs touched.
-
-## Related
-
-When the backlog looks thin or you want to decide what to tackle next, suggest running `prioritizing-work`. Do not auto-invoke it.

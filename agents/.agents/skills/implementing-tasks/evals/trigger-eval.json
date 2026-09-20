@@ -1,0 +1,22 @@
+[
+  {"query": "implement the approved plan for PROJ-214 on this branch", "should_trigger": true},
+  {"query": "I have an approved plan and acceptance criteria — build it, verify, commit and push", "should_trigger": true},
+  {"query": "the plan is approved, start implementing the steps on the current branch", "should_trigger": true},
+  {"query": "apply these review findings on the current branch, then re-verify and push", "should_trigger": true},
+  {"query": "code the accepted CSV export plan and keep the branch green", "should_trigger": true},
+  {"query": "apply the blocking review comments on this feature branch", "should_trigger": true},
+  {"query": "implement the approved steps for ticket #88, then present the change for approval", "should_trigger": true},
+  {"query": "build the plan we just approved and push the branch when checks pass", "should_trigger": true},
+  {"query": "write unit tests for the payments module", "should_trigger": false},
+  {"query": "implement issue PROJ-214, the one about the null pointer in the auth middleware", "should_trigger": false},
+  {"query": "just start coding a CSV export, no plan needed", "should_trigger": false},
+  {"query": "write an implementation plan for PROJ-214", "should_trigger": false},
+  {"query": "implement the changes for issue #212 and open the PR", "should_trigger": false},
+  {"query": "open a draft PR for this branch", "should_trigger": false},
+  {"query": "review PR #340 and tell me if it's ready to land", "should_trigger": false},
+  {"query": "rank my open issues and pick the next ticket", "should_trigger": false},
+  {"query": "review main and draft tickets for the tech debt you find", "should_trigger": false},
+  {"query": "fix the failing CI on my branch", "should_trigger": false},
+  {"query": "refactor the database layer to use connection pooling", "should_trigger": false},
+  {"query": "merge PR #340", "should_trigger": false}
+]

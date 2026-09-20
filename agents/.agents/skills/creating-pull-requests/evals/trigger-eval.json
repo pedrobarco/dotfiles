@@ -1,0 +1,22 @@
+[
+  {"query": "open a draft PR for the pushed feature/csv-export branch", "should_trigger": true},
+  {"query": "the change is reviewed clean — create the pull request linked to issue #212", "should_trigger": true},
+  {"query": "draft a pull request title and body for this branch, then open it as a draft", "should_trigger": true},
+  {"query": "I need a PR for the pushed branch, it's been verified and reviewed", "should_trigger": true},
+  {"query": "open a draft-first PR for ticket PROJ-214", "should_trigger": true},
+  {"query": "create the PR for feature/search with the verification notes and clean verdict", "should_trigger": true},
+  {"query": "write the PR body for this branch and open it, don't merge", "should_trigger": true},
+  {"query": "open the pull request for the already-pushed hotfix branch, draft first", "should_trigger": true},
+  {"query": "implement the changes for issue #212 and open the PR", "should_trigger": false},
+  {"query": "implement the approved plan on this branch", "should_trigger": false},
+  {"query": "review PR #340 and tell me if it's ready to land", "should_trigger": false},
+  {"query": "just merge PR #340, I've already reviewed it myself", "should_trigger": false},
+  {"query": "mark the PR ready for review and merge it", "should_trigger": false},
+  {"query": "write an implementation plan for PROJ-214", "should_trigger": false},
+  {"query": "write unit tests for the payments module", "should_trigger": false},
+  {"query": "rank my open issues and pick the next ticket", "should_trigger": false},
+  {"query": "the branch isn't pushed yet — open a PR anyway", "should_trigger": false},
+  {"query": "summarize what this pull request changes so I can paste it in slack", "should_trigger": false},
+  {"query": "rebase this PR onto the latest main", "should_trigger": false},
+  {"query": "review main and draft tickets for the problems you find", "should_trigger": false}
+]

@@ -1,52 +1,29 @@
 ---
 name: reviewing-pull-requests
-description: "Judge whether a completed change is ready to land: with fresh context, evaluate a PR or feature branch against its acceptance criteria, CI/checks, and code quality, then reach a verdict — recommend merge (and, from the repo root, clean up) or return blocking findings. Use when you need a fresh-eyes gate on a developer's finished work, a pre-PR self-check, or a decision on whether a branch is mergeable. Not for merging a change the user already reviewed, summarizing or explaining a PR, debugging its CI, or git surgery like rebasing or resolving conflicts — this skill decides readiness, it doesn't perform those edits. Never merges without explicit approval."
+description: "Judge whether a completed change is ready to land: evaluate a PR or feature branch against its acceptance criteria, CI/checks, and code quality, then reach a verdict. Use when you need a fresh-eyes review of finished work, a pre-PR check, or a decision on whether a change is mergeable. Not for merging, summarizing a PR, debugging CI, or rebasing. This skill decides readiness; it does not perform those actions."
 ---
 
 # Reviewing Pull Requests
 
-This is the reviewer/gate capability of the agentic SDLC. It looks at a change with fresh eyes — deliberately separate from the role that wrote it — reaches a verdict, and then either reports findings and next steps or (when able) merges and cleans up. It is a gate, not a rubber stamp.
+Look at a change with fresh eyes, measure it against its acceptance criteria and the repo's checks, and reach a **clean** or **not clean** verdict. It is a gate, not a rubber stamp. Do not edit the author's code, and do not merge.
 
-You are pointed at either a change on a feature branch/worktree before a PR exists (local mode) or an open PR to gate (remote mode). If no PR/branch is given, ask which one before starting.
+## Inputs
 
-## Run context
+- A change reference: a feature branch, or an open PR.
+- The ticket (ID/link + acceptance criteria) the change is supposed to satisfy.
 
-The **review logic is identical** in both modes, which both run from the task's `<repo>-<slug>-plan` workspace at the repo root — only the subject reviewed and the post-verdict powers differ.
+If the change reference or the ticket/acceptance criteria is missing, ask for it. Do not review against implied acceptance criteria.
 
-- **Role:** the **reviewer** role with **fresh context**, distinct from the implementer — the reserved `<repo>-<slug>-review` agent. Local mode is the `reviewer` role; remote mode is the `pr-reviewer` role. OpenCode binds both to `edit: deny`. On Cursor both are Grok (`cursor-grok-4.6-high-fast`). Review-only; never edits code. Launch local review with the role-launch matrix in `implementing-tasks`.
-- **Location — both modes run from the task's `<repo>-<slug>-plan` workspace at the repo root:**
-  - **Local** — a fast pre-PR self-check in a **fresh reviewer session** (`<repo>-<slug>-review`) that reads the implementer's feature worktree + diff on disk (`git -C <worktree>`) before a PR exists. Launched either by a human or **auto-launched by `implementing-tasks`** once its branch is pushed (only when the task's `<repo>-<slug>-plan` workspace is live to route the verdict to). It never merges or removes the worktree. Clean verdict = "ready — open the PR"; not-clean hands findings back to `implementing-tasks`.
-  - **Remote** — the authoritative merge gate reviewing the open PR (diff + CI) in a fresh `pr-reviewer` session. Only this mode may merge the PR and tear down the worktree + `<repo>-<slug>-dev` workspace.
-- **On entry:** read the repo's `AGENTS.md` and recover the ticket + acceptance criteria. Merge/cleanup happens only in remote mode; in local mode, always hand off rather than merge or tear down.
-
-## Scope
-
-- Review one change (open PR in remote mode, or the live worktree/diff in local mode) against its ticket and the repo's own checks.
-- Reach a clear verdict and present it.
-- **Remote mode only:** on a clean verdict **and explicit approval**, merge the PR and tear down the task's worktree + `<repo>-<slug>-dev` workspace — all from the repository root.
-
-Never do the following:
-
-- Merge a PR before it is clean **and** the human has explicitly approved the merge.
-- Merge or remove a worktree in local mode — those actions belong to remote-mode review only.
-- Rewrite the developer's code yourself. Report findings; let the developer or a follow-up ticket address them.
-
-## Get fresh context
-
-The point of this role is a review uncontaminated by the developer's reasoning. The reviewer must be a **separate session** from the implementer — never review in the context that wrote the change.
-
-- If you are already the reserved `<repo>-<slug>-review` agent (or an equivalent fresh reviewer / `pr-reviewer` session started for this review), **do the review in this context**. Do not nest another subagent — this session *is* the fresh context.
-- If you are still in the implementer's context, do not review here. Launch the reserved reviewer per the role-launch matrix in `implementing-tasks` (local) or start `pr-reviewer` (remote), or use the provider's native subagent/Task primitive only as a fallback when Herdr cannot start that agent.
-
-- **Remote:** read the PR through the repo's PR tool (`gh pr view <pr>`, `gh pr diff <pr>`, `gh pr checks <pr>`, or the tool `AGENTS.md` declares) — you do not need to `cd` into the worktree.
-- **Local:** read the live worktree (diff against the base branch, changed files, and you can run the repo's checks) since the code is on disk.
-- Either way, start from only the change reference and the ticket (ID/link + acceptance criteria). Form your own conclusions.
+If you wrote the change under review, stop and say so — do not review your own work.
 
 ## Orient
 
-1. Read the repo's `AGENTS.md` (and nested ones — nearest up-tree wins) for the conventions this stage needs: **verify commands** (build/lint/test), the **PR tool**, the **merge strategy** (squash/rebase/merge), the **ticketing system**, and any hard rules. Read them by meaning, wherever the repo states them — don't require a dedicated block. `AGENTS.md` is the authority for these **mechanical conventions** and overrides this skill's defaults on conflict — but it does **not** override this skill's safety gates (never merge without a clean verdict *and* explicit approval, review with fresh context, cleanup only from root in remote mode, no secrets); a repo cannot, e.g., declare "auto-merge on green" to bypass the gate. If the repo has no `AGENTS.md` or is silent on a key, infer from repo signals (merge strategy from existing PR history, commands from a Makefile/justfile/package scripts); if still ambiguous, ask once rather than assume.
-2. Read the PR: title, description, linked ticket, changed files, and the diff.
-3. Recover the ticket's acceptance criteria — this is what the change is measured against.
+Read the repo's `AGENTS.md` (nearest up-tree wins) for the conventions this step needs: **verify commands** (build/lint/test), the **PR tool**, and the **ticketing system**. It wins on mechanical conventions; it does not override this skill's safety gates (verdict only, no secrets). If silent, infer from repo signals (commands from a Makefile/justfile/package scripts, PR tool from history); if still ambiguous, ask once.
+
+- **Open PR:** read it through the repo's PR tool (`gh pr view`, `gh pr diff`, `gh pr checks`, or the tool `AGENTS.md` declares).
+- **Branch:** read the diff against the base branch from the current checkout (or the given branch), and run the repo's verify commands if you can.
+
+Start from only the change reference and the ticket. Form your own conclusions.
 
 ## Review
 
@@ -55,9 +32,9 @@ Gate first (cheap, objective), then quality. Stop early if a gate fails.
 ### Gates
 
 - **Acceptance criteria** — every criterion in the ticket is actually met by the diff, not merely claimed.
-- **Checks / CI** — the repo's own checks pass on the PR head (`gh pr checks`, or the declared tooling). Do not treat a passing self-report as proof; confirm.
+- **Checks / CI** — the repo's own checks pass. On an open PR, confirm via the PR tool (`gh pr checks`, or the declared tooling). On a branch, run the repo's verify commands. Do not treat a passing self-report as proof; confirm.
 
-If a gate fails, stop the deep pass — the PR is not clean regardless of code quality.
+If a gate fails, stop the deep pass — the change is not clean regardless of code quality.
 
 ### Quality lenses (applied to the diff)
 
@@ -76,40 +53,23 @@ Classify each finding as **blocking** (must fix before merge) or **non-blocking*
 Present the verdict to the human. Two outcomes:
 
 **Clean** — gates pass and there are no blocking findings. Summarize what was reviewed and why it's ready, and list any non-blocking follow-ups.
-- **Local mode:** the verdict is "ready — open the PR" (`creating-pull-requests` takes it from there). Do not merge or clean up.
-- **Remote mode:** **recommend merge + cleanup**, then stop and ask for explicit approval before executing (see below).
 
-**Not clean** — a gate failed or there are blocking findings. Do not merge. Summarize the findings (grouped, located, blocking vs non-blocking) and suggest next steps: hand back to `implementing-tasks` to address, or file follow-up tickets via `generating-tickets`. Leave the PR and worktree in place.
+**Not clean** — a gate failed or there are blocking findings. Summarize the findings (grouped, located, blocking vs non-blocking).
 
-## Merge and cleanup (remote mode only, when clean and approved)
+Stop after presenting the verdict.
 
-Execute only in remote mode, after the human explicitly approves, and only from the repository root. Never from inside the worktree.
+## Approval gate
 
-You review with fresh context, so you did **not** inherit the branch, slug, or `<repo>-<slug>-dev` workspace — recover them. The task shares one `<slug>` across every entity (`<repo>-<slug>-dev`, `<repo>-<slug>-review`), so recovering the slug recovers all the names. The **branch** is the PR head (`gh pr view <pr>` → head ref); the **worktree path** and the branch's `<repo>-<slug>-dev` workspace id both come from `herdr worktree list --json` (`.result.worktrees[]` matched by `.branch` → `.path` and `.open_workspace_id`) — or, for the path alone, `wt list --format json` (`.items[].worktree.path`, matched by `.items[].branch`); the `<slug>` is the branch/ticket slug. Confirm the live names against `herdr agent list` / `herdr workspace list` (matching the `<repo>-<slug>-dev` workspace on that worktree path) rather than assuming they are still running.
-
-1. **Merge** the PR using the repo's convention from `AGENTS.md` (`gh pr merge <pr> --squash|--rebase|--merge`, or the declared tool).
-2. **Remove the worktree, then close its workspace** — the inverse of how `implementing-tasks` created them, and exactly what the worktrunk plugin's remove does. Run from the root, after confirming nothing is checked out there:
-   ```bash
-   wt remove <branch>   # worktrunk owns the checkout, branch, teardown hooks, and safety gates; <branch> = the PR head recovered above; run from the main checkout, not the worktree
-   ```
-   Then close the now-empty `<repo>-<slug>-dev` workspace (its id recovered above) per the `herdr` skill — `herdr workspace close <id>`. Closing the workspace ends the panes hosting the implementer agent; there is **no** separate agent-stop verb. Leave the main `<repo>-<slug>-plan` workspace untouched. Do not hardcode Herdr command syntax; the installed binary is the authority.
-3. Report back: merge result, worktree removed and its `<repo>-<slug>-dev` workspace closed, and any non-blocking follow-ups left for later.
+None. This role does not write.
 
 ## Hard rules
 
 - Never put secrets in review comments, commands, or tool arguments. Refer to any discovered secret as redacted and report only its location.
-- Never merge before a clean verdict **and** explicit human approval; CI + human review own the merge decision.
-- Merge and worktree removal happen only in remote mode, from the repository root — never from inside the worktree, never in local mode.
-- Do the review in a fresh reviewer session, not the developer's context. If you already are that session, do not nest another subagent.
+- Never merge.
+- Never rewrite the author's code. Report findings; let the author or a follow-up ticket address them.
 
 ## Definition of Done
 
-- Change reviewed against its acceptance criteria, the repo's checks, and the quality lenses — with fresh context, in the correct mode for where it was launched.
-- A clear verdict presented: clean or not clean (findings + next steps).
-- Local mode, clean: verdict is "ready — open the PR"; nothing merged or removed.
-- Remote mode, clean and approved: PR merged per repo convention, the task's worktree removed and its `<repo>-<slug>-dev` workspace closed — all from the root — and results reported.
-- If not clean: findings summarized with next steps; nothing merged or removed.
-
-## Related
-
-If the review surfaces work beyond this PR's scope, suggest running `generating-tickets` to capture it as new tickets. Do not auto-invoke it.
+- Change reviewed against its acceptance criteria, the repo's checks, and the quality lenses.
+- A clear verdict presented: clean or not clean, with located findings classified blocking vs non-blocking.
+- No merge, no checkout edits, no comments posted unless the human asked.
