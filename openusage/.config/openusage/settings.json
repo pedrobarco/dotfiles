@@ -1,0 +1,195 @@
+{
+  "ui": {
+    "refresh_interval_seconds": 30,
+    "warn_threshold": 0.2,
+    "crit_threshold": 0.05
+  },
+  "theme": "Neon Dusk",
+  "data": {
+    "time_window": "30d",
+    "retention_days": 90
+  },
+  "telemetry": {
+    "provider_links": {
+      "anthropic": "claude_code",
+      "azure": "azure_openai",
+      "github-copilot": "copilot",
+      "google": "gemini_api"
+    }
+  },
+  "dashboard": {
+    "providers": [
+      {
+        "account_id": "cursor-ide",
+        "enabled": true
+      },
+      {
+        "account_id": "droid",
+        "enabled": false
+      }
+    ],
+    "view": "grid",
+    "widget_sections": [
+      {
+        "id": "top_usage_progress",
+        "enabled": true
+      },
+      {
+        "id": "model_burn",
+        "enabled": true
+      },
+      {
+        "id": "client_burn",
+        "enabled": false
+      },
+      {
+        "id": "project_breakdown",
+        "enabled": true
+      },
+      {
+        "id": "tool_usage",
+        "enabled": false
+      },
+      {
+        "id": "mcp_usage",
+        "enabled": false
+      },
+      {
+        "id": "language_burn",
+        "enabled": false
+      },
+      {
+        "id": "code_stats",
+        "enabled": false
+      },
+      {
+        "id": "daily_usage",
+        "enabled": true
+      },
+      {
+        "id": "provider_burn",
+        "enabled": false
+      },
+      {
+        "id": "upstream_providers",
+        "enabled": false
+      },
+      {
+        "id": "other_data",
+        "enabled": false
+      }
+    ],
+    "detail_sections": [
+      {
+        "id": "usage",
+        "enabled": true
+      },
+      {
+        "id": "spending",
+        "enabled": true
+      },
+      {
+        "id": "models",
+        "enabled": true
+      },
+      {
+        "id": "clients",
+        "enabled": false
+      },
+      {
+        "id": "projects",
+        "enabled": false
+      },
+      {
+        "id": "tools",
+        "enabled": false
+      },
+      {
+        "id": "mcp",
+        "enabled": false
+      },
+      {
+        "id": "languages",
+        "enabled": false
+      },
+      {
+        "id": "code_stats",
+        "enabled": false
+      },
+      {
+        "id": "trends",
+        "enabled": true
+      },
+      {
+        "id": "activity_heatmap",
+        "enabled": false
+      },
+      {
+        "id": "cost_requests",
+        "enabled": true
+      },
+      {
+        "id": "forecast",
+        "enabled": true
+      },
+      {
+        "id": "upstream",
+        "enabled": false
+      },
+      {
+        "id": "provider_burn",
+        "enabled": false
+      },
+      {
+        "id": "other_data",
+        "enabled": false
+      },
+      {
+        "id": "timers",
+        "enabled": false
+      },
+      {
+        "id": "info",
+        "enabled": false
+      }
+    ],
+    "hide_sections_with_no_data": true
+  },
+  "model_normalization": {
+    "enabled": true,
+    "group_by": "lineage",
+    "min_confidence": 0.8
+  },
+  "auto_detect": true,
+  "accounts": null,
+  "auto_detected_accounts": [
+    {
+      "id": "cursor-ide",
+      "provider": "cursor",
+      "auth": "local",
+      "provider_paths": {
+        "tracking_db": "/Users/barco/.cursor/ai-tracking/ai-code-tracking.db"
+      }
+    },
+    {
+      "id": "droid",
+      "provider": "droid",
+      "auth": "local",
+      "provider_paths": {
+        "sessions_dir": "/Users/barco/.factory/sessions"
+      }
+    }
+  ],
+  "export": {
+    "target": "",
+    "interval_seconds": 0,
+    "machine_name": ""
+  },
+  "hub": {
+    "listen_addr": "",
+    "stale_timeout_seconds": 0
+  },
+  "tmux": {
+    "alerts": {}
+  }
+}
