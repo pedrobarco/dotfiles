@@ -30,6 +30,11 @@ alias kns='kubectl ns "$(kubectl ns | fzy)"'
 # open pr
 alias gpr="open_pr"
 
+# list prs
+alias gprm="list_own_prs"
+alias gprs="list_requested_prs user-review-requested:@me"
+alias gprsa="list_requested_prs review-requested:@me"
+
 # reset branch to remote
 alias glf="force_pull"
 

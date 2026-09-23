@@ -37,6 +37,120 @@ open_pr() {
     open "https://${repo}/compare/${branch}?expand=1"
 }
 
+# author:@me; [changes] if review:changes_requested or unresolved review threads
+list_own_prs() {
+    local repo url payload rows
+    url=$(git config --get remote.origin.url) || return
+    url="${url%.git}"
+    case "$url" in
+        git@*) repo="${url#*:}" ;;
+        *) repo="${url#*://*/}" ;;
+    esac
+    payload=$(gh api graphql \
+        -f q="repo:${repo} is:pr is:open author:@me sort:created-desc" \
+        -f failing="repo:${repo} is:pr is:open author:@me status:failure" \
+        -f query='
+            query($q: String!, $failing: String!) {
+              prs: search(query: $q, type: ISSUE, first: 30) {
+                nodes {
+                  ... on PullRequest {
+                    number
+                    title
+                    isDraft
+                    mergeable
+                    additions
+                    deletions
+                    changedFiles
+                    reviewDecision
+                    reviewThreads(first: 100) {
+                      nodes { isResolved }
+                    }
+                  }
+                }
+              }
+              failing: search(query: $failing, type: ISSUE, first: 30) {
+                nodes { ... on PullRequest { number } }
+              }
+            }
+        ') || return
+
+    rows=$(print -r -- "$payload" | jq -r '
+            def rpad($n): tostring | (" " * ([($n - length), 0] | max)) + .;
+            def lpad($n): tostring | . + (" " * ([($n - length), 0] | max));
+            (.data.failing.nodes | map(.number // empty)) as $failing_ids
+            | [
+                .data.prs.nodes[]
+                | select(.number)
+                | {
+                    id: "#\(.number)",
+                    files: "\(.changedFiles)f",
+                    diff: "+\(.additions)/-\(.deletions)",
+                    badges: (
+                        [
+                            (if .number | IN($failing_ids[]) then "failing" else empty end),
+                            (if .reviewDecision == "CHANGES_REQUESTED"
+                                or any(.reviewThreads.nodes[]?; .isResolved | not)
+                             then "changes" else empty end),
+                            (if .mergeable == "CONFLICTING" then "conflicts" else empty end)
+                        ] | join(" | ")
+                        | if . == "" then "" else "[\(.)]" end
+                    ),
+                    title: (if .isDraft then "[DRAFT] \(.title)" else .title end)
+                  }
+              ] as $rows
+            | ($rows | map(.id | length) | max // 0) as $nw
+            | ($rows | map(.files | length) | max // 0) as $fw
+            | ($rows | map(.badges | length) | max // 0) as $bw
+            | $rows[]
+            | [
+                (.id | rpad($nw)),
+                (.files | rpad($fw)),
+                (.diff | lpad(12)),
+                (if $bw > 0 then (.badges | lpad($bw)) else empty end),
+                .title
+              ] | join(" ")
+        ') || return
+    if [ -z "$rows" ]; then
+        echo "no open PRs of yours"
+        return 1
+    fi
+    print -r -- "$rows"
+}
+
+# $1: user-review-requested:@me | review-requested:@me
+# draft:false status:success -review:changes_requested; skip mergeable==CONFLICTING
+list_requested_prs() {
+    local query="${1:-user-review-requested:@me}"
+    local rows
+    rows=$(gh pr list \
+        --search "${query} draft:false status:success -review:changes_requested" \
+        --json number,title,author,mergeable,changedFiles,additions,deletions \
+        --jq '
+            def rpad($n): tostring | (" " * ([($n - length), 0] | max)) + .;
+            def lpad($n): tostring | . + (" " * ([($n - length), 0] | max)) | .[0:$n];
+            [
+                .[]
+                | select(.mergeable != "CONFLICTING")
+                | {
+                    id: "#\(.number)",
+                    files: "\(.changedFiles)f",
+                    diff: "+\(.additions)/-\(.deletions)",
+                    author: (.author.login // "?" | .[0:26]),
+                    title
+                  }
+            ] as $rows
+            | ($rows | map(.id | length) | max // 0) as $nw
+            | ($rows | map(.files | length) | max // 0) as $fw
+            | $rows[]
+            | "\(.id | rpad($nw)) \(.files | rpad($fw)) \(.diff | lpad(12)) \(.author | lpad(26)) \(.title)"
+        ') || return
+    if [ -z "$rows" ]; then
+        echo "no ready, green PRs requested of you"
+        return 1
+    fi
+    print -r -- "$rows"
+}
+
 force_pull() {
     local branch=$(git branch --show-current)
     git fetch --all

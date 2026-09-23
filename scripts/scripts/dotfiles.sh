@@ -10,3 +10,4 @@ stow --no-folding --restow -t $HOME mpv
 stow --no-folding --restow -t $HOME opencode
 stow --no-folding --restow -t $HOME herdr
 stow --no-folding --restow -t $HOME agents
+stow --no-folding --restow -t $HOME tuicr
