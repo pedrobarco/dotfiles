@@ -12,6 +12,10 @@ agents = ["opencode", "cursor"]
 name = "notion"
 url = "https://mcp.notion.com/mcp"
 
+[[mcp]]
+name = "atlassian"
+url = "https://mcp.atlassian.com/v2/mcp"
+
 [[skills]]
 name = "herdr"
 source = "pedrobarco/herdr"
