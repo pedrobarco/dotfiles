@@ -26,6 +26,8 @@ selected_repo=$(cd "$selected_repo" && pwd -P)
 # A Worktrunk (or git) worktree shares the parent repo. Open it through herdr's
 # worktree API so the sidebar nests it under that repo and shows the branch.
 # workspace create would record a standalone space named after the directory.
+# worktree open also adopts a space that was previously created for this same
+# checkout: Herdr focuses it and marks it as a linked member of the project.
 if git_dir=$(git -C "$selected_repo" rev-parse --git-dir 2>/dev/null) \
     && git_common=$(git -C "$selected_repo" rev-parse --git-common-dir 2>/dev/null); then
     git_dir=$(cd "$selected_repo" && cd "$git_dir" && pwd -P)

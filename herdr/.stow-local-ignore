@@ -1,0 +1,30 @@
+# Replaces Stow's built-in ignore list for this package. The patterns below
+# the blank line are that built-in list.
+
+# Herdr writes these next to config.toml. Git already ignores them.
+.*\.log
+.*\.sock
+plugins\.json
+plugins
+
+RCS
+.+,v
+
+CVS
+\.\#.+
+\.cvsignore
+
+\.svn
+_darcs
+\.hg
+
+\.git
+\.gitignore
+\.gitmodules
+
+.+~
+\#.*\#
+
+^/README.*
+^/LICENSE.*
+^/COPYING

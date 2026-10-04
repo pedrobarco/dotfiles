@@ -23,7 +23,7 @@ rename_workspace = "prefix+$"     # tmux: rename-session
 
 # agents (no tmux equivalent; unset by default in herdr). indexed focus_agent is
 # avoided because terminals can't encode ctrl/alt/shift+digit; use letter cycling
-next_agent = "prefix+j"           # cycle to next agent (by urgency, see [ui])
+next_agent = "prefix+j"           # cycle to next agent (space order, see [ui])
 previous_agent = "prefix+k"       # cycle to previous agent
 
 # vim-herdr-navigation: seamless ctrl+h/j/k/l between herdr panes and vim splits
@@ -81,18 +81,25 @@ description = "agent picker"
 width = "80%"
 height = "80%"
 
-# worktree manager (worktrunk): fzf-pick a worktree/branch — enter switches or
-# creates, ctrl-x removes. pairs with prefix+t (repo sessionizer)
+# worktree session: fzf-pick a branch. Enter switches or creates a linked
+# worktree space under the project. pairs with prefix+t (repo sessionizer)
 [[keys.command]]
 key = "prefix+shift+t"
 type = "plugin_action"
 command = "worktrunk.open"
-description = "worktree switch/create (default branch)"
+description = "worktree session: switch or create"
+
+[[keys.command]]
+key = "prefix+shift+backspace"
+type = "plugin_action"
+command = "worktrunk.remove"
+description = "remove worktree session"
 
 [ui]
-# order the agent panel by attention (blocked > done > working > idle) so
-# focus_agent indexes and agent cycling mean "Nth most urgent agent"
-agent_panel_sort = "priority"
+
+# group agents by space. each worktree session is a space, so agents
+# sit under their worktree
+agent_panel_sort = "spaces"
 
 [theme]
 name = "terminal"
