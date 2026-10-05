@@ -41,5 +41,13 @@ alias glf="force_pull"
 # fetch and prune
 alias gfp="prune_fetch"
 
-# keep the system awake for N seconds
-alias keepawake="caffeinate -it"
+# Block idle sleep for N minutes. caffeinate takes seconds, so convert here.
+# Closing the lid still sleeps the Mac; this only holds off idle sleep.
+keepawake() {
+	local minutes="${1:-}"
+	if [[ -z "$minutes" || ! "$minutes" =~ ^[0-9]+$ || "$minutes" -lt 1 ]]; then
+		echo "usage: keepawake <minutes>" >&2
+		return 1
+	fi
+	caffeinate -it $((minutes * 60))
+}
